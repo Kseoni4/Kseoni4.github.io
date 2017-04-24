@@ -57,19 +57,18 @@ function personKeke(param) {
 			personList = personList + " " + Keke.namePerson;
 		//Keke.upgCost = Math.floor(10 * Math.pow(1.1, Keke.upgCount));
 		document.getElementById('upg').innerHTML = Keke.memesFirstProd;
-		document.getElementById('upgCostKeke').innerHTML = Keke.upgCost;
+		document.getElementById('upgCostKeke').innerHTML = "Update cost: " + Keke.upgCost;
 		document.getElementById('upgB1').style.display = 'inline';
-		document.getElementById('buyKeke').innerHTML = 'Keke';
 		document.getElementById('personList').innerHTML = personList;
-		document.getElementById('buyKeke1').disabled = 'disabled';
+		document.getElementById('buyKeke').disabled = 'disabled';
 		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(0%)";
 		Keke.personIsBuy = true;
 		}
 	}
 	function upgKeke() {
 		if (upgPerson.call(Keke) == true && Keke.upgCount < 4) { 
-		document.getElementById('buyKeke').innerHTML = "Keke" + " " + "Upgrades: " + Keke.upgCount;
-		document.getElementById('upgCostKeke').innerHTML = Keke.upgCost; 
+		//document.getElementById('buyKeke').innerHTML = "Keke" + " " + "Upgrades: " + Keke.upgCount;
+		document.getElementById('upgCostKeke').innerHTML = "Update cost: " + Keke.upgCost; 
 		}
 		if (Keke.upgCount == 3) { 
 			document.getElementById('upgB1').style.display = 'none',
@@ -215,12 +214,10 @@ function load() {
 		}	
 	if (savegame.Keke.personIsBuy != false) {
 		Keke = savegame.Keke;
-		document.getElementById('buyKeke').innerHTML = 'Keke';
 		document.getElementById('buyKeke').disabled = 'disabled';
 		document.getElementById('upgCostKeke').innerHTML = Keke.upgCost;
 		document.getElementById('upgB1').style.display = 'inline';
 		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(0%)";
-			if(Keke.upgCount > 0) { document.getElementById('buyKeke').innerHTML = "Keke" + " " + "Upgrades: " + Keke.upgCount; }
 			if (Keke.upgCount == 3) { 
 			document.getElementById('upgB1').style.display = 'none',
 			document.getElementById('upgCostKeke').innerHTML = ''; 
