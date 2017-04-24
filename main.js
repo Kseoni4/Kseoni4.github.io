@@ -94,7 +94,7 @@ function personJane(param) {
 		Jane.memesFirstProd = 15;
 		Jane.personCost = 50;
 		Jane.upgCost = 30;
-		Jane.memesUpgProd = 15;
+		Jane.memesUpgProd = 25;
 
 		if (meme >= Jane.personCost) {
 			upgds = upgds + Jane.memesFirstProd;
