@@ -8,8 +8,8 @@ var personList = "";
 
 //переменные счетчиков
 
-var meme = 0;
-var upgds = 0;
+var meme = 0; //Мемы
+var upgds = 0; //Мемы/cек
 
 //инициализация персонажей (глобальные объекты)
 
@@ -58,6 +58,7 @@ function personKeke(param) {
 		//Keke.upgCost = Math.floor(10 * Math.pow(1.1, Keke.upgCount));
 		document.getElementById('upg').innerHTML = Keke.memesFirstProd;
 		document.getElementById('upgCostKeke').innerHTML = "Update cost: " + Keke.upgCost;
+		document.getElementById('upgB1').style.display = '',
 		document.getElementById('upgB1').style.display = 'inline';
 		document.getElementById('personList').innerHTML = personList;
 		document.getElementById('buyKeke').disabled = 'disabled';
@@ -68,11 +69,11 @@ function personKeke(param) {
 	function upgKeke() {
 		if (upgPerson.call(Keke) == true && Keke.upgCount < 4) { 
 		//document.getElementById('buyKeke').innerHTML = "Keke" + " " + "Upgrades: " + Keke.upgCount;
-		document.getElementById('upgCostKeke').innerHTML = "Update cost: " + Keke.upgCost; 
+		document.getElementById('upgCostKeke').innerHTML = "Upgrade cost: " + Keke.upgCost; 
 		}
 		if (Keke.upgCount == 3) { 
 			document.getElementById('upgB1').style.display = 'none',
-			document.getElementById('upgCostKeke').innerHTML = ''; 
+			document.getElementById('upgCostKeke').innerHTML = 'Keke in final form!'; 
 		}
 	}
 }
@@ -125,9 +126,9 @@ function personJane(param) {
 /* Блок игровых функций */
 
 function memeClick(num) {
-	meme = meme + num;	
+	meme = meme + num,
 	document.getElementById('memes').innerHTML = meme;
-};
+}
 
 //Функция покупки улучшений для персонажей.
 
@@ -174,6 +175,11 @@ function initGame() {				//Функция инициализации игры
 	if (!gameInProgress) {			//Если флаг уже начатой игры равен false, то загрузить начальные значения счетчиков.
 		document.getElementById('upg').innerHTML = upgds,
 		document.getElementById('memes').innerHTML = meme,
+		document.getElementById('upgB1').style.display = 'none',
+		//document.getElementById('upgB2').style.display = 'none',
+		//document.getElementById('upgB3').style.display = 'none',
+		//document.getElementById('upgB4').style.display = 'none',
+		//document.getElementById('upgB5').style.display = 'none',
 		//initPersons(),
 		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%)";
 		gameInProgress = true;
@@ -215,7 +221,7 @@ function load() {
 	if (savegame.Keke.personIsBuy != false) {
 		Keke = savegame.Keke;
 		document.getElementById('buyKeke').disabled = 'disabled';
-		document.getElementById('upgCostKeke').innerHTML = Keke.upgCost;
+		document.getElementById('upgCostKeke').innerHTML = "Upgrade cost: " + Keke.upgCost;
 		document.getElementById('upgB1').style.display = 'inline';
 		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(0%)";
 			if (Keke.upgCount == 3) { 
@@ -324,5 +330,23 @@ function upgKeke() {
 
 	if (!upgPerson()) {	upgPerson.call(window.Keke); }
 
+}
+*/
+
+/*
+function chngColor(m, u) {
+	if (m < 50){
+		yClr = yClr + m;
+		if (yClr > 215 && zClr < 215) { yClr = 215, zClr = zClr + m }
+		clr = 'rgb(' + xClr +',' + yClr + ',' + zClr +')';
+		document.getElementById('memes').style.color = clr;
+	}
+	if (m > 50 && m <100){
+		yClr = yClr + m;
+		if (yClr > 215 && zClr < 215) { yClr = 215 }
+		zClr = zClr + m,
+		clr = 'rgb(' + xClr +',' + yClr + ',' + zClr +')';
+		document.getElementById('memes').style.color = clr;
+	}
 }
 */
