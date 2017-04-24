@@ -1,0 +1,44 @@
+<html>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<head>
+		<link rel="stylesheet" type="text/css" href="interface.css" />
+		<script type="text/javascript" src="main.js"></script>
+	</head>
+	<body>
+		<div id="header"><h1>МСПХ Кликер, который вы заслужили</h1></div>
+		<div id="counters">
+			Memes: <span id="memes"></span ><br />
+			Mem/s: <span id="upg"></span> <br />
+			The persons that you have: <span id="personList"></span>
+		</div>
+		<button onClick="memeClick(1)" id="clk">Click to produce meme</button>
+		
+		<div id="persons">
+		<button id='buyKeke' onClick="personKeke('buy')">Keke (cost: 10 memes)</button>
+		<button id='upgB1' onClick="personKeke('upg')" style="display: none">Upgrade</button>
+		<span id="upgCostKeke"></span>
+		<br />
+		<button id='buyJane' onClick="personJane('buy')">Jane (cost: 50 memes)</button>
+		<button id='upgB2' onClick="personJane('upg')" style="display: none">Upgrade</button>
+		<span id="upgCostJane"></span>
+
+		<br />
+		<div id="saveLoadButtons">
+			<button onClick="save()">Save game state</button>
+			<span id="autosave" style="display: none"></span>
+			</br>
+			<button onClick="load()">Load game state</button>
+				<br />
+			<button onClick="removeSave()">Delete game state</button>
+		</div>
+		<script>
+			initGame();
+		</script>
+	</body>	
+</html>
