@@ -61,7 +61,8 @@ function personKeke(param) {
 		document.getElementById('upgB1').style.display = 'inline';
 		document.getElementById('buyKeke').innerHTML = 'Keke';
 		document.getElementById('personList').innerHTML = personList;
-		document.getElementById('buyKeke').disabled = 'disabled';
+		document.getElementById('buyKeke1').disabled = 'disabled';
+		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(0%)";
 		Keke.personIsBuy = true;
 		}
 	}
@@ -175,6 +176,7 @@ function initGame() {				//Функция инициализации игры
 		document.getElementById('upg').innerHTML = upgds,
 		document.getElementById('memes').innerHTML = meme,
 		//initPersons(),
+		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%)";
 		gameInProgress = true;
 	};
 	resumeGame();
@@ -217,6 +219,7 @@ function load() {
 		document.getElementById('buyKeke').disabled = 'disabled';
 		document.getElementById('upgCostKeke').innerHTML = Keke.upgCost;
 		document.getElementById('upgB1').style.display = 'inline';
+		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(0%)";
 			if(Keke.upgCount > 0) { document.getElementById('buyKeke').innerHTML = "Keke" + " " + "Upgrades: " + Keke.upgCount; }
 			if (Keke.upgCount == 3) { 
 			document.getElementById('upgB1').style.display = 'none',
