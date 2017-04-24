@@ -6,11 +6,16 @@ body {
   background-color: #ffffff;
 }
 
+#rightBlock {
+}
+#clBlock {
+	margin-right: 30px;
+}
+
 #header {
 	font-family: "Helvetica";
-	font-size: 24px;
+	font-size: 32px;
 	color: #000000;
-    height: 100px;
 	border-bottom: 2px;
 	border-bottom-style: ridge;
 	border-bottom-color: #000000;
@@ -18,9 +23,9 @@ body {
 }
 
 #counters {
-	display: block;
 	color: #000000;
-	font-size: 32px;
+	font-size: 24px;
+	margin-left: 2%;
 	height: 50px;
 	border-bottom: 1px;
 	border-bottom-style: ridge;
@@ -33,8 +38,23 @@ body {
 	width: 10%;
 	display: inline-block;
 }
-#memeBtn {
 
+#updC {
+	max-width: 10px;
+}
+
+#person {
+	width: 1%;
+}
+
+#upgBtn1 {
+	background: none;
+	border: none;
+}
+
+#memeBtn {
+	margin-left: 20px;
+	display: inline-block;
 }
 
 #memeClick {
@@ -44,7 +64,7 @@ body {
 		color: white;
 		text-align: center;
 		text-decoration: none;
-		font-size: 24px;
+		font-size: 18px;
 }
 
 #persons {

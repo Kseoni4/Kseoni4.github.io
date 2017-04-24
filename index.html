@@ -7,49 +7,101 @@
     <meta name="description" content="">
     <meta name="author" content="">
 	<head>
+		<link rel="stylesheet" type="text/css" href="bootstrap.css" />
 		<link rel="stylesheet" type="text/css" href="interface.css" />
 		<script type="text/javascript" src="main.js"></script>
 	</head>
 	<body>
-		<div id="header"><h1>МСПХ Кликер, который вы заслужили</h1></div>
-		<div id="counters">
-			<p> Memes: <a id="memes"></a>
-				Mem/s: <a id="upg"></a>
-			</p>
+		<div class="row">
+			<div class="col-md-8">
+					<h1 id="header"><p>МСПХ Кликер, который вы заслужили</p></h1>
+			</div>
+		<div class="row">	
+			<div class="col-md-8">
+				<div id="counters">
+					<p> Memes: <span id="memes"></span>
+						Mem/s: <span id="upg"></span>
+					</p>
+				</div>
+			<div>
+		</div>	
+		<div class="row">
+			<div class="col-md-8">
+				<div id="memeBtn">
+					<button id='memeClick' onClick="memeClick(1)">
+						<p>Click to produce meme</p>
+					</button>
+				</div>
 			<br />
-			<span id="autosave" style="display: none"></span>
+			<span id="autosave" style="display: none"></span>	
+			</div>
 		</div>
+		<div class="row">
+			<div id="persons">
+					<div class="col-xs-4">
+						<button id="buyKeke1" style='border: none'><img id='imgPersonKeke' src="img/keke3_340.png" onClick="personKeke('buy')"></img></button>
+					</div>
+					<div class="col-sm-3">
+						<button id="upgBtn1"><img src="img/upg_340_a.png" onClick="personKeke('upg')"></img></button>
+					</div>
+					<p>The persons that you have: <span id="personList"></span></p>
+			</div>
+		</div>	
+			<script>
+				initGame();
+			</script>
+			
+<!--
+
+	
 		
-		<div id="memeBtn">
-			<button id='memeClick' onClick="memeClick(1)">
-				<a>Click to produce meme</a>
-			</button>
-		</div><br />
+	</div>	
+	</div>
+	
+
 		
-		<div id="persons">
-		<p>The persons that you have: <span id="personList"></span></p>
-			<table>
-				<tr>
-					<td><button id="buyKeke1" style='border: none'><img id='imgPersonKeke' src="img/keke3_340.png" onClick="personKeke('buy')"></img></button></td>
-					<td><img src="img/upg_340_a.png" onClick="personKeke('upg')"></img></td>
-				</tr>
-			</table>
-			<button id='buyKeke' onClick="personKeke('buy')">Keke (cost: 10 memes)</button>
-			<button id='upgB1' onClick="personKeke('upg')" style="display: none">Upgrade</button>
-			<span id="upgCostKeke"></span>
 			<br />
-			<button id='buyJane' onClick="personJane('buy')">Jane (cost: 50 memes)</button>
-			<button id='upgB2' onClick="personJane('upg')" style="display: none">Upgrade</button>
-			<span id="upgCostJane"></span>
+			
+		</div>		
+	</div>
+	</div>
+		
+		
+		<div id=leftBlock>
+			
+				
+				<div col-md-8>
+				<div id="saveLoadButtons">
+					<button id="SaveLoadBtn" onClick="save()">Save game state</button>
+					<button id="SaveLoadBtn" onClick="load()">Load game state</button>
+					<button id="removeSaveBtn" onClick="removeSave()">Delete game state</button>
+				</div>
+				</div>
+			</div>
 		</div>
-		<br />
-		<div id="saveLoadButtons">
-			<button id="SaveLoadBtn" onClick="save()">Save game state</button>
-			<button id="SaveLoadBtn" onClick="load()">Load game state</button>
-			<button id="removeSaveBtn" onClick="removeSave()">Delete game state</button>
+		<div class="col-md-4">
+			<div id="rightBlock">
+					<div id=clBlock>
+						<p>Change log (список изменений - лндск.)</p>
+						
+					</div>
+				</div>
 		</div>
-		<script>
-			initGame();
-		</script>
+		</div>
+
+--!>			
+
+<!--							
+						<button id='buyKeke' onClick="personKeke('buy')">Keke (cost: 10 memes)</button>
+						<button id='upgB1' onClick="personKeke('upg')" style="display: none">Upgrade</button>
+						<span id="upgCostKeke"></span>
+						<br />
+						<button id='buyJane' onClick="personJane('buy')">Jane (cost: 50 memes)</button>
+						<button id='upgB2' onClick="personJane('upg')" style="display: none">Upgrade</button>
+						<span id="upgCostJane"></span>
+					</div>
+				<br /> --!>
+
+
 	</body>	
 </html>
