@@ -11,7 +11,8 @@ var personList = "";
 var meme = 0; //Мемы
 var upgds = 0; //Мемы/cек
 var pValue = 0; //Прогресс
-var winValue = Math.floor(Math.random() * 500000);
+var winValue = 1000000;
+//var winValue = Math.floor(Math.random() * 500000);
 
 //инициализация персонажей (глобальные объекты)
 
@@ -74,7 +75,8 @@ function personKeke(param) {
 		}
 		if (Keke.upgCount == 3) { 
 			document.getElementById('upgB1').style.display = 'none',
-			document.getElementById('upgCostKeke').innerHTML = 'Keke in final form!'; 
+			document.getElementById('upgCostKeke').innerHTML = 'Keke in final form!';
+			document.getElementById('buyKeke').style.opacity = 1;
 		}
 	}
 }
@@ -95,8 +97,8 @@ function personJane(param) {
 	function buyJane() {
 		Jane.memesFirstProd = 15;
 		Jane.personCost = 50;
-		Jane.upgCost = 30;
-		Jane.memesUpgProd = 25;
+		Jane.upgCost = 25;
+		Jane.memesUpgProd = 20;
 
 		if (meme >= Jane.personCost) {
 			upgds = upgds + Jane.memesFirstProd;
@@ -119,7 +121,8 @@ function personJane(param) {
 		}
 		if (Jane.upgCount == 3) { 
 			document.getElementById('upgB2').style.display = 'none', 
-			document.getElementById('upgCostJane').innerHTML = 'Jane in final form!'; 
+			document.getElementById('upgCostJane').innerHTML = 'Jane in final form!';
+			document.getElementById('buyJane').style.opacity = 1;			
 		}
 	}
 }
@@ -138,10 +141,10 @@ function personBasta(param) {
 		break;
 	}
 	function buyBasta() {
-		Basta.memesFirstProd = 30;
-		Basta.personCost = 250;
-		Basta.upgCost = 350;
-		Basta.memesUpgProd = 55;
+		Basta.memesFirstProd = 25;
+		Basta.personCost = 300;
+		Basta.upgCost = 400;
+		Basta.memesUpgProd = 40;
 
 		if (meme >= Basta.personCost) {
 			upgds = upgds + Basta.memesFirstProd;
@@ -165,7 +168,55 @@ function personBasta(param) {
 		if (Basta.upgCount == 3) { 
 			document.getElementById('upgB3').style.display = 'none',
 			document.getElementById('imgPersonBasta').src="img/basta3.png"; 
-			document.getElementById('upgCostBasta').innerHTML = 'Basta in final form!'; 
+			document.getElementById('upgCostBasta').innerHTML = 'Basta in final form!';
+			document.getElementById('buyBasta').style.opacity = 1;			
+		}
+	}
+}
+
+/* Персонаж Калли */
+
+function personKali(param) {
+	switch (param)
+	{
+		case 'buy':
+		return buyKali();
+		break;
+
+		case 'upg':
+		return upgKali();
+		break;
+	}
+	function buyKali() {
+		Kali.memesFirstProd = 100;
+		Kali.personCost = 3000;
+		Kali.upgCost = 1000;
+		Kali.memesUpgProd = 250;
+
+		if (meme >= Kali.personCost) {
+			upgds = upgds + Kali.memesFirstProd;
+			meme = meme - Kali.personCost;
+			personList = personList + " " + Kali.namePerson;
+		//Kali.upgCost = Math.floor(10 * Math.pow(1.1, Kali.upgCount));
+		document.getElementById('upg').innerHTML = Kali.memesFirstProd;
+		document.getElementById('upgCostKali').innerHTML = "Update cost: " + Kali.upgCost;
+		document.getElementById('upgB4').style.display = '',
+		document.getElementById('upgB4').style.display = 'inline';
+		document.getElementById('personList').innerHTML = personList;
+		document.getElementById('buyKali').disabled = 'disabled';
+		document.getElementById('imgPersonKali').style.WebkitFilter="grayscale(0%)";
+		Kali.personIsBuy = true;
+		}
+	}
+	function upgKali() {
+		if (upgPerson.call(Kali) == true && Kali.upgCount < 4) {
+		document.getElementById('imgPersonKali').src="img/kali" + Kali.upgCount + ".png";
+		document.getElementById('upgCostKali').innerHTML = "Upgrade cost: " + Kali.upgCost; 
+		}
+		if (Kali.upgCount == 3) { 
+			document.getElementById('upgB4').style.display = 'none',
+			document.getElementById('upgCostKali').innerHTML = 'Kali in final form!';
+			document.getElementById('buyKali').style.opacity = 1;
 		}
 	}
 }
@@ -210,6 +261,7 @@ function timeOut(meme, upgds) {
 			if (min > 60) { min = min / 60 }
 			if (hours < 10) { hours = "0" + hours }
 			if (min < 10) { min = "0" + min}
+			if (sec < 10) { sec = "0" + sec}
 			document.getElementById('timeleft').innerHTML = "Timeleft: " + hours + ":" + min + ":" + sec;
 			} else { document.getElementById('timeleft').innerHTML = "Timeleft: " + "00" + ":" + "00" + ":" + "00"; }
 	}
@@ -287,13 +339,13 @@ function initGame() {				//Функция инициализации игры
 		document.getElementById('upgB1').style.display = 'none',
 		document.getElementById('upgB2').style.display = 'none',
 		document.getElementById('upgB3').style.display = 'none',
-		//document.getElementById('upgB4').style.display = 'none',
+		document.getElementById('upgB4').style.display = 'none',
 		//document.getElementById('upgB5').style.display = 'none',
 		//initPersons(),
 		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%) blur(10px)";
 		document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(100%) blur(10px)";
 		document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(10px)";
-		//document.getElementById('imgPersonKali').style.WebkitFilter="grayscale(100%)";
+		document.getElementById('imgPersonKali').style.WebkitFilter="grayscale(100%) blur(10px)";
 		//document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%)";
 		gameInProgress = true;
 
@@ -350,6 +402,7 @@ function load() {
 			if (Keke.upgCount == 3) { 
 			document.getElementById('upgB1').style.display = 'none',
 			document.getElementById('upgCostKeke').innerHTML = 'Keke in final form!'; 
+			document.getElementById('buyKeke').style.opacity = 1;
 			}
 		}
 	if (savegame.Jane.personIsBuy != false) {
@@ -361,6 +414,7 @@ function load() {
 			if (Jane.upgCount == 3) { 
 			document.getElementById('upgB2').style.display = 'none', 
 			document.getElementById('upgCostJane').innerHTML = "Jane in final form!"; 
+			document.getElementById('buyJane').style.opacity = 1;
 			}
 		}
 	if (savegame.Basta.personIsBuy != false) {
@@ -373,11 +427,21 @@ function load() {
 			document.getElementById('upgB3').style.display = 'none',
 			document.getElementById('imgPersonBasta').src="img/basta3.png";
 			document.getElementById('upgCostBasta').innerHTML = 'Basta in final form!'; 
+			document.getElementById('buyBasta').style.opacity = 1;
 			}
 		}
 
 	if (savegame.Kali.personIsBuy != false) {
-		document.getElementById('buyKali').innerHTML = 'Kali';
+		Kali = savegame.Kali;
+		document.getElementById('buyKali').disabled = 'disabled';
+		document.getElementById('upgCostKali').innerHTML = "Upgrade cost: " + Kali.upgCost;
+		document.getElementById('upgB4').style.display = 'inline';
+		document.getElementById('imgPersonKali').style.WebkitFilter="grayscale(0%)";
+			if (Kali.upgCount == 3) { 
+			document.getElementById('upgB4').style.display = 'none',
+			document.getElementById('upgCostKali').innerHTML = 'Kali in final form!'; 
+			document.getElementById('buyKali').style.opacity = 1;
+			}
 		}
 	if (savegame.Oleg.personIsBuy != false) {
 		document.getElementById('buyOleg').innerHTML = 'Oleg';
