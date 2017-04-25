@@ -70,6 +70,14 @@ body {
 	float: left;
 }
 
+#buyOleg {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+
 #textA {
 	float:right;
 }
@@ -90,10 +98,6 @@ body {
 	float:right;
 }
 
-#upgCostKeke {
-	font-size: 14px;
-	widght: 10%
-}
 
 #upgB2 {
 	font-size: 12px;
@@ -111,6 +115,12 @@ body {
 
 #upgB4 {
 	font-size: 12px;
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB4 {
 	background: none;
 	border: none;
 	float:right;
@@ -161,4 +171,8 @@ body {
 
 #upg {
 	color: rgb(211, 0, 0);
+}
+
+#pepe {
+	float: left;
 }

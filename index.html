@@ -24,7 +24,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-4"></div>
-			<div id="header" class="col-md-4"><h5>v.0.1:2504</h5></div>
+			<div id="header" class="col-md-4"><h5>v.0.1:2604</h5></div>
 			<div class="col-md-4"></div>	
 		</div>
 		
@@ -43,6 +43,7 @@
 				<p>The persons that you have: <span id="personList"></span></p>
 			</div>
 			<div class="col-md-4"></div>
+			<img class="img-responsive" id="pepe" src="img/1.png"></img>
 		</div>
 		
 	<!-- Блок прогресс-бара и таймера -->
@@ -50,7 +51,7 @@
 		<div class="row">
 			<div class="col-md-4"></div>
 			<div class="col-md-4">
-				Progress to win: <div class="progress"><div class="progress-bar" role="progressbar" id="prgs" aria-valuenow='' aria-valuemin ="" aria-valuemax = ""></div></div>
+				Progress to happines: <div class="progress"><div class="progress-bar" role="progressbar" id="prgs" aria-valuenow='' aria-valuemin ="" aria-valuemax = ""></div></div>
 				<span id="timeleft"></span>
 			</div>
 		</div>	
@@ -77,33 +78,35 @@
 					
 					<div class="btn-group" style="margin-left: -1px">
 						<div class="btn-group" >
-							<button id="buyKeke" class="btn btn-default" onClick="buyPerson_(Keke)" ><img id='imgPersonKeke' class="img-rounded img-responsive" src="img/keke3.png" title="Cost: 10 Memes"></img></button>
+							<button id="buyKeke" class="btn btn-default" onClick="buyPerson_(Keke)" ><img id='imgPersonKeke' class="img-rounded img-responsive" src="img/keke1.png" title="Cost: 10 Memes"></img></button>
 						</div>
 						<div class="btn-group" style="margin-left: -1px">
-							<button id="upgB1" class="btn btn-default" onClick="personKeke('upg')"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
+							<button id="upgB1" class="btn btn-default" onClick="upgPerson_(Keke)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
 						</div>
 					<span id="upgCostKeke"></span>
 					<br />
 
 					<!-- Jane -->
+
 					<div class="btn-group" style="margin-left: -1px">
 						<div class="btn-group" >
-							<button id="buyJane" class="btn btn-default" onClick="personJane('buy')" ><img id='imgPersonJane' class="img-rounded img-responsive" src="img/Jane3.png" title="Cost: 50 Memes"></img></button>
+							<button id="buyJane" class="btn btn-default" onClick="buyPerson_(Jane)" ><img id='imgPersonJane' class="img-rounded img-responsive" src="img/Jane1.png" title="Cost: 50 Memes"></img></button>
 						</div>
 						<div class="btn-group" style="margin-left: -1px">
-							<button id="upgB2" class="btn btn-default" onClick="personJane('upg')"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
+							<button id="upgB2" class="btn btn-default" onClick="upgPerson_(Jane)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
 						</div>
 					</div>	
 					<span id="upgCostJane"></span>
 					<br />
 				
 					<!-- Basta -->
+
 					<div class="btn-group" style="margin-left: -1px">
 						<div class="btn-group" >
-							<button id="buyBasta" class="btn btn-default" onClick="personBasta('buy')" ><img id='imgPersonBasta' class="img-rounded img-responsive" src="img/Basta2.png" title="Cost: 100 Memes"></img></button>
+							<button id="buyBasta" class="btn btn-default" onClick="buyPerson_(Basta)" ><img id='imgPersonBasta' class="img-rounded img-responsive" src="img/Basta1.png" title="Cost: 100 Memes"></img></button>
 						</div>
 						<div class="btn-group" style="margin-left: -1px">
-							<button id="upgB3" class="btn btn-default" onClick="personBasta('upg')"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
+							<button id="upgB3" class="btn btn-default" onClick="upgPerson_(Basta)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
 						</div>
 					</div>	
 					<span id="upgCostBasta"></span>
@@ -113,16 +116,26 @@
 					
 					<div class="btn-group" style="margin-left: -1px">
 						<div class="btn-group" >
-							<button id="buyKali" class="btn btn-default" onClick="personKali('buy')" ><img id='imgPersonKali' class="img-rounded img-responsive" src="img/kali1.png" title="Cost: 3000 Memes"></img></button>
+							<button id="buyKali" class="btn btn-default" onClick="buyPerson_(Kali)" ><img id='imgPersonKali' class="img-rounded img-responsive" src="img/kali1.png" title="Cost: 3000 Memes"></img></button>
 						</div>
 						<div class="btn-group" style="margin-left: -1px">
-							<button id="upgB4" class="btn btn-default" onClick="personKali('upg')"><img id="upgB4" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
+							<button id="upgB4" class="btn btn-default" onClick="upgPerson_(Kali)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
 						</div>
 					<span id="upgCostKali"></span>
 					<br />
 					
 					<!-- Oleg -->
 					
+					<div class="btn-group" style="margin-left: -1px">
+						<div class="btn-group" >
+							<button id="buyOleg" class="btn btn-default" onClick="buyPerson_(Oleg)" ><img id='imgPersonOleg' class="img-rounded img-responsive" src="img/Oleg1.png" title="Cost: 10 Memes"></img></button>
+						</div>
+						<div class="btn-group" style="margin-left: -1px">
+							<button id="upgB5" class="btn btn-default" onClick="upgPerson_(Oleg)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
+						</div>
+					<span id="upgCostOleg"></span>
+					<br />
+
 
 			</div>
 		</div>
@@ -144,9 +157,10 @@
 					<br />
 				<p style="font-size:20px">Change log (список изменений - лндск.):</p>
 					<textarea id="cLog" rows="20" cols="55" readonly style="font-size:16px">
+	[26.04.2017] Пора запускать в продакш, но прежде, надо добавить лягушонка Пепе, которого игрок должен "осчастливить" мемами. Такая вот незамысловатая идея для кликера. Чем больше мемов, тем счастливее выглядит Пепе. Хотя, конечно, в планах есть усложнить игру и добавить систему уровней. Уровень будет являться дополнительным множителем для получения мемов. А ещё необходимо сокращать большие числа, начиная с миллионов. Например: 1000000 = 1М и так далее. 
 	[25.04.2017] Довёл до ума прогрессбар, привёл в порядок директорию и разложил стили и скрипты по папочкам.
 Так же добавил таймер, чтобы смотреть сколько времени уходит на получение максимальной суммы в зависимости от значений генерации валюты у героев. 
-На данный момент, версия игры 0.1:2504 (после ":" - номер сборки - это дата последнего обновления).
+На данный момент, версия игры 0.1:2504 (после ":" - номер сборки - это дата последнего обновления). Поменял ещё раз дизайн. Добавил остальных персонажей и навёл порядок в исходном коде упростив множество функций. Осталась самая малость: добавить цель.
 					
 	[24.04.2017] Пытался разобраться с внешним видом страницы, плюнул нафиг и добавил Bootstrap. Теперь с ним приходится возиться. А так же, раз у меня есть рабочая версия, то я залил её на Github - в продакшн, так сказать. Теперь можно редактировать с ноута и компа и сихнронизировать между собой изменения.
 	Просидел до двух ночи, зато на данный момент в игре имеется:
