@@ -39,6 +39,21 @@ body {
 	display: inline-block;
 	float: left;
 }
+
+#buyJane {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+#buyBasta {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
 #textA {
 	float:right;
 }
@@ -58,13 +73,26 @@ body {
 	float:right;
 }
 
+#upgB2 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB3 {
+	background: none;
+	border: none;
+	float:right;
+}
+
 #memeBtn {
 	margin-left: 20px;
 	display: inline-block;
 }
 
 #memeClick {
-		float: left;
+		padding: 10px 10px;
+		margin-left: 30%;
 		background-color: #41bbf4;
 		border: 1px solid #4197f4;
 		color: white;

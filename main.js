@@ -10,6 +10,7 @@ var personList = "";
 
 var meme = 0; //Мемы
 var upgds = 0; //Мемы/cек
+var pValue = 0; //Прогресс
 
 //инициализация персонажей (глобальные объекты)
 
@@ -68,7 +69,6 @@ function personKeke(param) {
 	}
 	function upgKeke() {
 		if (upgPerson.call(Keke) == true && Keke.upgCount < 4) { 
-		//document.getElementById('buyKeke').innerHTML = "Keke" + " " + "Upgrades: " + Keke.upgCount;
 		document.getElementById('upgCostKeke').innerHTML = "Upgrade cost: " + Keke.upgCost; 
 		}
 		if (Keke.upgCount == 3) { 
@@ -103,25 +103,73 @@ function personJane(param) {
 			personList = personList + " " + Jane.namePerson;
 		//Jane.upgCost = Math.floor(10 * Math.pow(1.1, Jane.upgCount));
 		document.getElementById('upg').innerHTML = Jane.memesFirstProd;
-		document.getElementById('upgCostJane').innerHTML = Jane.upgCost;
+		document.getElementById('upgCostJane').innerHTML = "Upgrade cost: " + Jane.upgCost;
 		document.getElementById('upgB2').style.display = 'inline';
-		document.getElementById('buyJane').innerHTML = 'Jane';
 		document.getElementById('personList').innerHTML = personList;
 		document.getElementById('buyJane').disabled = 'disabled';
+		document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(0%)";
 		Jane.personIsBuy = true;
 		}
 	}
 	function upgJane() {
 		if (upgPerson.call(Jane) == true && Jane.upgCount < 4) { 
-			document.getElementById('buyJane').innerHTML = "Jane" + " " + "Upgrades: " + Jane.upgCount;
-			document.getElementById('upgCostJane').innerHTML = Jane.upgCost; 
+			document.getElementById('upgCostJane').innerHTML = "Upgrade cost: " + Jane.upgCost;
+
 		}
 		if (Jane.upgCount == 3) { 
 			document.getElementById('upgB2').style.display = 'none', 
-			document.getElementById('upgCostJane').innerHTML = ''; 
+			document.getElementById('upgCostJane').innerHTML = 'Jane in final form!'; 
 		}
 	}
 }
+
+/* Персонаж Баста */
+
+function personBasta(param) {
+	switch (param)
+	{
+		case 'buy':
+		return buyBasta();
+		break;
+
+		case 'upg':
+		return upgBasta();
+		break;
+	}
+	function buyBasta() {
+		Basta.memesFirstProd = 30;
+		Basta.personCost = 150;
+		Basta.upgCost = 350;
+		Basta.memesUpgProd = 55;
+
+		if (meme >= Basta.personCost) {
+			upgds = upgds + Basta.memesFirstProd;
+			meme = meme - Basta.personCost;
+			personList = personList + " " + Basta.namePerson;
+		//Basta.upgCost = Math.floor(10 * Math.pow(1.1, Basta.upgCount));
+		document.getElementById('upg').innerHTML = Basta.memesFirstProd;
+		document.getElementById('upgCostBasta').innerHTML = "Update cost: " + Basta.upgCost;
+		document.getElementById('upgB3').style.display = '',
+		document.getElementById('upgB3').style.display = 'inline';
+		document.getElementById('personList').innerHTML = personList;
+		document.getElementById('buyBasta').disabled = 'disabled';
+		document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(0%)";
+		Basta.personIsBuy = true;
+		}
+	}
+	function upgBasta() {
+		if (upgPerson.call(Basta) == true && Basta.upgCount < 4) { 
+		document.getElementById('upgCostBasta').innerHTML = "Upgrade cost: " + Basta.upgCost; 
+		}
+		if (Basta.upgCount == 3) { 
+			document.getElementById('upgB3').style.display = 'none',
+			document.getElementById('imgPersonBasta').src="img/basta3.png"; 
+			document.getElementById('upgCostBasta').innerHTML = 'Basta in final form!'; 
+		}
+	}
+}
+
+
 
 /* Блок игровых функций */
 
@@ -146,11 +194,34 @@ function upgPerson() {
 	}
 }
 
+function chkPrgrs(m) {
+	if (m > 0) {
+	pValue = m,
+	pValue = ((pValue / 1000000) * 100)
+	$(document).ready(function(){
+			$('.progress-bar').css('width', pValue+'%').attr('aria-valuenow', pValue);
+		});
+	}
+}
+
+function chkPers(m) {
+	if (m >= 10 && !Keke.personIsBuy) { document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < 10 && !Keke.personIsBuy) { document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+
+	if (m >= 50 && !Jane.personIsBuy) { document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < 50 && !Jane.personIsBuy) { document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+	 	
+	if (m >= 100 && !Basta.personIsBuy) { document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(0px)"; }
+	if (m < 100 && !Basta.personIsBuy) { document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+} 
+
 /* Блок асинхронных событий */
 
 window.setInterval(function(){
 	if(gameInProgress = true){
-		memeClick(upgds)
+		memeClick(upgds),
+		chkPers(meme)
+		chkPrgrs(meme)
 	};
 	document.getElementById('upg').innerHTML = upgds;
 }, 1000);
@@ -175,14 +246,22 @@ function initGame() {				//Функция инициализации игры
 	if (!gameInProgress) {			//Если флаг уже начатой игры равен false, то загрузить начальные значения счетчиков.
 		document.getElementById('upg').innerHTML = upgds,
 		document.getElementById('memes').innerHTML = meme,
+		$(document).ready(function(){
+			$('.progress-bar').attr('aria-valuemax', 1000000);
+		});
 		document.getElementById('upgB1').style.display = 'none',
-		//document.getElementById('upgB2').style.display = 'none',
-		//document.getElementById('upgB3').style.display = 'none',
+		document.getElementById('upgB2').style.display = 'none',
+		document.getElementById('upgB3').style.display = 'none',
 		//document.getElementById('upgB4').style.display = 'none',
 		//document.getElementById('upgB5').style.display = 'none',
 		//initPersons(),
-		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%)";
+		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%) blur(10px)";
+		document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(100%) blur(10px)";
+		document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(10px)";
+		//document.getElementById('imgPersonKali').style.WebkitFilter="grayscale(100%)";
+		//document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%)";
 		gameInProgress = true;
+
 	};
 	resumeGame();
 }
@@ -226,24 +305,33 @@ function load() {
 		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(0%)";
 			if (Keke.upgCount == 3) { 
 			document.getElementById('upgB1').style.display = 'none',
-			document.getElementById('upgCostKeke').innerHTML = ''; 
+			document.getElementById('upgCostKeke').innerHTML = 'Keke in final form!'; 
 			}
 		}
 	if (savegame.Jane.personIsBuy != false) {
 		Jane = savegame.Jane;
-		document.getElementById('buyJane').innerHTML = 'Jane';
 		document.getElementById('buyJane').disabled = 'disabled';
 		document.getElementById('upgCostJane').innerHTML = Jane.upgCost;
 		document.getElementById('upgB2').style.display = 'inline';
-			if (Jane.upgCount > 0) { document.getElementById('buyJane').innerHTML = "Jane" + " " + "Upgrades: " + Jane.upgCount; }
+		document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(0%)";
 			if (Jane.upgCount == 3) { 
 			document.getElementById('upgB2').style.display = 'none', 
-			document.getElementById('upgCostJane').innerHTML = ''; 
+			document.getElementById('upgCostJane').innerHTML = "Jane in final form!"; 
 			}
 		}
 	if (savegame.Basta.personIsBuy != false) {
-		document.getElementById('buyBasta').innerHTML = 'Basta';
+		Basta = savegame.Basta;
+		document.getElementById('buyBasta').disabled = 'disabled';
+		document.getElementById('upgCostBasta').innerHTML = "Upgrade cost: " + Basta.upgCost;
+		document.getElementById('upgB3').style.display = 'inline';
+		document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(0%)";
+			if (Basta.upgCount == 3) { 
+			document.getElementById('upgB3').style.display = 'none',
+			document.getElementById('imgPersonBasta').src="img/basta3.png";
+			document.getElementById('upgCostBasta').innerHTML = 'Basta in final form!'; 
+			}
 		}
+
 	if (savegame.Kali.personIsBuy != false) {
 		document.getElementById('buyKali').innerHTML = 'Kali';
 		}
