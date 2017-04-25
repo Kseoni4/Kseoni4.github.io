@@ -11,7 +11,7 @@ var personList = "";
 var meme = 0; //Мемы
 var upgds = 0; //Мемы/cек
 var pValue = 0; //Прогресс
-var winValue = 1000000;
+var winValue = 1000000; //Итоговая сумма
 //var winValue = Math.floor(Math.random() * 500000);
 
 //инициализация персонажей (глобальные объекты)
@@ -31,6 +31,7 @@ function memePerson(name) {
 	this.upgCost = 10;
 	this.upgCount = 0;
 	this.namePerson = name;
+	this.personNum = 0;
 	this.personIsBuy = false;
 
 }
@@ -221,7 +222,26 @@ function personKali(param) {
 	}
 }
 
+function buyPerson_(person) {
+	buyPerson.call(person)
+}
 
+function buyPerson() {
+	if (meme >= this.personCost) {
+			upgds = upgds + this.memesFirstProd;
+			meme = meme - this.personCost;
+			personList = personList + " " + this.namePerson;
+		//Kali.upgCost = Math.floor(10 * Math.pow(1.1, Kali.upgCount));
+		document.getElementById('upg').innerHTML = this.memesFirstProd;
+		document.getElementById('upgCost' + this.namePerson).innerHTML = "Update cost: " + this.upgCost;
+		document.getElementById('upgB' + this.personNum).style.display = '',
+		document.getElementById('upgB' + this.personNum).style.display = 'inline';
+		document.getElementById('personList').innerHTML = personList;
+		document.getElementById('buy' + this.namePerson).disabled = 'disabled';
+		document.getElementById('imgPerson' + this.namePerson).style.WebkitFilter="grayscale(0%)";
+		this.personIsBuy = true;
+	}
+}
 
 /* Блок игровых функций */
 
@@ -298,6 +318,9 @@ function chkPers(m) {
 	 	
 	if (m >= 100 && !Basta.personIsBuy) { document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(0px)"; }
 	if (m < 100 && !Basta.personIsBuy) { document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+	
+	if (m >= 3000 && !Kali.personIsBuy) { document.getElementById('imgPersonKali').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < 3000 && !Kali.personIsBuy) { document.getElementById('imgPersonKali').style.WebkitFilter="grayscale(100%) blur(10px)"; }
 } 
 
 
@@ -336,21 +359,53 @@ function initGame() {				//Функция инициализации игры
 		$(document).ready(function(){
 			$('.progress-bar').attr('aria-valuemax', winValue);
 		});
+		initPersons();
+		initStyles(); 
+		gameInProgress = true;
+		}
+	};
+	resumeGame();
+}
+
+function initPersons(){
+		Keke.personNum = 1;
+		Keke.memesFirstProd = 1;
+		Keke.personCost = 10;
+		Keke.upgCost = 10;
+		Keke.memesUpgProd = 5;
+		
+		Jane.personNum = 2;
+		Jane.memesFirstProd = 15;
+		Jane.personCost = 50;
+		Jane.upgCost = 25;
+		Jane.memesUpgProd = 20;
+		
+		Basta.personNum = 3;
+		Basta.memesFirstProd = 25;
+		Basta.personCost = 300;
+		Basta.upgCost = 400;
+		Basta.memesUpgProd = 40;
+		
+		Kali.personNum = 4;
+		Kali.memesFirstProd = 100;
+		Kali.personCost = 3000;
+		Kali.upgCost = 1000;
+		Kali.memesUpgProd = 250;
+		return true;
+}
+
+function initStyles() {
 		document.getElementById('upgB1').style.display = 'none',
 		document.getElementById('upgB2').style.display = 'none',
 		document.getElementById('upgB3').style.display = 'none',
 		document.getElementById('upgB4').style.display = 'none',
 		//document.getElementById('upgB5').style.display = 'none',
-		//initPersons(),
+
 		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%) blur(10px)";
 		document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(100%) blur(10px)";
 		document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(10px)";
 		document.getElementById('imgPersonKali').style.WebkitFilter="grayscale(100%) blur(10px)";
 		//document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%)";
-		gameInProgress = true;
-
-	};
-	resumeGame();
 }
 
 function save() {
