@@ -11,6 +11,7 @@ var personList = "";
 var meme = 0; //Мемы
 var upgds = 0; //Мемы/cек
 var pValue = 0; //Прогресс
+var winValue = Math.floor(Math.random() * 500000);
 
 //инициализация персонажей (глобальные объекты)
 
@@ -138,7 +139,7 @@ function personBasta(param) {
 	}
 	function buyBasta() {
 		Basta.memesFirstProd = 30;
-		Basta.personCost = 150;
+		Basta.personCost = 250;
 		Basta.upgCost = 350;
 		Basta.memesUpgProd = 55;
 
@@ -182,11 +183,11 @@ function memeClick(num) {
 
 function upgPerson() {
 	if (meme >= this.upgCost) {
-		this.memesUpgProd = Math.floor(this.memesUpgProd * Math.pow(2, this.upgCount));		
+		this.memesUpgProd = Math.floor(this.memesUpgProd * Math.pow(1.5, this.upgCount));		
 		upgds = upgds + this.memesUpgProd;
 		meme = meme - this.upgCost;
 		this.upgCount++
-		this.upgCost = Math.floor(this.personCost * Math.pow(5, this.upgCount));
+		this.upgCost = Math.floor(this.personCost * Math.pow(3, this.upgCount));
 		return true;
 	}
 	if(this == undefined) {
@@ -194,15 +195,47 @@ function upgPerson() {
 	}
 }
 
-function chkPrgrs(m) {
-	if (m > 0) {
-	pValue = m,
-	pValue = ((pValue / 1000000) * 100)
-	$(document).ready(function(){
-			$('.progress-bar').css('width', pValue+'%').attr('aria-valuenow', pValue);
-		});
+//Таймер для отсчёта времени до получения финальной суммы
+
+function timeOut(meme, upgds) {
+	if (meme > 0 && upgds > 0){
+		p = winValue - meme;
+		sec_ = Math.floor(p / upgds);
+		if (sec_ > 0){ 
+			hours = (sec_ / 3600);
+			hours = parseInt(hours);
+			min_= sec_ - (hours * 3600);
+			min = parseInt(min_ / 60);
+			sec = min_ - (min * 60);
+			if (min > 60) { min = min / 60 }
+			if (hours < 10) { hours = "0" + hours }
+			if (min < 10) { min = "0" + min}
+			document.getElementById('timeleft').innerHTML = "Timeleft: " + hours + ":" + min + ":" + sec;
+			} else { document.getElementById('timeleft').innerHTML = "Timeleft: " + "00" + ":" + "00" + ":" + "00"; }
 	}
 }
+
+
+//Функция рассчёта прогресс-бара
+
+function chkPrgrs(m) {
+	if (m > 0) {
+		pValue = m,
+		pValue = ((pValue / winValue) * 100)
+		if (pValue <= 100 && m <= winValue){
+			$(document).ready(function(){
+				$('.progress-bar').css('width', pValue+'%').attr('aria-valuenow', pValue);
+			});
+			document.getElementById('prgs').innerHTML = m + "/" + winValue;
+		}
+		if (pValue >= 100 ){	
+			document.getElementById('prgs').innerHTML = winValue + "/" + winValue;
+			$('.progress-bar').css('background-color', "#00ff00");
+		}	
+	}
+}
+
+//Функция проверки "доступности" покупки героев
 
 function chkPers(m) {
 	if (m >= 10 && !Keke.personIsBuy) { document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
@@ -215,6 +248,7 @@ function chkPers(m) {
 	if (m < 100 && !Basta.personIsBuy) { document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(10px)"; }
 } 
 
+
 /* Блок асинхронных событий */
 
 window.setInterval(function(){
@@ -222,6 +256,7 @@ window.setInterval(function(){
 		memeClick(upgds),
 		chkPers(meme)
 		chkPrgrs(meme)
+		timeOut(meme, upgds)
 	};
 	document.getElementById('upg').innerHTML = upgds;
 }, 1000);
@@ -247,7 +282,7 @@ function initGame() {				//Функция инициализации игры
 		document.getElementById('upg').innerHTML = upgds,
 		document.getElementById('memes').innerHTML = meme,
 		$(document).ready(function(){
-			$('.progress-bar').attr('aria-valuemax', 1000000);
+			$('.progress-bar').attr('aria-valuemax', winValue);
 		});
 		document.getElementById('upgB1').style.display = 'none',
 		document.getElementById('upgB2').style.display = 'none',
@@ -277,6 +312,8 @@ function save() {
 		Kali: Kali,
 		Oleg: Oleg,
 		personList: personList,
+		pValue: pValue,
+		winValue: winValue
 		//Остальные переменные сюда
 		}
 	localStorage.setItem('save', JSON.stringify(save));
@@ -292,6 +329,13 @@ function load() {
 	if (typeof savegame.upgds != "undefined") {
 		upgds = savegame.upgds;
 		document.getElementById('upg').innerHTML = upgds 
+		}
+	if (typeof savegame.pValue != "undefined") {
+			pValue = savegame.pValue;
+		$('.progress-bar').css('width', pValue+'%').attr('aria-valuenow', pValue);
+		}
+	if (typeof savegame.winValue != "undefined") {
+			winValue = savegame.winValue;
 		}
 	if (typeof savegame.personList != "undefined") {
 		personList = savegame.personList;
