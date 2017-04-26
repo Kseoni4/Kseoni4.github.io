@@ -236,30 +236,36 @@ function initPersons(){ //Инициализация характеристик 
 		Keke.personCost = 10;
 		Keke.upgCost = 15;
 		Keke.memesUpgProd = 5;
-		
+		perCost.call(Keke);
+
 		Jane.personNum = 2;
 		Jane.memesFirstProd = 15;
 		Jane.personCost = 300;
 		Jane.upgCost = 25;
 		Jane.memesUpgProd = 30;
+		perCost.call(Jane);
 		
 		Basta.personNum = 3;
 		Basta.memesFirstProd = 50;
 		Basta.personCost = 3000;
 		Basta.upgCost = 400;
 		Basta.memesUpgProd = 150;
+		perCost.call(Basta);
 		
 		Cali.personNum = 4;
 		Cali.memesFirstProd = 100;
 		Cali.personCost = 9000;
 		Cali.upgCost = 1000;
 		Cali.memesUpgProd = 250;
+		perCost.call(Cali);
 
 		Oleg.personNum = 5;
 		Oleg.memesFirstProd = 550;
 		Oleg.personCost = 100000;
 		Oleg.upgCost = 3500;
 		Oleg.memesUpgProd = 1000;
+		perCost.call(Oleg);
+
 		return true;
 }
 
@@ -271,6 +277,10 @@ function initStyles() { //Инициализация стилей у карти�
 		document.getElementById('imgPerson' + i).style.WebkitFilter="grayscale(100%) blur(10px)";
 	}
 }
+
+function perCost() {
+			document.getElementById('upgCost' + this.namePerson).innerHTML = "Сost: " + this.personCost; 
+		}
 
 function save() { 
 
