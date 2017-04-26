@@ -151,7 +151,7 @@ function chkPers(m) {
 	if (m >= Basta.personCost && !Basta.personIsBuy) { document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(0px)"; }
 	if (m < Basta.personCost && !Basta.personIsBuy) { document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(10px)"; }
 	
-	if (m >= Cali.personCost && !Kali.personIsBuy) { document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m >= Cali.personCost && !Cali.personIsBuy) { document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
 	if (m < Cali.personCost && !Cali.personIsBuy) { document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(100%) blur(10px)"; }
 	
 	if (m >= Oleg.personCost && !Oleg.personIsBuy) { document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
