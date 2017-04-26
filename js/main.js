@@ -22,6 +22,7 @@ var Basta = new memePerson("Basta");
 var Cali = new memePerson("Cali");
 var Oleg = new memePerson("Oleg");
 
+var pList = { Keke, Jane, Basta, Cali, Oleg };
 /* Блок конструктора и инициализации объектов персонажей */
 
 function memePerson(name) {
@@ -263,22 +264,12 @@ function initPersons(){ //Инициализация характеристик 
 }
 
 function initStyles() { //Инициализация стилей у картинок
-		document.getElementById('upgB1').style.display = 'none',
-		document.getElementById('upgB2').style.display = 'none',
-		document.getElementById('upgB3').style.display = 'none',
-		document.getElementById('upgB4').style.display = 'none',
-		document.getElementById('upgB5').style.display = 'none',
-
-		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%) blur(10px)";
-		document.getElementById('imgPersonKeke').title="Cost: " + Keke.personCost;
-		document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(100%) blur(10px)";
-		document.getElementById('imgPersonJane').title="Cost: " + Jane.personCost;
-		document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(10px)";
-		document.getElementById('imgPersonBasta').title="Cost: " + Basta.personCost;
-		document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(100%) blur(10px)";
-		document.getElementById('imgPersonCali').title="Cost: " + Cali.personCost;
-		document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%) blur(10px)";
-		document.getElementById('imgPersonOleg').title="Cost: " + Oleg.personCost;
+	for (var i = 1; i < 6; i++) {
+		document.getElementById('upgB' + i).style.display = 'none';	
+	}
+	for (var i in pList) {
+		document.getElementById('imgPerson' + i).style.WebkitFilter="grayscale(100%) blur(10px)";
+	}
 }
 
 function save() { 
@@ -293,7 +284,8 @@ function save() {
 		Oleg: Oleg,
 		personList: personList,
 		pValue: pValue,
-		winValue: winValue
+		winValue: winValue,
+		pList: pList
 		//Остальные переменные сюда
 		}
 	localStorage.setItem('save', JSON.stringify(save));
@@ -323,77 +315,39 @@ function load() {
 		}	
 	if (savegame.Keke.personIsBuy != false) {
 		Keke = savegame.Keke;
-		document.getElementById('buyKeke').disabled = 'disabled';
-		document.getElementById('upgCostKeke').innerHTML = "Upgrade cost: " + Keke.upgCost;
-		document.getElementById('upgB1').style.display = 'inline';
-		document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(0%)";
-		document.getElementById('imgPerson' + Keke.namePerson).src="img/" + Keke.namePerson + (Keke.upgCount + 1) + ".png"; 
-			if (Keke.upgCount == 3) { 
-			document.getElementById('upgB1').style.display = 'none',
-			document.getElementById('imgPerson' + Keke.namePerson).src="img/" + Keke.namePerson + "3.png"; 
-			document.getElementById('upgCostKeke').innerHTML = 'Keke in final form!'; 
-			document.getElementById('buyKeke').style.opacity = 1;
-
-			}
+		loadPerson.call(Keke);
 		}
 	if (savegame.Jane.personIsBuy != false) {
 		Jane = savegame.Jane;
-		document.getElementById('buyJane').disabled = 'disabled';
-		document.getElementById('upgCostJane').innerHTML = Jane.upgCost;
-		document.getElementById('upgB2').style.display = 'inline';
-		document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(0%)";
-		document.getElementById('imgPerson' + Jane.namePerson).src="img/" + Jane.namePerson + (Jane.upgCount + 1) + ".png"; 
-			if (Jane.upgCount == 3) { 
-			document.getElementById('upgB2').style.display = 'none', 
-			document.getElementById('imgPerson' + Jane.namePerson).src="img/" + Jane.namePerson + "3.png"; 
-			document.getElementById('upgCostJane').innerHTML = "Jane in final form!"; 
-			document.getElementById('buyJane').style.opacity = 1;
-			}
+		loadPerson.call(Jane);
 		}
 	if (savegame.Basta.personIsBuy != false) {
 		Basta = savegame.Basta;
-		document.getElementById('buyBasta').disabled = 'disabled';
-		document.getElementById('upgCostBasta').innerHTML = "Upgrade cost: " + Basta.upgCost;
-		document.getElementById('upgB3').style.display = 'inline';
-		document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(0%)";
-		document.getElementById('imgPerson' + Basta.namePerson).src="img/" + Basta.namePerson + (Basta.upgCount + 1) + ".png"; 
-			if (Basta.upgCount == 3) { 
-			document.getElementById('upgB3').style.display = 'none',
-			document.getElementById('imgPersonBasta').src="img/Basta3.png";
-			document.getElementById('upgCostBasta').innerHTML = 'Basta in final form!'; 
-			document.getElementById('buyBasta').style.opacity = 1;
-			}
+		loadPerson.call(Basta);
 		}
-
 	if (savegame.Cali.personIsBuy != false) {
 		Cali = savegame.Cali;
-		document.getElementById('buyCali').disabled = 'disabled';
-		document.getElementById('upgCostCali').innerHTML = "Upgrade cost: " + Cali.upgCost;
-		document.getElementById('upgB4').style.display = 'inline';
-		document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(0%)";
-		document.getElementById('imgPerson' + Cali.namePerson).src="img/" + Cali.namePerson + (Cali.upgCount + 1) + ".png"; 
-			if (Cali.upgCount == 3) { 
-			document.getElementById('upgB4').style.display = 'none',
-			document.getElementById('imgPerson' + Cali.namePerson).src="img/" + Cali.namePerson + "3.png"; 
-			document.getElementById('upgCostCali').innerHTML = 'Cali in final form!'; 
-			document.getElementById('buyCali').style.opacity = 1;
-			}
+		loadPerson.call(Cali);
 		}
 	if (savegame.Oleg.personIsBuy != false) {
 		Oleg = savegame.Oleg;
-		document.getElementById('buyOleg').disabled = 'disabled';
-		document.getElementById('upgCostOleg').innerHTML = "Upgrade cost: " + Oleg.upgCost;
-		document.getElementById('upgB5').style.display = 'inline';
-		document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(0%)";
-		document.getElementById('imgPerson' + Oleg.namePerson).src="img/" + Oleg.namePerson + (Oleg.upgCount + 1) + ".png"; 
-			if (Oleg.upgCount == 3) { 
-			document.getElementById('upgB5').style.display = 'none',
-			document.getElementById('imgPerson' + Oleg.namePerson).src="img/" + Oleg.namePerson + "3.png"; 
-			document.getElementById('upgCostOleg').innerHTML = 'Oleg in final form!'; 
-			document.getElementById('buyOleg').style.opacity = 1;
-			}
+		loadPerson.call(Oleg);
 		}
 }
+
+function loadPerson(){
+		document.getElementById('buy' + this.namePerson).disabled = 'disabled';
+		document.getElementById('upgCost' + this.namePerson).innerHTML = "Upgrade cost: " + this.upgCost;
+		document.getElementById('upgB' + this.personNum).style.display = 'inline';
+		document.getElementById('imgPerson' + this.namePerson).style.WebkitFilter="grayscale(0%)";
+		document.getElementById('imgPerson' + this.namePerson).src="img/" + this.namePerson + (this.upgCount + 1) + ".png"; 
+			if (this.upgCount == 3) { 
+			document.getElementById('upgB' + this.personNum).style.display = 'none',
+			document.getElementById('imgPerson' + this.namePerson).src="img/" + this.namePerson + "3.png"; 
+			document.getElementById('upgCost' + this.namePerson).innerHTML = this.namePerson + ' in final form!'; 
+			document.getElementById('buy' + this.namePerson).style.opacity = 1;
+			}
+}	
 
 function resumeGame() {
 	gameInProgress = (localStorage['check.gameInProgress'] == "true");
@@ -403,7 +357,6 @@ function resumeGame() {
 
 function removeSave() {
 	localStorage.removeItem("save");
-
 }
 
 
@@ -683,3 +636,19 @@ function personKali(param) {
 	}
 }
 */
+
+/*document.getElementById('upgB1').style.display = 'none',
+		document.getElementById('upgB2').style.display = 'none',
+		document.getElementById('upgB3').style.display = 'none',
+		document.getElementById('upgB4').style.display = 'none',
+		document.getElementById('upgB5').style.display = 'none',*/
+		/*document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%) blur(10px)";
+		document.getElementById('imgPersonKeke').title="Cost: " + Keke.personCost;
+		document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(100%) blur(10px)";
+		document.getElementById('imgPersonJane').title="Cost: " + Jane.personCost;
+		document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(10px)";
+		document.getElementById('imgPersonBasta').title="Cost: " + Basta.personCost;
+		document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(100%) blur(10px)";
+		document.getElementById('imgPersonCali').title="Cost: " + Cali.personCost;
+		document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%) blur(10px)";
+		document.getElementById('imgPersonOleg').title="Cost: " + Oleg.personCost;*/
