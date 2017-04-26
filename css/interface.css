@@ -1,0 +1,178 @@
+body {
+  font-family: "Lato", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #34495e;
+  background-color: #ffffff;
+}
+#autosave {
+	font-size: 14px;
+}
+
+#personList {
+	font-size: 14px;
+}
+
+#cLog {
+	border: none;
+}
+
+#rightBlock {
+}
+#clBlock {
+	margin-right: 30px;
+}
+
+#header {
+	font-family: "Helvetica";
+	font-size: 32px;
+	widght: 100%; 
+	color: #000000;
+	border-bottom: 2px;
+	border-bottom-style: ridge;
+	border-bottom-color: #000000;
+	box-sizing: border-box;
+}
+
+#counters {
+	color: #000000;
+	font-size: 24px;
+	width: 100%;
+	border-bottom: 1px;
+	border-bottom-style: ridge;
+	border-bottom-color: #000000;
+	box-sizing: border-box;
+}
+#buyKeke {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+#buyJane {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+#buyBasta {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+#buyKali {
+	background: none;
+	border: none;
+	float: left;
+}
+
+#buyOleg {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+
+#textA {
+	float:right;
+}
+
+
+#updC {
+	max-width: 10px;
+}
+
+#person {
+	width: 1%;
+}
+
+#upgB1 {
+	
+	background: none;
+	border: none;
+	float:right;
+}
+
+
+#upgB2 {
+	font-size: 12px;
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB3 {
+	font-size: 12px;
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB4 {
+	font-size: 12px;
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB4 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#memeBtn {
+	margin-left: 20px;
+	display: inline-block;
+}
+
+#memeClick {
+		padding: 10px 10px;
+		margin-left: 30%;
+		background-color: #41bbf4;
+		border: 1px solid #4197f4;
+		color: white;
+		text-align: center;
+		text-decoration: none;
+		font-size: 18px;
+}
+
+#persons {
+
+}
+
+#SaveLoadBtn {
+		float: left;
+		background-color: #4CAF50; /* Green */
+		border: 1px solid black;
+		color: white;
+		text-align: center;
+		text-decoration: none;
+		font-size: 16px;
+}
+#removeSaveBtn {
+		background-color: #f44e42; 
+		border: 1px solid black;
+		color: white;
+		text-align: center;
+		text-decoration: none;
+		font-size: 16px;
+}
+
+#memes {
+	color: rgb(211, 0, 0);
+}
+
+
+#upg {
+	color: rgb(211, 0, 0);
+}
+
+#pepe {
+	float: left;
+}

@@ -7,38 +7,180 @@
     <meta name="description" content="">
     <meta name="author" content="">
 	<head>
-		<link rel="stylesheet" type="text/css" href="interface.css" />
-		<script type="text/javascript" src="main.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="css/interface.css" />
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+
 	</head>
 	<body>
-		<div id="header"><h1>МСПХ Кликер, который вы заслужили</h1></div>
-		<div id="counters">
-			Memes: <span id="memes"></span ><br />
-			Mem/s: <span id="upg"></span> <br />
-			The persons that you have: <span id="personList"></span>
+	
+	<!-- Заголовок -->
+	
+		<div class="row">
+			<div id="col-md-12" style="text-align: center">
+				<h1>МСПХ Кликер, который вы заслужили<h1>
+			</div>
 		</div>
-		<button onClick="memeClick(1)" id="clk">Click to produce meme</button>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div id="header" class="col-md-4"><h5>v.0.1:2604</h5></div>
+			<div class="col-md-4"></div>	
+		</div>
 		
-		<div id="persons">
-		<button id='buyKeke' onClick="personKeke('buy')">Keke (cost: 10 memes)</button>
-		<button id='upgB1' onClick="personKeke('upg')" style="display: none">Upgrade</button>
-		<span id="upgCostKeke"></span>
-		<br />
-		<button id='buyJane' onClick="personJane('buy')">Jane (cost: 50 memes)</button>
-		<button id='upgB2' onClick="personJane('upg')" style="display: none">Upgrade</button>
-		<span id="upgCostJane"></span>
+	<!-- Блок счётчиков -->	
+		
+		<div class="row">
+			<div class="col-md-4"></div>	
+			<div class="col-md-4">
+				<div id="counters">
+					<p> Memes: <span id="memes"></span>
+						Mem/s: <span id="upg"></span>
+						<br />
+					</p>
+					<p><span id="autosave" style="display: none"></span></p>	
+				</div>
+				<p>The persons that you have: <span id="personList"></span></p>
+			</div>
+			<div class="col-md-4"></div>
+			<img class="img-responsive" id="pepe" src="img/1.png"></img>
+		</div>
+		
+	<!-- Блок прогресс-бара и таймера -->
+	
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				Progress to happines: <div class="progress"><div class="progress-bar" role="progressbar" id="prgs" aria-valuenow='' aria-valuemin ="" aria-valuemax = ""></div></div>
+				<span id="timeleft"></span>
+			</div>
+		</div>	
+		
+	<!-- Блок клика -->
+	
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				<button id='memeClick' class="btn btn-primary btn-lg" onClick="memeClick(1)">Click to produce meme</button>
+			</div>
+			<div class="col-md-4"></div>
+		</div>	
+	
+	<!-- Persons block -->
+	
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-8">
+				<h2>Persons</h2>
+				<h5>(they will improve your memes produce)</h5>
 
-		<br />
-		<div id="saveLoadButtons">
-			<button onClick="save()">Save game state</button>
-			<span id="autosave" style="display: none"></span>
-			</br>
-			<button onClick="load()">Load game state</button>
-				<br />
-			<button onClick="removeSave()">Delete game state</button>
+					<!-- Keke -->
+					
+					<div class="btn-group" style="margin-left: -1px">
+						<div class="btn-group" >
+							<button id="buyKeke" class="btn btn-default" onClick="buyPerson_(Keke)" ><img id='imgPersonKeke' class="img-rounded img-responsive" src="img/keke1.png" title="Cost: 10 Memes"></img></button>
+						</div>
+						<div class="btn-group" style="margin-left: -1px">
+							<button id="upgB1" class="btn btn-default" onClick="upgPerson_(Keke)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
+						</div>
+					<span id="upgCostKeke"></span>
+					<br />
+
+					<!-- Jane -->
+
+					<div class="btn-group" style="margin-left: -1px">
+						<div class="btn-group" >
+							<button id="buyJane" class="btn btn-default" onClick="buyPerson_(Jane)" ><img id='imgPersonJane' class="img-rounded img-responsive" src="img/Jane1.png" title="Cost: 50 Memes"></img></button>
+						</div>
+						<div class="btn-group" style="margin-left: -1px">
+							<button id="upgB2" class="btn btn-default" onClick="upgPerson_(Jane)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
+						</div>
+					</div>	
+					<span id="upgCostJane"></span>
+					<br />
+				
+					<!-- Basta -->
+
+					<div class="btn-group" style="margin-left: -1px">
+						<div class="btn-group" >
+							<button id="buyBasta" class="btn btn-default" onClick="buyPerson_(Basta)" ><img id='imgPersonBasta' class="img-rounded img-responsive" src="img/Basta1.png" title="Cost: 100 Memes"></img></button>
+						</div>
+						<div class="btn-group" style="margin-left: -1px">
+							<button id="upgB3" class="btn btn-default" onClick="upgPerson_(Basta)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
+						</div>
+					</div>	
+					<span id="upgCostBasta"></span>
+					<br />
+					
+					<!-- Kali -->
+					
+					<div class="btn-group" style="margin-left: -1px">
+						<div class="btn-group" >
+							<button id="buyKali" class="btn btn-default" onClick="buyPerson_(Kali)" ><img id='imgPersonKali' class="img-rounded img-responsive" src="img/kali1.png" title="Cost: 3000 Memes"></img></button>
+						</div>
+						<div class="btn-group" style="margin-left: -1px">
+							<button id="upgB4" class="btn btn-default" onClick="upgPerson_(Kali)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
+						</div>
+					<span id="upgCostKali"></span>
+					<br />
+					
+					<!-- Oleg -->
+					
+					<div class="btn-group" style="margin-left: -1px">
+						<div class="btn-group" >
+							<button id="buyOleg" class="btn btn-default" onClick="buyPerson_(Oleg)" ><img id='imgPersonOleg' class="img-rounded img-responsive" src="img/Oleg1.png" title="Cost: 10 Memes"></img></button>
+						</div>
+						<div class="btn-group" style="margin-left: -1px">
+							<button id="upgB5" class="btn btn-default" onClick="upgPerson_(Oleg)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
+						</div>
+					<span id="upgCostOleg"></span>
+					<br />
+
+
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-8">
+					<div id="saveLoadButtons" class="btn-group">
+						<div class="btn-group">
+						<button id="SaveLoadBtn" class="btn btn-sm" onClick="save()">Save game state</button>
+						</div>
+						<div class="btn-group">
+						<button id="SaveLoadBtn" class="btn btn-sm" onClick="load()">Load game state</button>
+						</div>
+						<div class="btn-group">
+						<button id="removeSaveBtn" class="btn btn-sm" onClick="removeSave()">Delete game state</button>
+						</div>
+					</div>
+					<br />
+				<p style="font-size:20px">Change log (список изменений - лндск.):</p>
+					<textarea id="cLog" rows="20" cols="55" readonly style="font-size:16px">
+	[26.04.2017] Пора запускать в продакш, но прежде, надо добавить лягушонка Пепе, которого игрок должен "осчастливить" мемами. Такая вот незамысловатая идея для кликера. Чем больше мемов, тем счастливее выглядит Пепе. Хотя, конечно, в планах есть усложнить игру и добавить систему уровней. Уровень будет являться дополнительным множителем для получения мемов. А ещё необходимо сокращать большие числа, начиная с миллионов. Например: 1000000 = 1М и так далее. 
+	[25.04.2017] Довёл до ума прогрессбар, привёл в порядок директорию и разложил стили и скрипты по папочкам.
+Так же добавил таймер, чтобы смотреть сколько времени уходит на получение максимальной суммы в зависимости от значений генерации валюты у героев. 
+На данный момент, версия игры 0.1:2504 (после ":" - номер сборки - это дата последнего обновления). Поменял ещё раз дизайн. Добавил остальных персонажей и навёл порядок в исходном коде упростив множество функций. Осталась самая малость: добавить цель.
+					
+	[24.04.2017] Пытался разобраться с внешним видом страницы, плюнул нафиг и добавил Bootstrap. Теперь с ним приходится возиться. А так же, раз у меня есть рабочая версия, то я залил её на Github - в продакшн, так сказать. Теперь можно редактировать с ноута и компа и сихнронизировать между собой изменения.
+	Просидел до двух ночи, зато на данный момент в игре имеется:
+	- Логика кликера
+	- Логика покупки и обновления для двух персонажей: Кеке, Жане и Басты.
+	- Прогресс-бар для отслеживания приближённости к победе.
+	- Какая-никакая ГРАФИКА.
+	- Система сохранения/загрузки/удаления прогресса. Пока ещё не до конца доведена до ума: не всё сохраняет и загружает как надо.
+
+	 
+	[23.04.2017] Доводил до ума код, устранял ошибки, разобрался с упрощением кода и такой вещью как "this". К концу дня была минимальная рабочая версия.
+
+	[22.04.2017] Начал кодить основную логику игры. Разбирался с js, читал некоторые гайды. Пытался оптимизировать код и уменьшить его в сравнении с примером другой инкрементарной (кликер) игры. 		
+					</textarea>	
+				</div>
+				<div class="col-md-4"></div>
+			</div>
 		</div>
 		<script>
 			initGame();
 		</script>
-	</body>	
+	</body>
 </html>
