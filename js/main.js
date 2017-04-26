@@ -359,7 +359,7 @@ function load() {
 		document.getElementById('imgPerson' + Basta.namePerson).src="img/" + Basta.namePerson + (Basta.upgCount + 1) + ".png"; 
 			if (Basta.upgCount == 3) { 
 			document.getElementById('upgB3').style.display = 'none',
-			document.getElementById('imgPersonBasta').src="img/basta3.png";
+			document.getElementById('imgPersonBasta').src="img/Basta3.png";
 			document.getElementById('upgCostBasta').innerHTML = 'Basta in final form!'; 
 			document.getElementById('buyBasta').style.opacity = 1;
 			}
