@@ -19,7 +19,7 @@ var winValue = 1000000; //Итоговая сумма
 var Keke = new memePerson("Keke");
 var Jane = new memePerson("Jane");
 var Basta = new memePerson("Basta");
-var Kali = new memePerson("Cali");
+var Cali = new memePerson("Cali");
 var Oleg = new memePerson("Oleg");
 
 /* Блок конструктора и инициализации объектов персонажей */
@@ -151,8 +151,8 @@ function chkPers(m) {
 	if (m >= Basta.personCost && !Basta.personIsBuy) { document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(0px)"; }
 	if (m < Basta.personCost && !Basta.personIsBuy) { document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(10px)"; }
 	
-	if (m >= Kali.personCost && !Kali.personIsBuy) { document.getElementById('imgPersonKali').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
-	if (m < Kali.personCost && !Kali.personIsBuy) { document.getElementById('imgPersonKali').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+	if (m >= Cali.personCost && !Cali.personIsBuy) { document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < Cali.personCost && !Cali.personIsBuy) { document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(100%) blur(10px)"; }
 	
 	if (m >= Oleg.personCost && !Oleg.personIsBuy) { document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
 	if (m < Oleg.personCost && !Oleg.personIsBuy) { document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%) blur(10px)"; }
@@ -248,11 +248,11 @@ function initPersons(){ //Инициализация характеристик 
 		Basta.upgCost = 400;
 		Basta.memesUpgProd = 150;
 		
-		Kali.personNum = 4;
-		Kali.memesFirstProd = 100;
-		Kali.personCost = 9000;
-		Kali.upgCost = 1000;
-		Kali.memesUpgProd = 250;
+		Cali.personNum = 4;
+		Cali.memesFirstProd = 100;
+		Cali.personCost = 9000;
+		Cali.upgCost = 1000;
+		Cali.memesUpgProd = 250;
 
 		Oleg.personNum = 5;
 		Oleg.memesFirstProd = 550;
@@ -275,8 +275,8 @@ function initStyles() { //Инициализация стилей у карти�
 		document.getElementById('imgPersonJane').title="Cost: " + Jane.personCost;
 		document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(10px)";
 		document.getElementById('imgPersonBasta').title="Cost: " + Basta.personCost;
-		document.getElementById('imgPersonKali').style.WebkitFilter="grayscale(100%) blur(10px)";
-		document.getElementById('imgPersonKali').title="Cost: " + Kali.personCost;
+		document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(100%) blur(10px)";
+		document.getElementById('imgPersonCali').title="Cost: " + Cali.personCost;
 		document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%) blur(10px)";
 		document.getElementById('imgPersonOleg').title="Cost: " + Oleg.personCost;
 }
@@ -289,7 +289,7 @@ function save() {
 		Keke: Keke,
 		Jane: Jane,
 		Basta: Basta,
-		Kali: Kali,
+		Cali: Cali,
 		Oleg: Oleg,
 		personList: personList,
 		pValue: pValue,
@@ -359,24 +359,24 @@ function load() {
 		document.getElementById('imgPerson' + Basta.namePerson).src="img/" + Basta.namePerson + (Basta.upgCount + 1) + ".png"; 
 			if (Basta.upgCount == 3) { 
 			document.getElementById('upgB3').style.display = 'none',
-			document.getElementById('imgPersonBasta').src="img/basta3.png";
+			document.getElementById('imgPersonBasta').src="img/Basta3.png";
 			document.getElementById('upgCostBasta').innerHTML = 'Basta in final form!'; 
 			document.getElementById('buyBasta').style.opacity = 1;
 			}
 		}
 
-	if (savegame.Kali.personIsBuy != false) {
-		Kali = savegame.Kali;
-		document.getElementById('buyKali').disabled = 'disabled';
-		document.getElementById('upgCostKali').innerHTML = "Upgrade cost: " + Kali.upgCost;
+	if (savegame.Cali.personIsBuy != false) {
+		Cali = savegame.Cali;
+		document.getElementById('buyCali').disabled = 'disabled';
+		document.getElementById('upgCostCali').innerHTML = "Upgrade cost: " + Cali.upgCost;
 		document.getElementById('upgB4').style.display = 'inline';
-		document.getElementById('imgPersonKali').style.WebkitFilter="grayscale(0%)";
-		document.getElementById('imgPerson' + Kali.namePerson).src="img/" + Kali.namePerson + (Kali.upgCount + 1) + ".png"; 
-			if (Kali.upgCount == 3) { 
+		document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(0%)";
+		document.getElementById('imgPerson' + Cali.namePerson).src="img/" + Cali.namePerson + (Cali.upgCount + 1) + ".png"; 
+			if (Cali.upgCount == 3) { 
 			document.getElementById('upgB4').style.display = 'none',
-			document.getElementById('imgPerson' + Kali.namePerson).src="img/" + Kali.namePerson + "3.png"; 
-			document.getElementById('upgCostKali').innerHTML = 'Kali in final form!'; 
-			document.getElementById('buyKali').style.opacity = 1;
+			document.getElementById('imgPerson' + Cali.namePerson).src="img/" + Cali.namePerson + "3.png"; 
+			document.getElementById('upgCostCali').innerHTML = 'Cali in final form!'; 
+			document.getElementById('buyCali').style.opacity = 1;
 			}
 		}
 	if (savegame.Oleg.personIsBuy != false) {
