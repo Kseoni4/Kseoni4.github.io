@@ -68,8 +68,13 @@ function memePerson(name) {
 /* Блок игровых функций */
 
 function memeClick(num) {
+	meme = meme + num + ((num * lvl) * Math.floor(upgds * b) + (upgds/2)),
+	document.getElementById('memes').innerHTML = Math.floor(meme);
+}
+
+function memeAutoClick(num) {
 	meme = meme + (num * lvl) + Math.floor(num * b),
-	document.getElementById('memes').innerHTML = meme;
+	document.getElementById('memes').innerHTML = Math.floor(meme);
 }
 
 //Функции покупки персонажей
@@ -220,25 +225,31 @@ function chkPepe(m) {
 //Округление числа
 
 function chkMeme(m) {
-	if (m >= 1000000) { m = Math.round(m / 1000000), document.getElementById('memes').innerHTML = m + "M" };
-	if (m >= 1000000000) { m = Math.round(m / 1000000000), document.getElementById('memes').innerHTML = m + "B" };
+	if (m >= 1000000) { m = Math.floor(m / 1000000), document.getElementById('memes').innerHTML = m + "M" };
+	if (m >= 1000000000) { m = Math.floor(m / 1000000000), document.getElementById('memes').innerHTML = m + "B" };
 }
 
 /* Блок асинхронных событий */
+
+window.setInterval(function(){
+	if (gameInProgress = true) {
+		chkPers(meme),
+		chkPrgrs(meme),
+		chkPepe(meme),
+		chkMeme(meme)
+	};
+}, 500);
 
 //Функция действий раз в секунду.
 
 window.setInterval(function(){
 	if(gameInProgress = true){
-		memeClick(upgds),
-		chkPers(meme)
-		chkPrgrs(meme)
-		chkPepe(meme)
-		chkMeme(meme)
+		memeAutoClick(upgds),
 		timeOut(meme, upgds)
 	};
 	document.getElementById('upg').innerHTML = Math.floor(upgds + (upgds * b));
-	document.getElementById('bns').innerHTML = b + '%';
+	document.getElementById('bns').innerHTML = b.toFixed(3) + '%';
+	document.getElementById('countMeme').innerHTML = Math.floor(1 + (1*lvl * (upgds * b)) + (upgds/2));
 }, 1000);
 
 //Функция автосохранения каждые 10 секунд.
