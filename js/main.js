@@ -32,8 +32,14 @@ var mtng = new bonus('Meeting');
 var jkCock = new bonus('Joke cock');
 var jkAss = new bonus('Joke ass');
 var plBotle = new bonus('Play bottle');
+var drink = new bonus('Drink');
+var lostFili = new bonus('Lost in Fili');
+var prazka	= new bonus('Prazka');
+var talkHS	= new bonus('Talk about Homestuck');
+var gribChannel = new bonus('Find way to Gribnoy Kanal');
+var battle = new bonus('Versus Battle');
 
-var bList = { mtng, jkCock, jkAss, plBotle };
+var bList = { mtng, jkCock, jkAss, plBotle, drink, lostFili, prazka, talkHS, gribChannel, battle};
 
 /* Блок конструктора бонусов */
 
@@ -62,7 +68,7 @@ function memePerson(name) {
 /* Блок игровых функций */
 
 function memeClick(num) {
-	meme = meme + (num * lvl),
+	meme = meme + (num * lvl) + Math.floor(num * b),
 	document.getElementById('memes').innerHTML = meme;
 }
 
@@ -104,7 +110,7 @@ function upgPerson() {
 			upgds = upgds + this.memesUpgProd;
 			meme = meme - this.upgCost;
 			this.upgCount++
-			this.upgCost = Math.floor(this.upgCost * Math.pow(2, this.upgCount));
+			this.upgCost = Math.floor(this.upgCost * Math.pow(3.5, this.upgCount));
 			document.getElementById('imgPerson' + this.namePerson).src="img/" + this.namePerson + (this.upgCount + 1) + ".png"; 
 			document.getElementById('upgCost' + this.namePerson).innerHTML = "Upgrade cost: " + this.upgCost; 
 		}
@@ -130,7 +136,7 @@ function buyBonus_(name){
 function buyBonus(){
 	if (meme >= this.bonusCost) {
 		b = b + this.bonusEffencive;
-		upgds = upgds + (Math.floor(upgds * b));
+		//upgds = upgds + (Math.floor(upgds * b));
 		meme = meme - this.bonusCost;
 		document.getElementById('buyBonus' + this.bonusNum).disabled = 'disabled';
 		this.bonusIsBuy = true;
@@ -142,7 +148,7 @@ function buyBonus(){
 function timeOut(meme, upgds) {
 	if (meme > 0 && upgds > 0){
 		p = winValue - meme;
-		sec_ = Math.floor(p / upgds);
+		sec_ = Math.floor(p / (upgds + Math.floor(upgds * b)));
 		if (sec_ > 0) { 
 			hours = (sec_ / 3600);
 			hours = parseInt(hours);
@@ -231,7 +237,8 @@ window.setInterval(function(){
 		chkMeme(meme)
 		timeOut(meme, upgds)
 	};
-	document.getElementById('upg').innerHTML = upgds;
+	document.getElementById('upg').innerHTML = Math.floor(upgds + (upgds * b));
+	document.getElementById('bns').innerHTML = b + '%';
 }, 1000);
 
 //Функция автосохранения каждые 10 секунд.
@@ -290,6 +297,36 @@ function initBonus(){
 	plBotle.bonusEffencive = 0.07;
 	plBotle.bonusCost = 3000;
 	bStyles.call(plBotle);
+
+	drink.bonusNum = 5;
+	drink.bonusEffencive = 0.09;
+	drink.bonusCost = 7000;
+	bStyles.call(drink);
+
+	lostFili.bonusNum = 6;
+	lostFili.bonusEffencive = 0.1;
+	lostFili.bonusCost = 10000;
+	bStyles.call(lostFili);
+
+	prazka.bonusNum = 7;
+	prazka.bonusEffencive = 0.12;
+	prazka.bonusCost = 15000;
+	bStyles.call(prazka);
+
+	talkHS.bonusNum = 8;
+	talkHS.bonusEffencive = 0.2;
+	talkHS.bonusCost = 30000;
+	bStyles.call(talkHS);
+
+	gribChannel.bonusNum = 9;
+	gribChannel.bonusEffencive = 0.25;
+	gribChannel.bonusCost = 50000;
+	bStyles.call(gribChannel);
+
+	battle.bonusNum = 10;
+	battle.bonusEffencive = 0.3;
+	battle.bonusCost = 100000;
+	bStyles.call(battle);
 }
 
 	
@@ -304,21 +341,21 @@ function initPersons(){ //Инициализация характеристик 
 		Jane.personNum = 2;
 		Jane.memesFirstProd = 15;
 		Jane.personCost = 100;
-		Jane.upgCost = 20;
+		Jane.upgCost = 50;
 		Jane.memesUpgProd = 25;
 		perCost.call(Jane);
 		
 		Basta.personNum = 3;
 		Basta.memesFirstProd = 25;
 		Basta.personCost = 1000;
-		Basta.upgCost = 100;
+		Basta.upgCost = 150;
 		Basta.memesUpgProd = 35;
 		perCost.call(Basta);
 		
 		Cali.personNum = 4;
 		Cali.memesFirstProd = 50;
 		Cali.personCost = 5000;
-		Cali.upgCost = 550;
+		Cali.upgCost = 600;
 		Cali.memesUpgProd = 100;
 		perCost.call(Cali);
 
@@ -342,7 +379,7 @@ function initStyles() { //Инициализация стилей у карти�
 }
 
 function bStyles () {
-	document.getElementById('costEf' + this.bonusNum).innerHTML = this.bonusCost; 
+	document.getElementById('costEf' + this.bonusNum).innerHTML = "Cost: " + this.bonusCost; 
 	document.getElementById('eF' + this.bonusNum).innerHTML = "+" + this.bonusEffencive;
 } 
 
@@ -370,6 +407,12 @@ function save() {
 		jkCock: jkCock,
 		jkAss: jkAss,
 		plBotle: plBotle,
+		drink: drink, 
+		lostFili: lostFili, 
+		prazka: prazka, 
+		talkHS: talkHS, 
+		gribChannel: gribChannel, 
+		battle: battle,
 		// Остальные значения
 		personList: personList,
 		pValue: pValue,
@@ -450,6 +493,30 @@ function load() {
 	if (savegame.plBotle.bonusIsBuy != false) {
 		plBotle = savegame.plBotle;
 		loadBonuses.call(plBotle);
+	}
+	if (savegame.drink.bonusIsBuy != false) {
+		drink = savegame.drink;
+		loadBonuses.call(drink);
+	}
+	if (savegame.lostFili.bonusIsBuy != false) {
+		lostFili = savegame.lostFili;
+		loadBonuses.call(lostFili);
+	}
+	if (savegame.prazka.bonusIsBuy != false) {
+		prazka = savegame.prazka;
+		loadBonuses.call(prazka);
+	}
+	if (savegame.talkHS.bonusIsBuy != false) {
+		talkHS = savegame.talkHS;
+		loadBonuses.call(talkHS);
+	}
+	if (savegame.gribChannel.bonusIsBuy != false) {
+		gribChannel = savegame.gribChannel;
+		loadBonuses.call(gribChannel);
+	}
+	if (savegame.battle.bonusIsBuy != false) {
+		battle = savegame.battle;
+		loadBonuses.call(battle);
 	}
 }
 
