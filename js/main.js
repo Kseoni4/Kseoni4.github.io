@@ -4,7 +4,7 @@
 
 var gameInProgress; //если равен true, то игра загружает сохранение. 
 
-var personList = ""; //строка приобретённных песонажей
+var personList = ""; //строка приобретённных  персонажей
 
 //переменные счетчиков
 
@@ -14,6 +14,7 @@ var pValue = 0; //Прогресс
 var winValue = 1000000; //Итоговая сумма
 //var winValue = Math.floor(Math.random() * 500000);
 var b = 0; //Бонус
+var lvl = 1; //Уровень
 
 //инициализация персонажей (глобальные объекты)
 
@@ -61,7 +62,7 @@ function memePerson(name) {
 /* Блок игровых функций */
 
 function memeClick(num) {
-	meme = meme + num,
+	meme = meme + (num * lvl),
 	document.getElementById('memes').innerHTML = meme;
 }
 
@@ -120,6 +121,8 @@ function upgPerson() {
 	}
 }
 
+// Функция покупки бонусов
+
 function buyBonus_(name){
 	buyBonus.call(name)
 }
@@ -127,7 +130,7 @@ function buyBonus_(name){
 function buyBonus(){
 	if (meme >= this.bonusCost) {
 		b = b + this.bonusEffencive;
-		upgds =  Math.floor(upgds * b);
+		upgds = upgds + (Math.floor(upgds * b));
 		meme = meme - this.bonusCost;
 		document.getElementById('buyBonus' + this.bonusNum).disabled = 'disabled';
 		this.bonusIsBuy = true;
@@ -265,25 +268,27 @@ function initGame() {				//Функция инициализации игры
 resumeGame();	
 };
 
+// Инициализация характеристик бонусов
+
 function initBonus(){
 	mtng.bonusNum = 1;
 	mtng.bonusEffencive = 0.01;
-	mtng.bonusCost = 1000;
+	mtng.bonusCost = 300;
 	bStyles.call(mtng);
 	
 	jkCock.bonusNum = 2;
 	jkCock.bonusEffencive = 0.05;
-	jkCock.bonusCost = 1500;
+	jkCock.bonusCost = 700;
 	bStyles.call(jkCock);
 	
 	jkAss.bonusNum = 3;
 	jkAss.bonusEffencive = 0.055;
-	jkAss.bonusCost = 2000;
+	jkAss.bonusCost = 1500;
 	bStyles.call(jkAss);
 	
 	plBotle.bonusNum = 4;
 	plBotle.bonusEffencive = 0.07;
-	plBotle.bonusCost = 5000;
+	plBotle.bonusCost = 3000;
 	bStyles.call(plBotle);
 }
 
@@ -349,17 +354,28 @@ function perCost() {
 function save() { 
 
 	var save = {
+		// Счётчики
 		meme: meme,
 		upgds: upgds,
+		b: b,
+		lvl: lvl,
+		// Персонажи
 		Keke: Keke,
 		Jane: Jane,
 		Basta: Basta,
 		Cali: Cali,
 		Oleg: Oleg,
+		// Бонусы
+		mtng: mtng,
+		jkCock: jkCock,
+		jkAss: jkAss,
+		plBotle: plBotle,
+		// Остальные значения
 		personList: personList,
 		pValue: pValue,
 		winValue: winValue,
-		pList: pList
+		pList: pList,
+		bList: bList
 		//Остальные переменные сюда
 		}
 	localStorage.setItem('save', JSON.stringify(save));
@@ -368,6 +384,9 @@ function save() {
 
 function load() {
 	var savegame = JSON.parse(localStorage.getItem("save"));
+	
+	/* Загружаем значения счётчиков */
+	
 	if (typeof savegame.meme != "undefined") {
 		meme = savegame.meme;
 		document.getElementById('memes').innerHTML = meme
@@ -375,6 +394,9 @@ function load() {
 	if (typeof savegame.upgds != "undefined") {
 		upgds = savegame.upgds;
 		document.getElementById('upg').innerHTML = upgds 
+		}
+	if (typeof savegame.b != "undefined") {
+		b = savegame.b;
 		}
 	if (typeof savegame.pValue != "undefined") {
 			pValue = savegame.pValue;
@@ -387,6 +409,9 @@ function load() {
 		personList = savegame.personList;
 		document.getElementById('personList').innerHTML = personList;
 		}	
+		
+	/* Загружаем персонажей */	
+	
 	if (savegame.Keke.personIsBuy != false) {
 		Keke = savegame.Keke;
 		loadPerson.call(Keke);
@@ -407,7 +432,32 @@ function load() {
 		Oleg = savegame.Oleg;
 		loadPerson.call(Oleg);
 		}
+		
+	/* Загружаем бонусы */
+	
+	if (savegame.mtng.bonusIsBuy != false) {
+		mtng = savegame.mtng;
+		loadBonuses.call(mtng);
+	}
+	if (savegame.jkCock.bonusIsBuy != false) {
+		jkCock = savegame.jkCock;
+		loadBonuses.call(jkCock);
+	}
+	if (savegame.jkAss.bonusIsBuy != false) {
+		jkAss = savegame.jkAss;
+		loadBonuses.call(jkAss);
+	}
+	if (savegame.plBotle.bonusIsBuy != false) {
+		plBotle = savegame.plBotle;
+		loadBonuses.call(plBotle);
+	}
 }
+
+function loadBonuses () {
+	document.getElementById('buyBonus' + this.bonusNum).disabled = 'disabled';
+	document.getElementById('costEf' + this.bonusNum).innerHTML = this.bonusCost; 
+	document.getElementById('eF' + this.bonusNum).innerHTML = "+" + this.bonusEffencive;
+} 
 
 function loadPerson(){
 		document.getElementById('buy' + this.namePerson).disabled = 'disabled';
