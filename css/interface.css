@@ -146,6 +146,10 @@ body {
 
 }
 
+.costEf{
+	font-size:12px;
+}
+
 #SaveLoadBtn {
 		float: left;
 		background-color: #4CAF50; /* Green */

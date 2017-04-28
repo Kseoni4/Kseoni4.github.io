@@ -13,6 +13,7 @@ var upgds = 0; //Мемы/cек
 var pValue = 0; //Прогресс
 var winValue = 1000000; //Итоговая сумма
 //var winValue = Math.floor(Math.random() * 500000);
+var b = 0; //Бонус
 
 //инициализация персонажей (глобальные объекты)
 
@@ -23,7 +24,27 @@ var Cali = new memePerson("Cali");
 var Oleg = new memePerson("Oleg");
 
 var pList = { Keke, Jane, Basta, Cali, Oleg };
-/* Блок конструктора и инициализации объектов персонажей */
+
+// инициализация бонусов (глобальные объекты)
+
+var mtng = new bonus('Meeting');
+var jkCock = new bonus('Joke cock');
+var jkAss = new bonus('Joke ass');
+var plBotle = new bonus('Play bottle');
+
+var bList = { mtng, jkCock, jkAss, plBotle };
+
+/* Блок конструктора бонусов */
+
+function bonus(name){
+	this.bonusNum = 0;
+	this.bonusName = name;
+	this.bonusEffencive = 1;
+	this.bonusCost = 1;
+	this.bonusIsBuy = false;
+}
+
+/* Блок конструктора объектов персонажей */
 
 function memePerson(name) {
 	this.personCost = 10;
@@ -78,11 +99,11 @@ function upgPerson_(person) {
 function upgPerson() {
 	if(this.upgCount < 4) { 	
 		if (meme >= this.upgCost) {
-			this.memesUpgProd = Math.floor(this.memesUpgProd * Math.pow(1.5, this.upgCount));		
+			this.memesUpgProd = Math.floor(this.memesUpgProd * Math.pow(1.3, this.upgCount));		
 			upgds = upgds + this.memesUpgProd;
 			meme = meme - this.upgCost;
 			this.upgCount++
-			this.upgCost = Math.floor(this.upgCost * Math.pow(3, this.upgCount));
+			this.upgCost = Math.floor(this.upgCost * Math.pow(2, this.upgCount));
 			document.getElementById('imgPerson' + this.namePerson).src="img/" + this.namePerson + (this.upgCount + 1) + ".png"; 
 			document.getElementById('upgCost' + this.namePerson).innerHTML = "Upgrade cost: " + this.upgCost; 
 		}
@@ -96,6 +117,20 @@ function upgPerson() {
 	}
 	if(this == undefined) {
 		return false;
+	}
+}
+
+function buyBonus_(name){
+	buyBonus.call(name)
+}
+
+function buyBonus(){
+	if (meme >= this.bonusCost) {
+		b = b + this.bonusEffencive;
+		upgds =  Math.floor(upgds * b);
+		meme = meme - this.bonusCost;
+		document.getElementById('buyBonus' + this.bonusNum).disabled = 'disabled';
+		this.bonusIsBuy = true;
 	}
 }
 
@@ -224,12 +259,35 @@ function initGame() {				//Функция инициализации игры
 		});
 		initPersons(); //Инициализация характеристик персонажей
 		initStyles();  //Инициализация стилей у картинок.	
+		initBonus();
 		gameInProgress = true;
 	}
 resumeGame();	
 };
-	
 
+function initBonus(){
+	mtng.bonusNum = 1;
+	mtng.bonusEffencive = 0.01;
+	mtng.bonusCost = 1000;
+	bStyles.call(mtng);
+	
+	jkCock.bonusNum = 2;
+	jkCock.bonusEffencive = 0.05;
+	jkCock.bonusCost = 1500;
+	bStyles.call(jkCock);
+	
+	jkAss.bonusNum = 3;
+	jkAss.bonusEffencive = 0.055;
+	jkAss.bonusCost = 2000;
+	bStyles.call(jkAss);
+	
+	plBotle.bonusNum = 4;
+	plBotle.bonusEffencive = 0.07;
+	plBotle.bonusCost = 5000;
+	bStyles.call(plBotle);
+}
+
+	
 function initPersons(){ //Инициализация характеристик персонажей
 		Keke.personNum = 1;
 		Keke.memesFirstProd = 1;
@@ -240,30 +298,30 @@ function initPersons(){ //Инициализация характеристик 
 
 		Jane.personNum = 2;
 		Jane.memesFirstProd = 15;
-		Jane.personCost = 300;
-		Jane.upgCost = 25;
-		Jane.memesUpgProd = 30;
+		Jane.personCost = 100;
+		Jane.upgCost = 20;
+		Jane.memesUpgProd = 25;
 		perCost.call(Jane);
 		
 		Basta.personNum = 3;
-		Basta.memesFirstProd = 50;
-		Basta.personCost = 3000;
-		Basta.upgCost = 400;
-		Basta.memesUpgProd = 150;
+		Basta.memesFirstProd = 25;
+		Basta.personCost = 1000;
+		Basta.upgCost = 100;
+		Basta.memesUpgProd = 35;
 		perCost.call(Basta);
 		
 		Cali.personNum = 4;
-		Cali.memesFirstProd = 100;
-		Cali.personCost = 9000;
-		Cali.upgCost = 1000;
-		Cali.memesUpgProd = 250;
+		Cali.memesFirstProd = 50;
+		Cali.personCost = 5000;
+		Cali.upgCost = 550;
+		Cali.memesUpgProd = 100;
 		perCost.call(Cali);
 
 		Oleg.personNum = 5;
-		Oleg.memesFirstProd = 550;
-		Oleg.personCost = 100000;
-		Oleg.upgCost = 3500;
-		Oleg.memesUpgProd = 1000;
+		Oleg.memesFirstProd = 300;
+		Oleg.personCost = 50000;
+		Oleg.upgCost = 1500;
+		Oleg.memesUpgProd = 350;
 		perCost.call(Oleg);
 
 		return true;
@@ -274,9 +332,15 @@ function initStyles() { //Инициализация стилей у карти�
 		document.getElementById('upgB' + i).style.display = 'none';	
 	}
 	for (var i in pList) {
-		document.getElementById('imgPerson' + i).style.WebkitFilter="grayscale(100%) blur(10px)";
+		document.getElementById('imgPerson' + i).style.WebkitFilter = "grayscale(100%) blur(10px)";
 	}
 }
+
+function bStyles () {
+	document.getElementById('costEf' + this.bonusNum).innerHTML = this.bonusCost; 
+	document.getElementById('eF' + this.bonusNum).innerHTML = "+" + this.bonusEffencive;
+} 
+
 
 function perCost() {
 			document.getElementById('upgCost' + this.namePerson).innerHTML = "Сost: " + this.personCost; 
