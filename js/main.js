@@ -36,10 +36,10 @@ var drink = new bonus('Drink');
 var lostFili = new bonus('Lost in Fili');
 var prazka	= new bonus('Prazka');
 var talkHS	= new bonus('Talk about Homestuck');
-var gribChannel = new bonus('Find way to Gribnoy Kanal');
+var GrebChannel = new bonus('Find way to Gribnoy Kanal');
 var battle = new bonus('Versus Battle');
 
-var bList = { mtng, jkCock, jkAss, plBotle, drink, lostFili, prazka, talkHS, gribChannel, battle};
+var bList = { mtng, jkCock, jkAss, plBotle, drink, lostFili, prazka, talkHS, GrebChannel, battle};
 
 /* Блок конструктора бонусов */
 
@@ -318,10 +318,10 @@ function initBonus(){
 	talkHS.bonusCost = 30000;
 	bStyles.call(talkHS);
 
-	gribChannel.bonusNum = 9;
-	gribChannel.bonusEffencive = 0.25;
-	gribChannel.bonusCost = 50000;
-	bStyles.call(gribChannel);
+	GrebChannel.bonusNum = 9;
+	GrebChannel.bonusEffencive = 0.25;
+	GrebChannel.bonusCost = 50000;
+	bStyles.call(GrebChannel);
 
 	battle.bonusNum = 10;
 	battle.bonusEffencive = 0.3;
@@ -411,7 +411,7 @@ function save() {
 		lostFili: lostFili, 
 		prazka: prazka, 
 		talkHS: talkHS, 
-		gribChannel: gribChannel, 
+		GrebChannel: GrebChannel, 
 		battle: battle,
 		// Остальные значения
 		personList: personList,
@@ -510,9 +510,9 @@ function load() {
 		talkHS = savegame.talkHS;
 		loadBonuses.call(talkHS);
 	}
-	if (savegame.gribChannel.bonusIsBuy != false) {
-		gribChannel = savegame.gribChannel;
-		loadBonuses.call(gribChannel);
+	if (savegame.GrebChannel.bonusIsBuy != false) {
+		GrebChannel = savegame.GrebChannel;
+		loadBonuses.call(GrebChannel);
 	}
 	if (savegame.battle.bonusIsBuy != false) {
 		battle = savegame.battle;
