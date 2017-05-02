@@ -25,39 +25,60 @@
 		</div>
 		<div class="row">
 			<div class="col-md-4"></div>
-			<div id="header" class="col-md-4"><h5>v.0.2:2804</h5></div>
+			<div id="header" class="col-md-4"><h5>v.0.2:2904</h5></div>
 			<div class="col-md-4"></div>	
 		</div>
 		
-	<!-- Блок счётчиков -->	
+	<!-- Блок счётчиков и бонусов -->	
 		
 		<div class="row">
-			<div class="col-md-3">
-				<p>Bonus upgrades</p>
-				<p style="font-size:12px">(improve meme produce on some %)</p>
-				<div class="btn-group">
-					<button class="btn btn-bonus btn-sm" id="buyBonus1" onClick='buyBonus_(mtng)'>Сходить на сходку <span id="eF1"></span></button><span class="costEf" id="costEf1"></span>
-				</div>
-				<div class="btn-group">
-					<button class="btn btn-sm" id="buyBonus2" onClick='buyBonus_(jkCock)'>Пошутить про кок <span id="eF2"></span></button><span class="costEf" id="costEf2"></span>
-				</div>
-				<div class="btn-group">
-					<button class="btn btn-sm" id="buyBonus3" onClick='buyBonus_(jkAss)'>Пошутить про очко <span id="eF3"></span></button><span class="costEf" id="costEf3"></span>
-				</div>	
-				<div class="btn-group">	
-					<button class="btn btn-sm" id="buyBonus4" onClick='buyBonus_(plBotle)'>Сыграть в бутылочку <span id="eF4"></span></button><span class="costEf" id="costEf4"></span>
-				</div>
-			</div>	
-			<div class="col-md-1"></div>
+			<div class="col-md-4"></div>
 			<div class="col-md-4">
 				<div id="counters">
 					<p> Memes: <span id="memes"></span>
 						Mem/s: <span id="upg"></span>
+						Bonus: <span id='bns'></span>
 						<br />
 					</p>
 					<p><span id="autosave" style="display: none"></span></p>	
 				</div>
 				<p>The persons that you have: <span id="personList"></span></p>
+					<p>Bonus upgrades</p>
+					<p style="font-size:12px">(improve meme produce for some %'s)</p>
+					<div class="col-md-2">
+					<div class="btn-group">
+						<button class="btn btn-bonus btn-sm" id="buyBonus1" onClick='buyBonus_(mtng)'>Сходить на сходку <span id="eF1"></span></button><span class="costEf" id="costEf1"></span>
+					</div> <br />
+					<div class="btn-group">
+						<button class="btn btn-sm" id="buyBonus2" onClick='buyBonus_(jkCock)'>Пошутить про кок <span id="eF2"></span></button><span class="costEf" id="costEf2"></span>
+					</div><br />
+					<div class="btn-group">
+						<button class="btn btn-sm" id="buyBonus3" onClick='buyBonus_(jkAss)'>Пошутить про очко <span id="eF3"></span></button><span class="costEf" id="costEf3"></span>
+					</div>	<br />
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus4" onClick='buyBonus_(plBotle)'>Сыграть в бутылочку <span id="eF4"></span></button><span class="costEf" id="costEf4"></span>
+					</div> <br />
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus5" onClick='buyBonus_(drink)'>Выпить бухлишка <span id="eF5"></span></button><span class="costEf" id="costEf5"></span>
+					</div> <br />
+					</div>
+					<div class="col-md-2" style="margin-left: 20%">
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus6" onClick='buyBonus_(lostFili)'>Заблудиться в Филях<span id="eF6"></span></button><span class="costEf" id="costEf6"></span>
+					</div> <br />
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus7" onClick='buyBonus_(prazka)'>Поныть про Пражку<span id="eF7"></span></button><span class="costEf" id="costEf7"></span>
+					</div> <br />
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus8" onClick='buyBonus_(talkHS)'>Поговорить про Хоумстак<span id="eF8"></span></button><span class="costEf" id="costEf8"></span>
+					</div> <br />
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus9" onClick='buyBonus_(GrebChannel)'>Найти дорогу к Гребному каналу<span id="eF9"></span></button><span class="costEf" id="costEf9"></span>
+					</div> <br />
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus10" onClick='buyBonus_(battle)'>Устроить баттл на сходке<span id="eF10"></span></button><span class="costEf" id="costEf10"></span>
+					</div>
+				</div>
 			</div>
 			<div class="col-md-4"></div>
 			<img class="img-responsive" id="pepe" src="img/1.png"></img>
@@ -78,7 +99,7 @@
 		<div class="row">
 			<div class="col-md-4"></div>
 			<div class="col-md-4">
-				<button id='memeClick' class="btn btn-primary btn-lg" onClick="memeClick(1)">Click to produce meme</button>
+				<button id='memeClick' class="btn btn-primary btn-lg" onClick="memeClick(1)">Click to produce meme: <span id='countMeme'></span></button>
 			</div>
 			<div class="col-md-4"></div>
 		</div>	
@@ -174,6 +195,7 @@
 					<br />
 				<p style="font-size:20px">Change log (список изменений - лндск.):</p>
 					<textarea id="cLog" rows="20" cols="55" readonly style="font-size:16px">
+	[28.04.2017] В этой версии изменил характеристики персонажей и добавил бонусные улучшения, который увелчивают на опеределённый процент скорость генерации мемов. Предварительно сделал файл с расчётами, с помощью которых мне теперь удобнее разрабатывать игру и искать оптимальные значения характеристик персонажей.  
 	[26.04.2017] Пора запускать в продакш, но прежде, надо добавить лягушонка Пепе, которого игрок должен "осчастливить" мемами. Такая вот незамысловатая идея для кликера. Чем больше мемов, тем счастливее выглядит Пепе. Хотя, конечно, в планах есть усложнить игру и добавить систему уровней. Уровень будет являться дополнительным множителем для получения мемов. А ещё необходимо сокращать большие числа, начиная с миллионов. Например: 1000000 = 1М и так далее. 
 	[25.04.2017] Довёл до ума прогрессбар, привёл в порядок директорию и разложил стили и скрипты по папочкам.
 Так же добавил таймер, чтобы смотреть сколько времени уходит на получение максимальной суммы в зависимости от значений генерации валюты у героев. 
