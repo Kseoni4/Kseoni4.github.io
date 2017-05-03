@@ -67,14 +67,28 @@ function memePerson(name) {
 
 /* Блок игровых функций */
 
-function memeClick(num) {
+function memeClick(num) { // Обычное нажатие
 	meme = meme + num + ((num * lvl) * Math.floor(upgds * b) + (upgds/2)),
 	document.getElementById('memes').innerHTML = Math.floor(meme);
 }
 
-function memeAutoClick(num) {
+function memeAutoClick(num) { // Автонажатие
 	meme = meme + (num * lvl) + Math.floor(num * b),
 	document.getElementById('memes').innerHTML = Math.floor(meme);
+}
+
+
+function nextLevel() {
+	if (meme >= winValue) {
+		gameInProgress = false;
+		meme = 0;
+		upgrds = 0;
+		b = 0;
+		lvl++;
+		winValue = 50000000;
+		initGame();
+		return true;
+	}
 }
 
 //Функции покупки персонажей
@@ -229,6 +243,12 @@ function chkMeme(m) {
 	if (m >= 1000000000) { m = Math.floor(m / 1000000000), document.getElementById('memes').innerHTML = m + "B" };
 }
 
+function chkLvl(m) {
+	if (m >= winValue) { document.getElementById('nxtLvl').disabled = '';
+	document.getElementById('nxtLvl').style.display = '';
+	}
+}
+
 /* Блок асинхронных событий */
 
 window.setInterval(function(){
@@ -237,6 +257,7 @@ window.setInterval(function(){
 		chkPrgrs(meme),
 		chkPepe(meme),
 		chkMeme(meme)
+		chkLvl(meme);
 	};
 }, 500);
 
@@ -275,12 +296,14 @@ function initGame() {				//Функция инициализации игры
 	if (!gameInProgress) {			//Если флаг уже начатой игры равен false, то загрузить начальные значения счетчиков.
 		document.getElementById('upg').innerHTML = upgds,
 		document.getElementById('memes').innerHTML = meme,
+		document.getElementById('lvl').innerHTML = lvl,
+		document.getElementById('nxtLvl').disabled = 'disabled',
 		$(document).ready(function(){
 			$('.progress-bar').attr('aria-valuemax', winValue);
 		});
-		initPersons(); //Инициализация характеристик персонажей
-		initStyles();  //Инициализация стилей у картинок.	
-		initBonus();
+		initPersons(); // Инициализация характеристик персонажей
+		initStyles();  // Инициализация стилей у картинок.	
+		initBonus(); // Инициализация бонусов
 		gameInProgress = true;
 	}
 resumeGame();	
@@ -346,35 +369,35 @@ function initPersons(){ //Инициализация характеристик 
 		Keke.memesFirstProd = 1;
 		Keke.personCost = 10;
 		Keke.upgCost = 15;
-		Keke.memesUpgProd = 5;
+		Keke.memesUpgProd = Keke.memesFirstProd * 5;
 		perCost.call(Keke);
 
 		Jane.personNum = 2;
 		Jane.memesFirstProd = 15;
 		Jane.personCost = 100;
 		Jane.upgCost = 50;
-		Jane.memesUpgProd = 25;
+		Jane.memesUpgProd = Jane.memesFirstProd * 5;
 		perCost.call(Jane);
 		
 		Basta.personNum = 3;
 		Basta.memesFirstProd = 25;
 		Basta.personCost = 1000;
 		Basta.upgCost = 150;
-		Basta.memesUpgProd = 35;
+		Basta.memesUpgProd = Basta.memesFirstProd * 5;
 		perCost.call(Basta);
 		
 		Cali.personNum = 4;
 		Cali.memesFirstProd = 50;
 		Cali.personCost = 5000;
 		Cali.upgCost = 600;
-		Cali.memesUpgProd = 100;
+		Cali.memesUpgProd = Cali.memesFirstProd * 5;
 		perCost.call(Cali);
 
 		Oleg.personNum = 5;
-		Oleg.memesFirstProd = 300;
-		Oleg.personCost = 50000;
+		Oleg.memesFirstProd = 100;
+		Oleg.personCost = 30000;
 		Oleg.upgCost = 1500;
-		Oleg.memesUpgProd = 350;
+		Oleg.memesUpgProd = Oleg.memesFirstProd * 5;
 		perCost.call(Oleg);
 
 		return true;

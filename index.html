@@ -35,50 +35,18 @@
 			<div class="col-md-4"></div>
 			<div class="col-md-4">
 				<div id="counters">
-					<p> Memes: <span id="memes"></span>
+					<p> 
+						Level: <span id="lvl"></span>
+						Memes: <span id="memes"></span>
 						Mem/s: <span id="upg"></span>
 						Bonus: <span id='bns'></span>
 						<br />
 					</p>
 					<p><span id="autosave" style="display: none"></span></p>	
 				</div>
-				<p>The persons that you have: <span id="personList"></span></p>
+					<p>The persons that you have: <span id="personList"></span></p>
 					<p>Bonus upgrades</p>
 					<p style="font-size:12px">(improve meme produce for some %'s)</p>
-					<div class="col-md-2">
-					<div class="btn-group">
-						<button class="btn btn-bonus btn-sm" id="buyBonus1" onClick='buyBonus_(mtng)'>Сходить на сходку <span id="eF1"></span></button><span class="costEf" id="costEf1"></span>
-					</div> <br />
-					<div class="btn-group">
-						<button class="btn btn-sm" id="buyBonus2" onClick='buyBonus_(jkCock)'>Пошутить про кок <span id="eF2"></span></button><span class="costEf" id="costEf2"></span>
-					</div><br />
-					<div class="btn-group">
-						<button class="btn btn-sm" id="buyBonus3" onClick='buyBonus_(jkAss)'>Пошутить про очко <span id="eF3"></span></button><span class="costEf" id="costEf3"></span>
-					</div>	<br />
-					<div class="btn-group">	
-						<button class="btn btn-sm" id="buyBonus4" onClick='buyBonus_(plBotle)'>Сыграть в бутылочку <span id="eF4"></span></button><span class="costEf" id="costEf4"></span>
-					</div> <br />
-					<div class="btn-group">	
-						<button class="btn btn-sm" id="buyBonus5" onClick='buyBonus_(drink)'>Выпить бухлишка <span id="eF5"></span></button><span class="costEf" id="costEf5"></span>
-					</div> <br />
-					</div>
-					<div class="col-md-2" style="margin-left: 20%">
-					<div class="btn-group">	
-						<button class="btn btn-sm" id="buyBonus6" onClick='buyBonus_(lostFili)'>Заблудиться в Филях<span id="eF6"></span></button><span class="costEf" id="costEf6"></span>
-					</div> <br />
-					<div class="btn-group">	
-						<button class="btn btn-sm" id="buyBonus7" onClick='buyBonus_(prazka)'>Поныть про Пражку<span id="eF7"></span></button><span class="costEf" id="costEf7"></span>
-					</div> <br />
-					<div class="btn-group">	
-						<button class="btn btn-sm" id="buyBonus8" onClick='buyBonus_(talkHS)'>Поговорить про Хоумстак<span id="eF8"></span></button><span class="costEf" id="costEf8"></span>
-					</div> <br />
-					<div class="btn-group">	
-						<button class="btn btn-sm" id="buyBonus9" onClick='buyBonus_(GrebChannel)'>Найти дорогу к Гребному каналу<span id="eF9"></span></button><span class="costEf" id="costEf9"></span>
-					</div> <br />
-					<div class="btn-group">	
-						<button class="btn btn-sm" id="buyBonus10" onClick='buyBonus_(battle)'>Устроить баттл на сходке<span id="eF10"></span></button><span class="costEf" id="costEf10"></span>
-					</div>
-				</div>
 			</div>
 			<div class="col-md-4"></div>
 			<img class="img-responsive" id="pepe" src="img/1.png"></img>
@@ -98,22 +66,54 @@
 	
 		<div class="row">
 			<div class="col-md-4"></div>
-			<div class="col-md-4">
-				<button id='memeClick' class="btn btn-primary btn-lg" onClick="memeClick(1)">Click to produce meme: <span id='countMeme'></span></button>
+			<div class="col-md-8">
+				<div class="btn-group">
+					<button id='memeClick' class="btn btn-primary btn-lg" onClick="memeClick(1)">Click to produce meme: <span id='countMeme'></span></button>
+				</div>
+				<div class="btn-group" style="margin-left: 60px">
+					<button id='nxtLvl' class="btn btn-default btn-lg" onClick="nextLevel()">Go to the next level!</button>
+				</div>
 			</div>
-			<div class="col-md-4"></div>
 		</div>	
+	<div class="row">
+		<div class="col-md-12"> 
+			<div class="btn-group-vertical">
+				<button type="button" class="btn btn-bonus btn-sm" id="buyBonus1" onClick='buyBonus_(mtng)'>Сходить на сходку <span id="eF1"></span></button><span class="costEf" id="costEf1"></span>
+				<button class="btn btn-sm" id="buyBonus2" onClick='buyBonus_(jkCock)'>Пошутить про кок <span id="eF2"></span></button><span class="costEf" id="costEf2"></span>
+
+			</div>
+			<div class="btn-group-vertical">
+				<button class="btn btn-sm" id="buyBonus3" onClick='buyBonus_(jkAss)'>Пошутить про очко <span id="eF3"></span></button><span class="costEf" id="costEf3"></span>
+				<button class="btn btn-sm" id="buyBonus4" onClick='buyBonus_(plBotle)'>Сыграть в бутылочку <span id="eF4"></span></button><span class="costEf" id="costEf4"></span>
+			</div>
+			<div class="btn-group-vertical">
+				<button class="btn btn-sm" id="buyBonus5" onClick='buyBonus_(drink)'>Выпить бухлишка <span id="eF5"></span></button><span class="costEf" id="costEf5"></span>
+				<button class="btn btn-sm" id="buyBonus6" onClick='buyBonus_(lostFili)'>Заблудиться в Филях<span id="eF6"></span></button><span class="costEf" id="costEf6"></span>
+			</div>
+			<div class="btn-group-vertical">
+				<button class="btn btn-sm" id="buyBonus7" onClick='buyBonus_(prazka)'>Поныть про Пражку<span id="eF7"></span></button><span class="costEf" id="costEf7"></span>
+				<button class="btn btn-sm" id="buyBonus8" onClick='buyBonus_(talkHS)'>Поговорить про Хоумстак<span id="eF8"></span></button><span class="costEf" id="costEf8"></span>
+			</div> 
+			<div class="btn-group-vertical">
+				<button class="btn btn-sm" id="buyBonus9" onClick='buyBonus_(GrebChannel)'>Найти дорогу к Гребному каналу<span id="eF9"></span></button><span class="costEf" id="costEf9"></span>	
+				<button class="btn btn-sm" id="buyBonus10" onClick='buyBonus_(battle)'>Устроить баттл на сходке<span id="eF10"></span></button><span class="costEf" id="costEf10"></span>
+			</div>
+		</div>
+	</div>
+	
 	
 	<!-- Persons block -->
 	
 		<div class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-8">
+			<div class="col-md-4">
 				<h2>Persons</h2>
 				<h5>(they will make memes automaticly)</h5>
-
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
 					<!-- Keke -->
-					
+				<div=class="btn-group-vertical">	
 					<div class="btn-group" style="margin-left: -1px">
 						<div class="btn-group" >
 							<button id="buyKeke" class="btn btn-default" onClick="buyPerson_(Keke)" ><img id='imgPersonKeke' class="img-rounded img-responsive" src="img/Keke1.png" title="Cost: 10 Memes"></img></button>
@@ -123,7 +123,6 @@
 						</div>
 					<span id="upgCostKeke"></span>
 					<br />
-
 					<!-- Jane -->
 
 					<div class="btn-group" style="margin-left: -1px">
@@ -170,11 +169,21 @@
 						</div>
 						<div class="btn-group" style="margin-left: -1px">
 							<button id="upgB5" class="btn btn-default" onClick="upgPerson_(Oleg)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
-						</div>
+					</div>
 					<span id="upgCostOleg"></span>
+				<br />
+			</div>
+			<div class="col-md-4">
+				<div class="btn-group">
+						<div class="btn-group" >
+							<button id="buyBasta" class="btn btn-default" onClick="buyPerson_(Basta)" ><img id='imgPersonBasta' class="img-rounded img-responsive" src="img/Basta1.png" title="Cost: 100 Memes"></img></button>
+						</div>
+						<div class="btn-group" style="margin-left: -1px">
+							<button id="upgB3" class="btn btn-default" onClick="upgPerson_(Basta)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
+						</div>
+					</div>	
+					<span id="upgCostBasta"></span>
 					<br />
-
-
 			</div>
 		</div>
 		<div class="container">
@@ -221,5 +230,41 @@
 		<script>
 			initGame();
 		</script>
+		
+<!-- 
+	<div class="btn-group">
+						<button class="btn btn-bonus btn-sm" id="buyBonus1" onClick='buyBonus_(mtng)'>Сходить на сходку <span id="eF1"></span></button><span class="costEf" id="costEf1"></span>
+					
+					<div class="btn-group">
+						<button class="btn btn-sm" id="buyBonus2" onClick='buyBonus_(jkCock)'>Пошутить про кок <span id="eF2"></span></button><span class="costEf" id="costEf2"></span>
+					</div><br />
+					<div class="btn-group">
+						<button class="btn btn-sm" id="buyBonus3" onClick='buyBonus_(jkAss)'>Пошутить про очко <span id="eF3"></span></button><span class="costEf" id="costEf3"></span>
+					</div>	
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus4" onClick='buyBonus_(plBotle)'>Сыграть в бутылочку <span id="eF4"></span></button><span class="costEf" id="costEf4"></span>
+					</div> 
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus5" onClick='buyBonus_(drink)'>Выпить бухлишка <span id="eF5"></span></button><span class="costEf" id="costEf5"></span>
+					</div> 
+					</div>
+					<div class="col-md-2" style="margin-left: 20%">
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus6" onClick='buyBonus_(lostFili)'>Заблудиться в Филях<span id="eF6"></span></button><span class="costEf" id="costEf6"></span>
+					</div> 
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus7" onClick='buyBonus_(prazka)'>Поныть про Пражку<span id="eF7"></span></button><span class="costEf" id="costEf7"></span>
+					</div> 
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus8" onClick='buyBonus_(talkHS)'>Поговорить про Хоумстак<span id="eF8"></span></button><span class="costEf" id="costEf8"></span>
+					</div> 
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus9" onClick='buyBonus_(GrebChannel)'>Найти дорогу к Гребному каналу<span id="eF9"></span></button><span class="costEf" id="costEf9"></span>
+					</div> 
+					<div class="btn-group">	
+						<button class="btn btn-sm" id="buyBonus10" onClick='buyBonus_(battle)'>Устроить баттл на сходке<span id="eF10"></span></button><span class="costEf" id="costEf10"></span>
+					</div>
+				</div>
+-->
 	</body>
 </html>
