@@ -86,7 +86,7 @@ function nextLevel() {
 	if (meme >= 100) {
 		gameInProgress = false;
 		meme = 0;
-		upgrds = 0;
+		upgds = 0;
 		b = 0;
 		n = 0;
 		lvl++;
@@ -251,7 +251,7 @@ function chkMeme(m) {
 }
 
 function chkLvl(m) {
-	if (m >= winValue) { document.getElementById('nxtLvl').disabled = '';
+	if (m >= 100) { document.getElementById('nxtLvl').disabled = '';
 	document.getElementById('nxtLvl').style.display = '';
 	}
 }
@@ -276,7 +276,7 @@ window.setInterval(function(){
 		timeOut(meme, upgds)
 	};
 	document.getElementById('lvl').innerHTML = lvl;
-	document.getElementById('upg').innerHTML = Math.floor(upgds + (upgds * b));
+	document.getElementById('upg').innerHTML = Math.floor(upgds + (upgds * b)) * lvl;
 	document.getElementById('bns').innerHTML = b.toFixed(3) + '%';
 	document.getElementById('countMeme').innerHTML = Math.floor(1 + (((1*lvl) * (upgds * b)) + (upgds/2)));
 }, 1000);
@@ -307,15 +307,16 @@ function initGame() {				// Функция инициализации игры
 		document.getElementById('memes').innerHTML = meme,
 		document.getElementById('lvl').innerHTML = lvl,
 		document.getElementById('nxtLvl').disabled = 'disabled',
+		personList = '';
 		$(document).ready(function(){
 			$('.progress-bar').attr('aria-valuemax', winValue);
 		});
 		initPersons(); // Инициализация характеристик персонажей
 		initStyles();  // Инициализация стилей у картинок.	
-		initBonus(); // Инициализация бонусов
+		//initBonus(); // Инициализация бонусов
 		gameInProgress = true;
 	}
-	resumeGame();
+	if(!resumeGame()) { save(); }
 };
 
 // Инициализация характеристик бонусов
@@ -429,6 +430,7 @@ function bStyles () {
 
 
 function perCost() {
+			this.personIsBuy = false;
 			document.getElementById('upgCost' + this.namePerson).innerHTML = "Сost: " + this.personCost; 
 		}
 
@@ -490,6 +492,7 @@ function load() {
 		}
 	if (typeof savegame.lvl != "undefined") {
 		lvl = savegame.lvl;
+		loadLvls(lvl);
 		}
 	if (typeof savegame.n != "undefined"){
 		n = savegame.n;
@@ -570,6 +573,12 @@ function load() {
 	if (savegame.battle.bonusIsBuy != false) {
 		battle = savegame.battle;
 		loadBonuses.call(battle);
+	}
+}
+
+function loadLvls (lvl) {
+	for (var i = 1; i <= lvl; i++) {
+		document.getElementById('lvl'+ lvl).disabled = '';
 	}
 }
 

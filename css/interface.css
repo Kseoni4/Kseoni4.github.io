@@ -17,6 +17,10 @@ body {
 	border: none;
 }
 
+#timeleft {
+	font-size: 18px;
+}
+
 #rightBlock {
 }
 #clBlock {
@@ -141,6 +145,10 @@ body {
 	font-size: 18px;
 	color: white;
 	background-color: #00FF00;
+}
+#nxtLvl:disabled {
+	filter: alpha(opacity=15);
+  opacity: .15;
 }
 
 #memeClick {
