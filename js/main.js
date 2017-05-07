@@ -2,7 +2,7 @@
 
 //"флаг" начатой игры
 
-var gameInProgress; //если равен true, то игра загружает сохранение. 
+var gameInProgress = false; //если равен true, то игра загружает сохранение. 
 
 var personList = ""; //строка приобретённных  персонажей
 
@@ -11,6 +11,7 @@ var personList = ""; //строка приобретённных  персона
 var meme = 0; //Мемы
 var upgds = 0; //Мемы/cек
 var pValue = 0; //Прогресс
+var n = 0;
 var winValue = 1000000; //Итоговая сумма
 //var winValue = Math.floor(Math.random() * 500000);
 var b = 0; //Бонус
@@ -39,7 +40,7 @@ var talkHS	= new bonus('Talk about Homestuck');
 var GrebChannel = new bonus('Find way to Gribnoy Kanal');
 var battle = new bonus('Versus Battle');
 
-var bList = { mtng, jkCock, jkAss, plBotle, drink, lostFili, prazka, talkHS, GrebChannel, battle};
+var bList = { mtng, jkCock, jkAss, plBotle, drink, lostFili, prazka, talkHS, GrebChannel, battle };
 
 /* Блок конструктора бонусов */
 
@@ -68,24 +69,30 @@ function memePerson(name) {
 /* Блок игровых функций */
 
 function memeClick(num) { // Обычное нажатие
-	meme = meme + num + ((num * lvl) * Math.floor(upgds * b) + (upgds/2)),
+	n = ((num * lvl) * Math.floor(upgds * b) + (upgds/2));
+	if (n <= 0) {n = 1};
+	meme = meme + num * n;
 	document.getElementById('memes').innerHTML = Math.floor(meme);
 }
 
 function memeAutoClick(num) { // Автонажатие
-	meme = meme + (num * lvl) + Math.floor(num * b),
+	n = (num * lvl) + Math.floor(num * b);
+	meme = meme + n;
 	document.getElementById('memes').innerHTML = Math.floor(meme);
 }
 
 
 function nextLevel() {
-	if (meme >= winValue) {
+	if (meme >= 100) {
 		gameInProgress = false;
 		meme = 0;
 		upgrds = 0;
 		b = 0;
+		n = 0;
 		lvl++;
+		document.getElementById('lvl'+ lvl).disabled = '';
 		winValue = 50000000;
+		save();
 		initGame();
 		return true;
 	}
@@ -105,7 +112,7 @@ function buyPerson() {
 		//this.upgCost = Math.floor(10 * Math.pow(1.1, this.upgCount));
 		document.getElementById('upg').innerHTML = this.memesFirstProd;
 		document.getElementById('upgCost' + this.namePerson).innerHTML = "Update cost: " + this.upgCost;
-		document.getElementById('upgB' + this.personNum).style.display = '',
+		document.getElementById('upgB' + this.personNum).style.display = '';
 		document.getElementById('upgB' + this.personNum).style.display = 'inline';
 		document.getElementById('personList').innerHTML = personList;
 		document.getElementById('buy' + this.namePerson).disabled = 'disabled';
@@ -268,9 +275,10 @@ window.setInterval(function(){
 		memeAutoClick(upgds),
 		timeOut(meme, upgds)
 	};
+	document.getElementById('lvl').innerHTML = lvl;
 	document.getElementById('upg').innerHTML = Math.floor(upgds + (upgds * b));
 	document.getElementById('bns').innerHTML = b.toFixed(3) + '%';
-	document.getElementById('countMeme').innerHTML = Math.floor(1 + (1*lvl * (upgds * b)) + (upgds/2));
+	document.getElementById('countMeme').innerHTML = Math.floor(1 + (((1*lvl) * (upgds * b)) + (upgds/2)));
 }, 1000);
 
 //Функция автосохранения каждые 10 секунд.
@@ -292,8 +300,9 @@ window.setInterval(function(){
 
 /* Блок системных функций */
 
-function initGame() {				//Функция инициализации игры
-	if (!gameInProgress) {			//Если флаг уже начатой игры равен false, то загрузить начальные значения счетчиков.
+function initGame() {				// Функция инициализации игры
+	gameInProgress = (localStorage['check.gameInProgress'] == "true");
+	if (!gameInProgress) {			// Если флаг уже начатой игры равен false, то загрузить начальные значения счетчиков.
 		document.getElementById('upg').innerHTML = upgds,
 		document.getElementById('memes').innerHTML = meme,
 		document.getElementById('lvl').innerHTML = lvl,
@@ -306,7 +315,7 @@ function initGame() {				//Функция инициализации игры
 		initBonus(); // Инициализация бонусов
 		gameInProgress = true;
 	}
-resumeGame();	
+	resumeGame();
 };
 
 // Инициализация характеристик бонусов
@@ -399,8 +408,6 @@ function initPersons(){ //Инициализация характеристик 
 		Oleg.upgCost = 1500;
 		Oleg.memesUpgProd = Oleg.memesFirstProd * 5;
 		perCost.call(Oleg);
-
-		return true;
 }
 
 function initStyles() { //Инициализация стилей у картинок
@@ -409,6 +416,9 @@ function initStyles() { //Инициализация стилей у карти�
 	}
 	for (var i in pList) {
 		document.getElementById('imgPerson' + i).style.WebkitFilter = "grayscale(100%) blur(10px)";
+	}
+	if (meme < winValue) {
+	document.getElementById('nxtLvl').disabled = 'disabled';
 	}
 }
 
@@ -430,6 +440,7 @@ function save() {
 		upgds: upgds,
 		b: b,
 		lvl: lvl,
+		n: n,
 		// Персонажи
 		Keke: Keke,
 		Jane: Jane,
@@ -452,7 +463,7 @@ function save() {
 		pValue: pValue,
 		winValue: winValue,
 		pList: pList,
-		bList: bList
+		bList: bList,
 		//Остальные переменные сюда
 		}
 	localStorage.setItem('save', JSON.stringify(save));
@@ -461,8 +472,10 @@ function save() {
 
 function load() {
 	var savegame = JSON.parse(localStorage.getItem("save"));
-	
 	/* Загружаем значения счётчиков */
+	initPersons();
+	//initBonus();
+	initStyles();
 	
 	if (typeof savegame.meme != "undefined") {
 		meme = savegame.meme;
@@ -474,6 +487,12 @@ function load() {
 		}
 	if (typeof savegame.b != "undefined") {
 		b = savegame.b;
+		}
+	if (typeof savegame.lvl != "undefined") {
+		lvl = savegame.lvl;
+		}
+	if (typeof savegame.n != "undefined"){
+		n = savegame.n;
 		}
 	if (typeof savegame.pValue != "undefined") {
 			pValue = savegame.pValue;
@@ -582,6 +601,7 @@ function resumeGame() {
 
 function removeSave() {
 	localStorage.removeItem("save");
+	localStorage.removeItem('check.gameInProgress');
 }
 
 
