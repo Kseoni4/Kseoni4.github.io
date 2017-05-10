@@ -6,6 +6,13 @@ var gameInProgress = false; //если равен true, то игра загру
 
 var personList = ""; //строка приобретённных  персонажей
 
+// Коэффициенты
+
+var cP = 1.5; // Коэффициент производства
+var cUpg = 3; // Коэффициент стоимости улучшения
+var cSP = 2.5; // Коэффициент возрастания производства
+var cUpgFirstCost = 1.3; // Коэффициент стоимости первичного улучшения
+
 //переменные счетчиков
 
 var meme = 0; //Мемы
@@ -91,8 +98,8 @@ function nextLevel() {
 		n = 0;
 		lvl++;
 		document.getElementById('lvl'+ lvl).disabled = '';
-		winValue = 50000000;
 		save();
+		initLevel(lvl);
 		initGame();
 		return true;
 	}
@@ -130,27 +137,32 @@ function upgPerson_(person) {
 	}
 
 function upgPerson() {
-	if(this.upgCount < 4) { 	
-		if (meme >= this.upgCost) {
-			this.memesUpgProd = Math.floor(this.memesUpgProd * Math.pow(1.3, this.upgCount));		
-			upgds = upgds + this.memesUpgProd;
+	if (meme >= this.upgCost) {
+		if(this.upgCount < 4) {
+			if (this.upgCount == 0) {
+				upgds = upgds + this.memesUpgProd; 
+			}
+			else {
+				this.memesUpgProd = Math.floor(this.memesUpgProd * Math.pow(cP, this.upgCount)); 
+				upgds = upgds + this.memesUpgProd; 
+			}	
 			meme = meme - this.upgCost;
-			this.upgCount++
-			this.upgCost = Math.floor(this.upgCost * Math.pow(3.5, this.upgCount));
+			this.upgCount++;
+			this.upgCost = Math.floor(this.upgCost * Math.pow(cUpg, this.upgCount));
+			if (this.upgCount == 3) { 
+				document.getElementById('upgB' + this.personNum).style.display = 'none',
+				document.getElementById('upgCost' + this.namePerson).innerHTML = this.namePerson + " " + 'in final form!';
+				document.getElementById('imgPerson' + this.namePerson).src="img/" + this.namePerson + "3.png"; 
+				document.getElementById('buy' + this.namePerson).style.opacity = 1;
+				return true;
+			}
 			document.getElementById('imgPerson' + this.namePerson).src="img/" + this.namePerson + (this.upgCount + 1) + ".png"; 
-			document.getElementById('upgCost' + this.namePerson).innerHTML = "Upgrade cost: " + this.upgCost; 
+			document.getElementById('upgCost' + this.namePerson).innerHTML = "Upgrade cost: " + this.upgCost;
+			if (this == undefined) {
+			return false;
+			}
 		}
-		if (this.upgCount == 3) { 
-			document.getElementById('upgB' + this.personNum).style.display = 'none',
-			document.getElementById('upgCost' + this.namePerson).innerHTML = this.namePerson + " " + 'in final form!';
-			document.getElementById('imgPerson' + this.namePerson).src="img/" + this.namePerson + "3.png"; 
-			document.getElementById('buy' + this.namePerson).style.opacity = 1;
-		}
-		return true;
-	}
-	if(this == undefined) {
-		return false;
-	}
+	}	
 }
 
 // Функция покупки бонусов
@@ -194,14 +206,14 @@ function timeOut(meme, upgds) {
 //Функция рассчёта прогресс-бара
 
 function chkPrgrs(m) {
-	if (m > 0) {
+	if (m => 0) {
 		pValue = m,
 		pValue = ((pValue / winValue) * 100)
 		if (pValue <= 100 && m <= winValue){
 			$(document).ready(function(){
 				$('.progress-bar').css('width', pValue+'%').attr('aria-valuenow', pValue);
 			});
-			document.getElementById('prgs').innerHTML = m + "/" + winValue;
+			document.getElementById('prgs').innerHTML = Math.floor(m) + "/" + winValue;
 		}
 		if (pValue >= 100 ){	
 			document.getElementById('prgs').innerHTML = winValue + "/" + winValue;
@@ -251,7 +263,7 @@ function chkMeme(m) {
 }
 
 function chkLvl(m) {
-	if (m >= 100) { document.getElementById('nxtLvl').disabled = '';
+	if (m >= winValue) { document.getElementById('nxtLvl').disabled = '';
 	document.getElementById('nxtLvl').style.display = '';
 	}
 }
@@ -263,10 +275,10 @@ window.setInterval(function(){
 		chkPers(meme),
 		chkPrgrs(meme),
 		chkPepe(meme),
-		chkMeme(meme)
+		chkMeme(meme),
 		chkLvl(meme);
 	};
-}, 500);
+}, 100);
 
 //Функция действий раз в секунду.
 
@@ -276,7 +288,7 @@ window.setInterval(function(){
 		timeOut(meme, upgds)
 	};
 	document.getElementById('lvl').innerHTML = lvl;
-	document.getElementById('upg').innerHTML = Math.floor(upgds + (upgds * b)) * lvl;
+	document.getElementById('upg').innerHTML = Math.round(upgds + (upgds * b)) * lvl;
 	document.getElementById('bns').innerHTML = b.toFixed(3) + '%';
 	document.getElementById('countMeme').innerHTML = Math.floor(1 + (((1*lvl) * (upgds * b)) + (upgds/2)));
 }, 1000);
@@ -318,6 +330,56 @@ function initGame() {				// Функция инициализации игры
 	}
 	if(!resumeGame()) { save(); }
 };
+	
+function initPersons(){ //Инициализация характеристик персонажей
+		Keke.personNum = 1;
+		Keke.memesFirstProd = 1;
+		Keke.personCost = 10;
+		perCost.call(Keke);
+
+		Jane.personNum = 2;
+		Jane.memesFirstProd = 15;
+		Jane.personCost = 100;
+		perCost.call(Jane);
+		
+		Basta.personNum = 3;
+		Basta.memesFirstProd = 25;
+		Basta.personCost = 1000;
+		perCost.call(Basta);
+		
+		Cali.personNum = 4;
+		Cali.memesFirstProd = 50;
+		Cali.personCost = 5000;
+		perCost.call(Cali);
+
+		Oleg.personNum = 5;
+		Oleg.memesFirstProd = 100;
+		Oleg.personCost = 30000;
+		perCost.call(Oleg);
+}
+
+function perCost() {
+			this.upgCost = Math.round(this.personCost / cUpgFirstCost);
+			this.personIsBuy = false;
+			this.upgCount = 0;
+			this.memesUpgProd = this.memesFirstProd * cSP;
+			document.getElementById('buy' + this.namePerson).disabled = '';
+			document.getElementById('buy' + this.namePerson).style.opacity = .65;
+			document.getElementById('imgPerson' + this.namePerson).src="img/" + this.namePerson + (this.upgCount + 1) + ".png"; 
+			document.getElementById('upgCost' + this.namePerson).innerHTML = "Сost: " + this.personCost; 
+		}
+
+function initStyles() { //Инициализация стилей у картинок
+	for (var i = 1; i < 6; i++) {
+		document.getElementById('upgB' + i).style.display = 'none';	
+	}
+	for (var i in pList) {
+		document.getElementById('imgPerson' + i).style.WebkitFilter = "grayscale(100%) blur(10px)";
+	}
+	if (meme < winValue) {
+	document.getElementById('nxtLvl').disabled = 'disabled';
+	}
+}
 
 // Инициализация характеристик бонусов
 
@@ -373,66 +435,35 @@ function initBonus(){
 	bStyles.call(battle);
 }
 
-	
-function initPersons(){ //Инициализация характеристик персонажей
-		Keke.personNum = 1;
-		Keke.memesFirstProd = 1;
-		Keke.personCost = 10;
-		Keke.upgCost = 15;
-		Keke.memesUpgProd = Keke.memesFirstProd * 5;
-		perCost.call(Keke);
-
-		Jane.personNum = 2;
-		Jane.memesFirstProd = 15;
-		Jane.personCost = 100;
-		Jane.upgCost = 50;
-		Jane.memesUpgProd = Jane.memesFirstProd * 5;
-		perCost.call(Jane);
-		
-		Basta.personNum = 3;
-		Basta.memesFirstProd = 25;
-		Basta.personCost = 1000;
-		Basta.upgCost = 150;
-		Basta.memesUpgProd = Basta.memesFirstProd * 5;
-		perCost.call(Basta);
-		
-		Cali.personNum = 4;
-		Cali.memesFirstProd = 50;
-		Cali.personCost = 5000;
-		Cali.upgCost = 600;
-		Cali.memesUpgProd = Cali.memesFirstProd * 5;
-		perCost.call(Cali);
-
-		Oleg.personNum = 5;
-		Oleg.memesFirstProd = 100;
-		Oleg.personCost = 30000;
-		Oleg.upgCost = 1500;
-		Oleg.memesUpgProd = Oleg.memesFirstProd * 5;
-		perCost.call(Oleg);
-}
-
-function initStyles() { //Инициализация стилей у картинок
-	for (var i = 1; i < 6; i++) {
-		document.getElementById('upgB' + i).style.display = 'none';	
-	}
-	for (var i in pList) {
-		document.getElementById('imgPerson' + i).style.WebkitFilter = "grayscale(100%) blur(10px)";
-	}
-	if (meme < winValue) {
-	document.getElementById('nxtLvl').disabled = 'disabled';
-	}
-}
-
 function bStyles () {
 	document.getElementById('costEf' + this.bonusNum).innerHTML = "Cost: " + this.bonusCost; 
 	document.getElementById('eF' + this.bonusNum).innerHTML = "+" + this.bonusEffencive;
 } 
 
-
-function perCost() {
-			this.personIsBuy = false;
-			document.getElementById('upgCost' + this.namePerson).innerHTML = "Сost: " + this.personCost; 
+function initLevel (lvl) {
+	lv = lvl;
+	switch (lv) {
+		
+		case 1: {
+			$('.progress').css('background-color', "#3F3F3F");
+			$('.progress-bar').css('background-color', "#0E3E5B");
+			winValue = 1000000;
+			break;
 		}
+		case 2: {
+			$('.progress').css('background-color', "#0E3E5B");
+			$('.progress-bar').css('background-color', "#0E5195");
+			winValue = 50000000;
+			break;
+		}
+		case 3: {
+			$('.progress').css('background-color', "#0E5195");
+			$('.progress-bar').css('background-color', "#0E62B8");
+			winValue = 100000000;
+			break;
+		}	
+	}
+}
 
 function save() { 
 
@@ -579,8 +610,9 @@ function load() {
 function loadLvls (lvl) {
 	for (var i = 1; i <= lvl; i++) {
 		document.getElementById('lvl'+ lvl).disabled = '';
+		initLevel(i);
+		}
 	}
-}
 
 function loadBonuses () {
 	document.getElementById('buyBonus' + this.bonusNum).disabled = 'disabled';
@@ -596,7 +628,8 @@ function loadPerson(){
 		document.getElementById('imgPerson' + this.namePerson).src="img/" + this.namePerson + (this.upgCount + 1) + ".png"; 
 			if (this.upgCount == 3) { 
 			document.getElementById('upgB' + this.personNum).style.display = 'none',
-			document.getElementById('imgPerson' + this.namePerson).src="img/" + this.namePerson + "3.png"; 
+			document.getElementById('imgPerson' + this.namePerson).src="img/" + this.namePerson + "3.png";
+			document.getElementById('imgPerson' + this.namePerson).style.WebkitFilter="grayscale(0%)"; 
 			document.getElementById('upgCost' + this.namePerson).innerHTML = this.namePerson + ' in final form!'; 
 			document.getElementById('buy' + this.namePerson).style.opacity = 1;
 			}

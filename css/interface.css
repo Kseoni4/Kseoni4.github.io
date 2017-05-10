@@ -5,6 +5,10 @@ body {
   color: #34495e;
   background-color: #ffffff;
 }
+
+.progress {
+	background-color: #3F3F3F;
+}
 #autosave {
 	font-size: 14px;
 }
