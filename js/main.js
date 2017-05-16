@@ -102,6 +102,7 @@ function nextLevel() { // Функция перехода на следующи�
 		upgds = 0;
 		b = 0;
 		n = 0;
+		personList='';
 		lvl++;
 		document.getElementById('lvl'+ lvl).disabled = '';
 		save();
@@ -338,7 +339,7 @@ function chkMeme(m) {
 }
 
 function chkLvl(m) {
-	if (m >= 100 && lvl != 3) { document.getElementById('nxtLvl').disabled = '';
+	if (m >= winValue && lvl != 3) { document.getElementById('nxtLvl').disabled = '';
 	document.getElementById('nxtLvl').style.display = ''; 
 	}
 	if (lvl == 3) { document.getElementById('nxtLvl').innerHTML = "Avalible in next updates"; }
@@ -407,7 +408,7 @@ function initGame() {				// Функция инициализации игры
 		document.getElementById('memes').innerHTML = meme,
 		document.getElementById('lvl').innerHTML = lvl,
 		document.getElementById('nxtLvl').disabled = 'disabled',
-		document.getElementById('personList').innerHTML = personList;
+		document.getElementById('personList').innerHTML = "";
 		$(document).ready(function(){
 			$('.progress-bar').attr('aria-valuemax', winValue);
 		});
