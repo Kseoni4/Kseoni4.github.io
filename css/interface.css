@@ -116,6 +116,20 @@ body {
 	float: left;
 }
 
+#buyViet {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+#buyErni {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
 #textA {
 	float:right;
 }
@@ -180,6 +194,18 @@ body {
 }
 
 #upgB8 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB9 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB10 {
 	background: none;
 	border: none;
 	float:right;

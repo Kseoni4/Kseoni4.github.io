@@ -31,6 +31,8 @@ var Oleg = new memePerson("Oleg", 30000, 100, 0, 5);
 var Kan = new memePerson("Kan", 80000, 200, 0, 6);
 var Kolbas = new memePerson("Kolbas", 150000, 500, 0, 7);
 var Vasay = new memePerson("Vasay", 300000, 700, 0, 8);
+var Viet = new memePerson("Viet", 800000, 900, 0, 9);
+var Erni = new memePerson("Erni", 1000000, 1000, 0, 10);
 
 /* Блок конструктора объектов персонажей */
 
@@ -46,7 +48,7 @@ function memePerson(name, pC, mFP, upgCount, pN) {
 	//perCost.call(this);
 }
 
-pList = { Keke, Jane, Basta, Cali, Oleg, Kan, Kolbas, Vasay }; // Список персонажей
+pList = { Keke, Jane, Basta, Cali, Oleg, Kan, Kolbas, Vasay, Viet, Erni }; // Список персонажей
 
 var personList = ""; //строка приобретённных  персонажей
 
@@ -270,6 +272,16 @@ function chkPers(m) {
 		{ document.getElementById('imgPersonVasay').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
 	if (m < Vasay.personCost && !Vasay.personIsBuy) 
 		{ document.getElementById('imgPersonVasay').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+
+	if (m >= Viet.personCost && !Viet.personIsBuy) 
+		{ document.getElementById('imgPersonViet').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < Viet.personCost && !Viet.personIsBuy) 
+		{ document.getElementById('imgPersonViet').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+
+	if (m >= Erni.personCost && !Erni.personIsBuy) 
+		{ document.getElementById('imgPersonErni').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < Erni.personCost && !Erni.personIsBuy) 
+		{ document.getElementById('imgPersonErni').style.WebkitFilter="grayscale(100%) blur(10px)"; }
 } 
 
 //Функция рассчёта прогресс-бара
@@ -326,7 +338,7 @@ function chkMeme(m) {
 }
 
 function chkLvl(m) {
-	if (m >= winValue && lvl != 3) { document.getElementById('nxtLvl').disabled = '';
+	if (m >= 100 && lvl != 3) { document.getElementById('nxtLvl').disabled = '';
 	document.getElementById('nxtLvl').style.display = ''; 
 	}
 	if (lvl == 3) { document.getElementById('nxtLvl').innerHTML = "Avalible in next updates"; }
@@ -395,7 +407,7 @@ function initGame() {				// Функция инициализации игры
 		document.getElementById('memes').innerHTML = meme,
 		document.getElementById('lvl').innerHTML = lvl,
 		document.getElementById('nxtLvl').disabled = 'disabled',
-		personList = '';
+		document.getElementById('personList').innerHTML = personList;
 		$(document).ready(function(){
 			$('.progress-bar').attr('aria-valuemax', winValue);
 		});
@@ -443,10 +455,20 @@ function initGame() {				// Функция инициализации игры
 		Kolbas.personCost = 150000;
 		perCost.call(Kolbas);
 
-		Vasay.personNum = 6;
-		Vasay.memesFirstProd = 200;
-		Vasay.personCost = 80000;
+		Vasay.personNum = 8;
+		Vasay.memesFirstProd = 700;
+		Vasay.personCost = 300000;
 		perCost.call(Vasay);
+
+		Viet.personNum = 9;
+		Viet.memesFirstProd = 900;
+		Viet.personCost = 800000;
+		perCost.call(Viet);
+
+		Erni.personNum = 10;
+		Erni.memesFirstProd = 1000;
+		Erni.personCost = 1000000;
+		perCost.call(Erni);
 }
 
 function perCost() {
@@ -461,7 +483,7 @@ function perCost() {
 		}
 
 function initStyles() { //Инициализация стилей у картинок
-	for (var i = 1; i < 9; i++) {
+	for (var i = 1; i < 11; i++) {
 		document.getElementById('upgB' + i).style.display = 'none';	
 	}
 	for (var i in pList) {
@@ -561,6 +583,8 @@ function save() {
 		Kan: Kan,
 		Kolbas: Kolbas,
 		Vasay: Vasay,
+		Viet: Viet,
+		Erni: Erni,
 		// Бонусы
 		mtng: mtng,
 		jkCock: jkCock,
@@ -666,7 +690,15 @@ function load() {
 		Vasay = savegame.Vasay;
 		loadPerson.call(Vasay);
 		}	
-		
+	if (savegame.Viet.personIsBuy != false) {
+		Viet = savegame.Viet;
+		loadPerson.call(Viet);
+		}
+	if (savegame.Erni.personIsBuy != false) {
+		Erni = savegame.Erni;
+		loadPerson.call(Erni);
+		}	
+
 	/* Загружаем бонусы */
 	
 	if (savegame.mtng.bonusIsBuy != false) {
