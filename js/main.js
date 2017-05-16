@@ -338,7 +338,7 @@ function chkMeme(m) {
 }
 
 function chkLvl(m) {
-	if (m >= 100 && lvl != 3) { document.getElementById('nxtLvl').disabled = '';
+	if (m >= winValue && lvl != 3) { document.getElementById('nxtLvl').disabled = '';
 	document.getElementById('nxtLvl').style.display = ''; 
 	}
 	if (lvl == 3) { document.getElementById('nxtLvl').innerHTML = "Avalible in next updates"; }
