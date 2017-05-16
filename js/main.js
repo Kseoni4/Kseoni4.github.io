@@ -4,11 +4,9 @@
 
 var gameInProgress = false; //если равен true, то игра загружает сохранение. 
 
-var personList = ""; //строка приобретённных  персонажей
-
 // Коэффициенты
 
-var cP = 1.5; // Коэффициент производства
+var cP = 1.1	; // Коэффициент производства
 var cUpg = 3; // Коэффициент стоимости улучшения
 var cSP = 2.5; // Коэффициент возрастания производства
 var cUpgFirstCost = 1.3; // Коэффициент стоимости первичного улучшения
@@ -16,23 +14,38 @@ var cUpgFirstCost = 1.3; // Коэффициент стоимости перви
 //переменные счетчиков
 
 var meme = 0; //Мемы
-var upgds = 0; //Мемы/cек
-var pValue = 0; //Прогресс
-var n = 0;
+var upgds = 0; //Прирост мем/cек
+var pValue = 0; //Текущий прогресс
+var n = 0; // Переменная для рассчёта "клика"
 var winValue = 1000000; //Итоговая сумма
-//var winValue = Math.floor(Math.random() * 500000);
-var b = 0; //Бонус
-var lvl = 1; //Уровень
+var b = 0; //Текущий бонус
+var lvl = 1; //Текущий уровень (по умолчанию 1)
 
 //инициализация персонажей (глобальные объекты)
 
-var Keke = new memePerson("Keke");
-var Jane = new memePerson("Jane");
-var Basta = new memePerson("Basta");
-var Cali = new memePerson("Cali");
-var Oleg = new memePerson("Oleg");
+var Keke = new memePerson("Keke", 10, 5, 0, 1);
+var Jane = new memePerson("Jane", 500, 15, 0, 2);
+var Basta = new memePerson("Basta", 1000, 25, 0, 3);
+var Cali = new memePerson("Cali", 5000, 50, 0, 4);
+var Oleg = new memePerson("Oleg", 30000, 100, 0, 5);
 
-var pList = { Keke, Jane, Basta, Cali, Oleg };
+/* Блок конструктора объектов персонажей */
+
+function memePerson(name, pC, mFP, upgCount, pN) {
+	this.personCost = pC;
+	this.memesFirstProd = mFP;
+	this.memesUpgProd = this.memesFirstProd * cSP;
+	this.upgCost = Math.round(this.personCost / cUpgFirstCost);;
+	this.upgCount = upgCount;
+	this.namePerson = name;
+	this.personNum = pN;
+	this.personIsBuy = false;
+	//perCost.call(this);
+}
+
+pList = { Keke, Jane, Basta, Cali, Oleg }; // Список персонажей
+
+var personList = ""; //строка приобретённных  персонажей
 
 // инициализация бонусов (глобальные объекты)
 
@@ -47,7 +60,9 @@ var talkHS	= new bonus('Talk about Homestuck');
 var GrebChannel = new bonus('Find way to Gribnoy Kanal');
 var battle = new bonus('Versus Battle');
 
-var bList = { mtng, jkCock, jkAss, plBotle, drink, lostFili, prazka, talkHS, GrebChannel, battle };
+var bList = { mtng, jkCock, jkAss, 
+plBotle, drink, lostFili, 
+prazka, talkHS, GrebChannel, battle }; // Список бонусов
 
 /* Блок конструктора бонусов */
 
@@ -59,37 +74,23 @@ function bonus(name){
 	this.bonusIsBuy = false;
 }
 
-/* Блок конструктора объектов персонажей */
-
-function memePerson(name) {
-	this.personCost = 10;
-	this.memesFirstProd = 1;
-	this.memesUpgProd = 0;
-	this.upgCost = 10;
-	this.upgCount = 0;
-	this.namePerson = name;
-	this.personNum = 0;
-	this.personIsBuy = false;
-
-}
 
 /* Блок игровых функций */
 
 function memeClick(num) { // Обычное нажатие
-	n = ((num * lvl) * Math.floor(upgds * b) + (upgds/2));
+	n = ((num * lvl) * (Math.floor(upgds * b) + (upgds/2)));
 	if (n <= 0) {n = 1};
 	meme = meme + num * n;
 	document.getElementById('memes').innerHTML = Math.floor(meme);
 }
 
 function memeAutoClick(num) { // Автонажатие
-	n = (num * lvl) + Math.floor(num * b);
+	n = (num + Math.floor(num * b)) * lvl;
 	meme = meme + n;
 	document.getElementById('memes').innerHTML = Math.floor(meme);
 }
 
-
-function nextLevel() {
+function nextLevel() { // Функция перехода на следующий уровень
 	if (meme >= 100) {
 		gameInProgress = false;
 		meme = 0;
@@ -101,9 +102,38 @@ function nextLevel() {
 		save();
 		initLevel(lvl);
 		initGame();
+		initPersons();
 		return true;
 	}
 }
+
+// Инициирование уровня: присвоение соответствующего стиля полосы прогресса
+
+function initLevel (lvl) {
+	lv = lvl;
+	switch (lv) 
+	{		
+		case 1: {
+			$('.progress').css('background-color', "#3F3F3F");
+			$('.progress-bar').css('background-color', "#0E3E5B");
+			winValue = 1000000;
+			break;
+		}
+		case 2: {
+			$('.progress').css('background-color', "#0E3E5B");
+			$('.progress-bar').css('background-color', "#0E5195");
+			winValue = 50000000;
+			break;
+		}
+		case 3: {
+			$('.progress').css('background-color', "#0E5195");
+			$('.progress-bar').css('background-color', "#0E62B8");
+			winValue = 100000000;
+			break;
+		}	
+	}
+}
+
 
 //Функции покупки персонажей
 
@@ -127,7 +157,6 @@ function buyPerson() {
 		this.personIsBuy = true;
 	}
 }
-
 
 //Функции покупки улучшений для персонажей.
 
@@ -181,27 +210,49 @@ function buyBonus(){
 	}
 }
 
-//Таймер для отсчёта времени до получения финальной суммы
 
-function timeOut(meme, upgds) {
-	if (meme > 0 && upgds > 0){
-		p = winValue - meme;
-		sec_ = Math.floor(p / (upgds + Math.floor(upgds * b)));
-		if (sec_ > 0) { 
-			hours = (sec_ / 3600);
-			hours = parseInt(hours);
-			min_= sec_ - (hours * 3600);
-			min = parseInt(min_ / 60);
-			sec = min_ - (min * 60);
-			if (min > 60) { min = min / 60 }
-			if (hours < 10) { hours = "0" + hours }
-			if (min < 10) { min = "0" + min}
-			if (sec < 10) { sec = "0" + sec}
-			document.getElementById('timeleft').innerHTML = "Timeleft to max memes: " + hours + ":" + min + ":" + sec;
-		} 	else { document.getElementById('timeleft').innerHTML = "Timeleft: " + "00" + ":" + "00" + ":" + "00" + " Over! Pepe is happy!"; }
-	}
-}
+/* Блок асинхронных событий */
 
+// События раз в 10 мс.
+
+window.setInterval(function(){
+	if (gameInProgress = true) {
+		chkPers(meme),
+		chkPrgrs(meme),
+		chkPepe(meme),
+		chkMeme(meme),
+		chkLvl(meme);
+	};
+}, 50);
+
+//Функция проверки "доступности" покупки героев
+
+function chkPers(m) {
+	if (m >= Keke.personCost && !Keke.personIsBuy) 
+		{ document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < Keke.personCost && !Keke.personIsBuy) 
+		{ document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+
+	if (m >= Jane.personCost && !Jane.personIsBuy) 
+		{ document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < Jane.personCost && !Jane.personIsBuy) 
+		{ document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+	 	
+	if (m >= Basta.personCost && !Basta.personIsBuy) 
+		{ document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(0px)"; }
+	if (m < Basta.personCost && !Basta.personIsBuy) 
+		{ document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+	
+	if (m >= Cali.personCost && !Cali.personIsBuy) 
+		{ document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < Cali.personCost && !Cali.personIsBuy) 
+		{ document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+	
+	if (m >= Oleg.personCost && !Oleg.personIsBuy) 
+		{ document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < Oleg.personCost && !Oleg.personIsBuy) 
+		{ document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+} 
 
 //Функция рассчёта прогресс-бара
 
@@ -222,63 +273,47 @@ function chkPrgrs(m) {
 	}
 }
 
-//Функция проверки "доступности" покупки героев
-
-function chkPers(m) {
-	if (m >= Keke.personCost && !Keke.personIsBuy) { document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
-	if (m < Keke.personCost && !Keke.personIsBuy) { document.getElementById('imgPersonKeke').style.WebkitFilter="grayscale(100%) blur(10px)"; }
-
-	if (m >= Jane.personCost && !Jane.personIsBuy) { document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
-	if (m < Jane.personCost && !Jane.personIsBuy) { document.getElementById('imgPersonJane').style.WebkitFilter="grayscale(100%) blur(10px)"; }
-	 	
-	if (m >= Basta.personCost && !Basta.personIsBuy) { document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(0px)"; }
-	if (m < Basta.personCost && !Basta.personIsBuy) { document.getElementById('imgPersonBasta').style.WebkitFilter="grayscale(100%) blur(10px)"; }
-	
-	if (m >= Cali.personCost && !Cali.personIsBuy) { document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
-	if (m < Cali.personCost && !Cali.personIsBuy) { document.getElementById('imgPersonCali').style.WebkitFilter="grayscale(100%) blur(10px)"; }
-	
-	if (m >= Oleg.personCost && !Oleg.personIsBuy) { document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
-	if (m < Oleg.personCost && !Oleg.personIsBuy) { document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%) blur(10px)"; }
-} 
 
 //Функция проверки Пепе
 
 function chkPepe(m) {
-	if (m < 10) { document.getElementById('pepe').src="img/1.png" }
-	if (m >= 10) { document.getElementById('pepe').src="img/2a.png" }
-	if (m >= 100) { document.getElementById('pepe').src="img/2b.png" }
-	if (m >= 500) { document.getElementById('pepe').src="img/2.png" }
-	if (m >= 1000) { document.getElementById('pepe').src="img/3.png" }
-	if (m >= 5000) { document.getElementById('pepe').src="img/5.png" }	
-	if (m >= 10000) { document.getElementById('pepe').src="img/4.png" }
-	if (m >= 100000) { document.getElementById('pepe').src="img/6.png" }
-	if (m >= 1000000) { document.getElementById('pepe').src="img/7.png" }
+	if (m < 10) 
+		{ document.getElementById('pepe').src="img/1.png" }
+	if (m >= 10) 
+		{ document.getElementById('pepe').src="img/2a.png" }
+	if (m >= 100) 
+		{ document.getElementById('pepe').src="img/2b.png" }
+	if (m >= (winValue/3.5)) 
+		{ document.getElementById('pepe').src="img/2.png" }
+	if (m >= (winValue/3)) 
+		{ document.getElementById('pepe').src="img/3.png" }
+	if (m >= (winValue/2.5)) 
+		{ document.getElementById('pepe').src="img/5.png" }	
+	if (m >= (winValue/2)) 
+		{ document.getElementById('pepe').src="img/4.png" }
+	if (m >= (winValue/1.5)) 
+		{ document.getElementById('pepe').src="img/6.png" }
+	if (m >= winValue) 
+		{ document.getElementById('pepe').src="img/7.png" }
 }
 
 //Округление числа
 
 function chkMeme(m) {
-	if (m >= 1000000) { m = Math.floor(m / 1000000), document.getElementById('memes').innerHTML = m + "M" };
-	if (m >= 1000000000) { m = Math.floor(m / 1000000000), document.getElementById('memes').innerHTML = m + "B" };
+	if (m >= 1000000 && m < 1000000000) 
+		{ var d = m; m = Math.floor(m / 1000000); d = Math.floor((d % 1000000) / 100000); 
+		document.getElementById('memes').innerHTML = m + "," + d + "M" };
+	if (m >= 1000000000) 
+		{ m = Math.floor(m / 1000000000), document.getElementById('memes').innerHTML = m + "B" };
 }
 
 function chkLvl(m) {
-	if (m >= winValue) { document.getElementById('nxtLvl').disabled = '';
-	document.getElementById('nxtLvl').style.display = '';
+	if (m >= winValue && lvl != 3) { document.getElementById('nxtLvl').disabled = '';
+	document.getElementById('nxtLvl').style.display = ''; 
 	}
+	if (lvl == 3) { document.getElementById('nxtLvl').innerHTML = "Avalible in next updates"; }
 }
 
-/* Блок асинхронных событий */
-
-window.setInterval(function(){
-	if (gameInProgress = true) {
-		chkPers(meme),
-		chkPrgrs(meme),
-		chkPepe(meme),
-		chkMeme(meme),
-		chkLvl(meme);
-	};
-}, 100);
 
 //Функция действий раз в секунду.
 
@@ -290,8 +325,32 @@ window.setInterval(function(){
 	document.getElementById('lvl').innerHTML = lvl;
 	document.getElementById('upg').innerHTML = Math.round(upgds + (upgds * b)) * lvl;
 	document.getElementById('bns').innerHTML = b.toFixed(3) + '%';
-	document.getElementById('countMeme').innerHTML = Math.floor(1 + (((1*lvl) * (upgds * b)) + (upgds/2)));
+	if (upgds > 0){
+		document.getElementById('countMeme').innerHTML = Math.round(((1*lvl) * ((upgds * b) + (upgds/2))));
+	}
+	else document.getElementById('countMeme').innerHTML = 1;
 }, 1000);
+
+//Таймер для отсчёта времени до получения финальной суммы
+
+function timeOut(meme, upgds) {
+	if (meme > 0 && upgds > 0){
+		p = winValue - meme;
+		sec_ = Math.floor(p / ((upgds + Math.floor(upgds * b))*lvl));
+		if (sec_ > 0) { 
+			hours = (sec_ / 3600);
+			hours = parseInt(hours);
+			min_= sec_ - (hours * 3600);
+			min = parseInt(min_ / 60);
+			sec = min_ - (min * 60);
+			if (min > 60) { min = min / 60 }
+			if (hours < 10) { hours = "0" + hours }
+			if (min < 10) { min = "0" + min}
+			if (sec < 10) { sec = "0" + sec}
+			document.getElementById('timeleft').innerHTML = "Timeleft to max memes: " + hours + ":" + min + ":" + sec;
+		} 	else { document.getElementById('timeleft').innerHTML = "Timeleft: " + "00" + ":" + "00" + ":" + "00" + " Over! Pepe is happy!"; }
+	}
+}
 
 //Функция автосохранения каждые 10 секунд.
 
@@ -304,7 +363,6 @@ window.setInterval(function(){
 //Функция замещения сообщения об успешном автосохранении
 
 window.setInterval(function(){
-	save();
 	document.getElementById('autosave').style.display = "none"
 	document.getElementById('autosave').innerHTML = "";
 }, 11000);
@@ -323,23 +381,23 @@ function initGame() {				// Функция инициализации игры
 		$(document).ready(function(){
 			$('.progress-bar').attr('aria-valuemax', winValue);
 		});
-		initPersons(); // Инициализация характеристик персонажей
+		//initPersons(); // Инициализация характеристик персонажей
 		initStyles();  // Инициализация стилей у картинок.	
-		//initBonus(); // Инициализация бонусов
-		gameInProgress = true;
+		initBonus(); // Инициализация бонусов
+		gameInProgress = true; 
 	}
-	if(!resumeGame()) { save(); }
+	if(!resumeGame()) { /*save();*/ }
 };
-	
-function initPersons(){ //Инициализация характеристик персонажей
+
+	function initPersons(){ //Инициализация характеристик персонажей
 		Keke.personNum = 1;
-		Keke.memesFirstProd = 1;
+		Keke.memesFirstProd = 5;
 		Keke.personCost = 10;
 		perCost.call(Keke);
 
 		Jane.personNum = 2;
 		Jane.memesFirstProd = 15;
-		Jane.personCost = 100;
+		Jane.personCost = 500;
 		perCost.call(Jane);
 		
 		Basta.personNum = 3;
@@ -359,14 +417,14 @@ function initPersons(){ //Инициализация характеристик 
 }
 
 function perCost() {
-			this.upgCost = Math.round(this.personCost / cUpgFirstCost);
-			this.personIsBuy = false;
-			this.upgCount = 0;
-			this.memesUpgProd = this.memesFirstProd * cSP;
-			document.getElementById('buy' + this.namePerson).disabled = '';
-			document.getElementById('buy' + this.namePerson).style.opacity = .65;
-			document.getElementById('imgPerson' + this.namePerson).src="img/" + this.namePerson + (this.upgCount + 1) + ".png"; 
-			document.getElementById('upgCost' + this.namePerson).innerHTML = "Сost: " + this.personCost; 
+		this.upgCost = Math.round(this.personCost / cUpgFirstCost);
+		this.personIsBuy = false;
+		this.upgCount = 0;
+		this.memesUpgProd = this.memesFirstProd * cSP;
+		document.getElementById('buy' + this.namePerson).disabled = '';
+		document.getElementById('buy' + this.namePerson).style.opacity = .65;
+		document.getElementById('imgPerson' + this.namePerson).src="img/" + this.namePerson + (this.upgCount + 1) + ".png"; 
+		document.getElementById('upgCost' + this.namePerson).innerHTML = "Сost: " + this.personCost; 	
 		}
 
 function initStyles() { //Инициализация стилей у картинок
@@ -375,6 +433,10 @@ function initStyles() { //Инициализация стилей у карти�
 	}
 	for (var i in pList) {
 		document.getElementById('imgPerson' + i).style.WebkitFilter = "grayscale(100%) blur(10px)";
+		document.getElementById('buy' + pList[i].namePerson).disabled = '';
+		document.getElementById('buy' + pList[i].namePerson).style.opacity = .65;
+		document.getElementById('imgPerson' + pList[i].namePerson).src="img/" + pList[i].namePerson + (pList[i].upgCount + 1) + ".png"; 
+		document.getElementById('upgCost' + pList[i].namePerson).innerHTML = "Сost: " + pList[i].personCost; 
 	}
 	if (meme < winValue) {
 	document.getElementById('nxtLvl').disabled = 'disabled';
@@ -436,37 +498,20 @@ function initBonus(){
 }
 
 function bStyles () {
+	this.bonusIsBuy = false;
+	document.getElementById('buyBonus' + this.bonusNum).disabled = '';
 	document.getElementById('costEf' + this.bonusNum).innerHTML = "Cost: " + this.bonusCost; 
 	document.getElementById('eF' + this.bonusNum).innerHTML = "+" + this.bonusEffencive;
 } 
 
-function initLevel (lvl) {
-	lv = lvl;
-	switch (lv) {
-		
-		case 1: {
-			$('.progress').css('background-color', "#3F3F3F");
-			$('.progress-bar').css('background-color', "#0E3E5B");
-			winValue = 1000000;
-			break;
-		}
-		case 2: {
-			$('.progress').css('background-color', "#0E3E5B");
-			$('.progress-bar').css('background-color', "#0E5195");
-			winValue = 50000000;
-			break;
-		}
-		case 3: {
-			$('.progress').css('background-color', "#0E5195");
-			$('.progress-bar').css('background-color', "#0E62B8");
-			winValue = 100000000;
-			break;
-		}	
-	}
+function resumeGame() {
+	gameInProgress = (localStorage['check.gameInProgress'] == "true");
+	if (!gameInProgress) { return false };
+	load();
 }
+	
 
 function save() { 
-
 	var save = {
 		// Счётчики
 		meme: meme,
@@ -499,16 +544,17 @@ function save() {
 		bList: bList,
 		//Остальные переменные сюда
 		}
+
 	localStorage.setItem('save', JSON.stringify(save));
 	localStorage['check.gameInProgress'] = gameInProgress;
 };
 
 function load() {
 	var savegame = JSON.parse(localStorage.getItem("save"));
-	/* Загружаем значения счётчиков */
-	initPersons();
-	//initBonus();
 	initStyles();
+	initBonus();
+
+	/* Загружаем значения счётчиков */
 	
 	if (typeof savegame.meme != "undefined") {
 		meme = savegame.meme;
@@ -539,8 +585,15 @@ function load() {
 		personList = savegame.personList;
 		document.getElementById('personList').innerHTML = personList;
 		}	
-		
+
 	/* Загружаем персонажей */	
+
+	/*for (let i in pList) {
+		if (savegame.pList[i].personIsBuy != false) {
+			loadPerson.call(savegame.pList[i]);
+			pList[i] = savegame.pList[i];
+		}
+	}*/ 	
 	
 	if (savegame.Keke.personIsBuy != false) {
 		Keke = savegame.Keke;
@@ -609,14 +662,14 @@ function load() {
 
 function loadLvls (lvl) {
 	for (var i = 1; i <= lvl; i++) {
-		document.getElementById('lvl'+ lvl).disabled = '';
+		document.getElementById('lvl'+ i).disabled = '';
 		initLevel(i);
 		}
 	}
 
 function loadBonuses () {
 	document.getElementById('buyBonus' + this.bonusNum).disabled = 'disabled';
-	document.getElementById('costEf' + this.bonusNum).innerHTML = this.bonusCost; 
+	document.getElementById('costEf' + this.bonusNum).innerHTML = "Cost: " + this.bonusCost; 
 	document.getElementById('eF' + this.bonusNum).innerHTML = "+" + this.bonusEffencive;
 } 
 
@@ -635,15 +688,11 @@ function loadPerson(){
 			}
 }	
 
-function resumeGame() {
-	gameInProgress = (localStorage['check.gameInProgress'] == "true");
-	if (!gameInProgress) { return false };
-	load();
-}
 
 function removeSave() {
 	localStorage.removeItem("save");
 	localStorage.removeItem('check.gameInProgress');
+	location.reload();
 }
 
 

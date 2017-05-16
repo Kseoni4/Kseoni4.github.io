@@ -53,6 +53,14 @@ body {
 	border-bottom-color: #000000;
 	box-sizing: border-box;
 }
+
+/*#timeLeftBlock {
+	border-bottom: 1px;
+	border-bottom-style: ridge;
+	border-bottom-color: #000000;
+	box-sizing: border-box;
+}
+*/
 #buyKeke {
 	background: none;
 	border: none;
