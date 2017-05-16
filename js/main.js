@@ -407,7 +407,7 @@ function initGame() {				// Функция инициализации игры
 		document.getElementById('memes').innerHTML = meme,
 		document.getElementById('lvl').innerHTML = lvl,
 		document.getElementById('nxtLvl').disabled = 'disabled',
-		document.getElementById('personList').innerHTML = personList;
+		document.getElementById('personList').innerHTML = "";
 		$(document).ready(function(){
 			$('.progress-bar').attr('aria-valuemax', winValue);
 		});
