@@ -1,9 +1,13 @@
 body {
-  font-family: "Lato", Arial, sans-serif;
+  font-family: "Helvetica", sans-serif;
   font-size: 18px;
   line-height: 1.5;
   color: #34495e;
   background-color: #ffffff;
+}
+
+.progress {
+	background-color: #3F3F3F;
 }
 #autosave {
 	font-size: 14px;
@@ -15,6 +19,10 @@ body {
 
 #cLog {
 	border: none;
+}
+
+#timeleft {
+	font-size: 18px;
 }
 
 #rightBlock {
@@ -39,10 +47,20 @@ body {
 	font-size: 24px;
 	width: 100%;
 	border-bottom: 1px;
+	border-right: 2px;
+	border-right-style: ridge;
 	border-bottom-style: ridge;
 	border-bottom-color: #000000;
 	box-sizing: border-box;
 }
+
+/*#timeLeftBlock {
+	border-bottom: 1px;
+	border-bottom-style: ridge;
+	border-bottom-color: #000000;
+	box-sizing: border-box;
+}
+*/
 #buyKeke {
 	background: none;
 	border: none;
@@ -77,6 +95,40 @@ body {
 	float: left;
 }
 
+#buyKan {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+#buyKolbas {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+#buyVasay {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+#buyViet {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+#buyErni {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
 
 #textA {
 	float:right;
@@ -91,8 +143,11 @@ body {
 	width: 1%;
 }
 
+.upgBtn {
+	display: none;
+}
+
 #upgB1 {
-	
 	background: none;
 	border: none;
 	float:right;
@@ -120,7 +175,37 @@ body {
 	float:right;
 }
 
-#upgB4 {
+#upgB5 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB6 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB7 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB8 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB9 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB10 {
 	background: none;
 	border: none;
 	float:right;
@@ -131,7 +216,19 @@ body {
 	display: inline-block;
 }
 
+#nxtLvl {
+	float: right;
+	font-size: 18px;
+	color: white;
+	background-color: #00FF00;
+}
+#nxtLvl:disabled {
+	filter: alpha(opacity=15);
+  opacity: .15;
+}
+
 #memeClick {
+		float:left;
 		padding: 10px 10px;
 		margin-left: 30%;
 		background-color: #41bbf4;
@@ -153,12 +250,16 @@ body {
 .btn-bonus {
 	font-size: 12px;
 }
+.lvl2 {
+	
+}
 
 #SaveLoadBtn {
 		float: left;
 		background-color: #4CAF50; /* Green */
 		border: 1px solid black;
 		color: white;
+		margin-left: 48%;
 		text-align: center;
 		text-decoration: none;
 		font-size: 16px;
@@ -167,9 +268,15 @@ body {
 		background-color: #f44e42; 
 		border: 1px solid black;
 		color: white;
+		margin-left: 45%;
 		text-align: center;
+		
 		text-decoration: none;
 		font-size: 16px;
+}
+
+#lvl {
+	color: rgb(211, 0, 0);
 }
 
 #memes {
