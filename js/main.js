@@ -28,6 +28,9 @@ var Jane = new memePerson("Jane", 500, 15, 0, 2);
 var Basta = new memePerson("Basta", 1000, 25, 0, 3);
 var Cali = new memePerson("Cali", 5000, 50, 0, 4);
 var Oleg = new memePerson("Oleg", 30000, 100, 0, 5);
+var Kan = new memePerson("Kan", 80000, 200, 0, 6);
+var Kolbas = new memePerson("Kolbas", 150000, 500, 0, 7);
+var Vasay = new memePerson("Vasay", 300000, 700, 0, 8);
 
 /* Блок конструктора объектов персонажей */
 
@@ -43,7 +46,7 @@ function memePerson(name, pC, mFP, upgCount, pN) {
 	//perCost.call(this);
 }
 
-pList = { Keke, Jane, Basta, Cali, Oleg }; // Список персонажей
+pList = { Keke, Jane, Basta, Cali, Oleg, Kan, Kolbas, Vasay }; // Список персонажей
 
 var personList = ""; //строка приобретённных  персонажей
 
@@ -252,6 +255,21 @@ function chkPers(m) {
 		{ document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
 	if (m < Oleg.personCost && !Oleg.personIsBuy) 
 		{ document.getElementById('imgPersonOleg').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+
+	if (m >= Kan.personCost && !Kan.personIsBuy) 
+		{ document.getElementById('imgPersonKan').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < Kan.personCost && !Kan.personIsBuy) 
+		{ document.getElementById('imgPersonKan').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+
+	if (m >= Kolbas.personCost && !Kolbas.personIsBuy) 
+		{ document.getElementById('imgPersonKolbas').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < Kolbas.personCost && !Kolbas.personIsBuy) 
+		{ document.getElementById('imgPersonKolbas').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+
+	if (m >= Vasay.personCost && !Vasay.personIsBuy) 
+		{ document.getElementById('imgPersonVasay').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < Vasay.personCost && !Vasay.personIsBuy) 
+		{ document.getElementById('imgPersonVasay').style.WebkitFilter="grayscale(100%) blur(10px)"; }
 } 
 
 //Функция рассчёта прогресс-бара
@@ -283,15 +301,15 @@ function chkPepe(m) {
 		{ document.getElementById('pepe').src="img/2a.png" }
 	if (m >= 100) 
 		{ document.getElementById('pepe').src="img/2b.png" }
-	if (m >= (winValue/3.5)) 
+	if (m >= (winValue/12)) 
 		{ document.getElementById('pepe').src="img/2.png" }
-	if (m >= (winValue/3)) 
+	if (m >= (winValue/10)) 
 		{ document.getElementById('pepe').src="img/3.png" }
-	if (m >= (winValue/2.5)) 
+	if (m >= (winValue/7)) 
 		{ document.getElementById('pepe').src="img/5.png" }	
-	if (m >= (winValue/2)) 
+	if (m >= (winValue/5)) 
 		{ document.getElementById('pepe').src="img/4.png" }
-	if (m >= (winValue/1.5)) 
+	if (m >= (winValue/2)) 
 		{ document.getElementById('pepe').src="img/6.png" }
 	if (m >= winValue) 
 		{ document.getElementById('pepe').src="img/7.png" }
@@ -414,6 +432,21 @@ function initGame() {				// Функция инициализации игры
 		Oleg.memesFirstProd = 100;
 		Oleg.personCost = 30000;
 		perCost.call(Oleg);
+
+		Kan.personNum = 6;
+		Kan.memesFirstProd = 200;
+		Kan.personCost = 80000;
+		perCost.call(Kan);
+
+		Kolbas.personNum = 7;
+		Kolbas.memesFirstProd = 500;
+		Kolbas.personCost = 150000;
+		perCost.call(Kolbas);
+
+		Vasay.personNum = 6;
+		Vasay.memesFirstProd = 200;
+		Vasay.personCost = 80000;
+		perCost.call(Vasay);
 }
 
 function perCost() {
@@ -428,7 +461,7 @@ function perCost() {
 		}
 
 function initStyles() { //Инициализация стилей у картинок
-	for (var i = 1; i < 6; i++) {
+	for (var i = 1; i < 9; i++) {
 		document.getElementById('upgB' + i).style.display = 'none';	
 	}
 	for (var i in pList) {
@@ -525,6 +558,9 @@ function save() {
 		Basta: Basta,
 		Cali: Cali,
 		Oleg: Oleg,
+		Kan: Kan,
+		Kolbas: Kolbas,
+		Vasay: Vasay,
 		// Бонусы
 		mtng: mtng,
 		jkCock: jkCock,
@@ -595,6 +631,7 @@ function load() {
 		}
 	}*/ 	
 	
+	/* Level 1 */
 	if (savegame.Keke.personIsBuy != false) {
 		Keke = savegame.Keke;
 		loadPerson.call(Keke);
@@ -615,6 +652,20 @@ function load() {
 		Oleg = savegame.Oleg;
 		loadPerson.call(Oleg);
 		}
+
+	/* Level 2 */
+	if (savegame.Kan.personIsBuy != false) {
+		Kan = savegame.Kan;
+		loadPerson.call(Kan);
+		}
+	if (savegame.Kolbas.personIsBuy != false) {
+		Kolbas = savegame.Kolbas;
+		loadPerson.call(Kolbas);
+		}
+	if (savegame.Vasay.personIsBuy != false) {
+		Vasay = savegame.Vasay;
+		loadPerson.call(Vasay);
+		}	
 		
 	/* Загружаем бонусы */
 	

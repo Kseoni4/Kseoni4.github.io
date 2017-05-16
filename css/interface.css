@@ -95,6 +95,26 @@ body {
 	float: left;
 }
 
+#buyKan {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+#buyKolbas {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+#buyVasay {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
 
 #textA {
 	float:right;
@@ -142,6 +162,24 @@ body {
 }
 
 #upgB5 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB6 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB7 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB8 {
 	background: none;
 	border: none;
 	float:right;
