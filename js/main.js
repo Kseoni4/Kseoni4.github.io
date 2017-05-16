@@ -102,6 +102,7 @@ function nextLevel() { // Функция перехода на следующи�
 		upgds = 0;
 		b = 0;
 		n = 0;
+		personList='';
 		lvl++;
 		document.getElementById('lvl'+ lvl).disabled = '';
 		save();
