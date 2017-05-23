@@ -130,6 +130,27 @@ body {
 	float: left;
 }
 
+#buyArtem {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+#buyBipa {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
+#nxtPers {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+}
+
 #textA {
 	float:right;
 }
@@ -206,6 +227,18 @@ body {
 }
 
 #upgB10 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB11 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB12 {
 	background: none;
 	border: none;
 	float:right;

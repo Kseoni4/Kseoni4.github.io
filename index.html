@@ -22,14 +22,14 @@
 				<h1>МСПХ Кликер, который вы заслужили</h1>
 			</div>
 			<div id="header" class="col-md-4">
-				<h5>v.0.3:1605</h5>
+				<h5>v.0.3a:17x05</h5>
 			</div>
 			<div class="col-md-4"> 
 				<img class="img-responsive" id="pepe" src="img/1.png"></img>	
 			</div>	
 		</div>
 		
-	<!-- Блок счётчиков и бонусов -->	
+	<!-- Блок счётчиков -->	
 		
 		<div class="row">
 			<div class="col-md-7">
@@ -94,6 +94,7 @@
 				<h5>(they will make memes automaticly)</h5>
 			</div>
 		</div>
+		<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-7">
 				<ul class="nav nav-tabs">
@@ -112,17 +113,32 @@
 					
 					<!-- Level 1 -->
 						
-						<!-- Keke -->
+						<!-- Artem -->
+
 						<div class="btn-group" style="margin-left: -1px">
 							<div class="btn-group" >
-								<button id="buyKeke" class="btn btn-default" onClick="buyPerson_(Keke)" ><img id='imgPersonKeke' class="img-rounded img-responsive" src="img/Keke1.png" title="Cost: 10 Memes"></img></button>
+								<button id="buyArtem" class="btn btn-default" onClick="buyPerson_(Artem)" ><img id='imgPersonArtem' class="img-rounded img-responsive" src="img/Artem1.png" title=""></img></button>
 							</div>
 							<div class="btn-group" style="margin-left: -1px">
-								<button id="upgB1" class="btn btn-default" onClick="upgPerson_(Keke)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
+								<button id="upgB1" class="btn btn-default" onClick="upgPerson_(Artem)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
+							</div>
+						</div>
+						<span id="upgCostArtem"></span>
+						<br />
+
+						<!-- Keke -->
+
+						<div class="btn-group" style="margin-left: -1px">
+							<div class="btn-group" >
+								<button id="buyKeke" class="btn btn-default" onClick="buyPerson_(Keke)" ><img id='imgPersonKeke' class="img-rounded img-responsive" src="img/Keke1.png" title=""></img></button>
+							</div>
+							<div class="btn-group" style="margin-left: -1px">
+								<button id="upgB2" class="btn btn-default" onClick="upgPerson_(Keke)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
 							</div>
 						</div>
 						<span id="upgCostKeke"></span>
 						<br />
+
 						<!-- Jane -->
 
 						<div class="btn-group" style="margin-left: -1px">
@@ -130,7 +146,7 @@
 								<button id="buyJane" class="btn btn-default" onClick="buyPerson_(Jane)" ><img id='imgPersonJane' class="img-rounded img-responsive" src="img/Jane1.png" title="Cost: 50 Memes"></img></button>
 							</div>
 							<div class="btn-group" style="margin-left: -1px">
-								<button id="upgB2" class="btn btn-default" onClick="upgPerson_(Jane)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
+								<button id="upgB3" class="btn btn-default" onClick="upgPerson_(Jane)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
 							</div>
 						</div>	
 						<span id="upgCostJane"></span>
@@ -143,7 +159,7 @@
 								<button id="buyBasta" class="btn btn-default" onClick="buyPerson_(Basta)" ><img id='imgPersonBasta' class="img-rounded img-responsive" src="img/Basta1.png" title="Cost: 100 Memes"></img></button>
 							</div>
 							<div class="btn-group" style="margin-left: -1px">
-								<button id="upgB3" class="btn btn-default" onClick="upgPerson_(Basta)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
+								<button id="upgB4" class="btn btn-default" onClick="upgPerson_(Basta)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
 							</div>
 						</div>	
 						<span id="upgCostBasta"></span>
@@ -156,7 +172,7 @@
 								<button id="buyCali" class="btn btn-default" onClick="buyPerson_(Cali)" ><img id='imgPersonCali' class="img-rounded img-responsive" src="img/Cali1.png" title="Cost: 3000 Memes"></img></button>
 							</div>
 							<div class="btn-group" style="margin-left: -1px">
-								<button id="upgB4" class="btn btn-default" onClick="upgPerson_(Cali)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
+								<button id="upgB5" class="btn btn-default" onClick="upgPerson_(Cali)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
 							</div>
 						<span id="upgCostCali"></span>
 						<br />
@@ -165,10 +181,10 @@
 						
 						<div class="btn-group" style="margin-left: -1px">
 							<div class="btn-group" >
-								<button id="buyOleg" class="btn btn-default" onClick="buyPerson_(Oleg)" ><img id='imgPersonOleg' class="img-rounded img-responsive" src="img/Oleg1.png" title="Cost: 10 Memes"></img></button>
+								<button id="buyOleg" class="btn btn-default" onClick="buyPerson_(Oleg)" ><img id='imgPersonOleg' class="img-rounded img-responsive" src="img/Oleg1.png" title=""></img></button>
 							</div>
 							<div class="btn-group" style="margin-left: -1px">
-								<button id="upgB5" class="btn btn-default" onClick="upgPerson_(Oleg)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
+								<button id="upgB6" class="btn btn-default" onClick="upgPerson_(Oleg)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
 						</div>
 						<span id="upgCostOleg"></span>
 					</div>
@@ -180,10 +196,10 @@
 						
 						<div class="btn-group" style="margin-left: -1px">
 							<div class="btn-group" >
-								<button id="buyKan" class="btn btn-default" onClick="buyPerson_(Kan)" ><img id='imgPersonKan' class="img-rounded img-responsive" src="img/Kan1.png" title="Cost: 10 Memes"></img></button>
+								<button id="buyKan" class="btn btn-default" onClick="buyPerson_(Kan)" ><img id='imgPersonKan' class="img-rounded img-responsive" src="img/Kan1.png" title=""></img></button>
 							</div>
 							<div class="btn-group" style="margin-left: -1px">
-								<button id="upgB6" class="btn btn-default" onClick="upgPerson_(Kan)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
+								<button id="upgB7" class="btn btn-default" onClick="upgPerson_(Kan)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
 						</div>
 						<span id="upgCostKan"></span>
 						<br />
@@ -191,10 +207,10 @@
 						
 						<div class="btn-group" style="margin-left: -1px">
 							<div class="btn-group" >
-								<button id="buyKolbas" class="btn btn-default" onClick="buyPerson_(Kolbas)" ><img id='imgPersonKolbas' class="img-rounded img-responsive" src="img/Kolbas1.png" title="Cost: 10 Memes"></img></button>
+								<button id="buyKolbas" class="btn btn-default" onClick="buyPerson_(Kolbas)" ><img id='imgPersonKolbas' class="img-rounded img-responsive" src="img/Kolbas1.png" title=""></img></button>
 							</div>
 							<div class="btn-group" style="margin-left: -1px">
-								<button id="upgB7" class="btn btn-default" onClick="upgPerson_(Kolbas)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
+								<button id="upgB8" class="btn btn-default" onClick="upgPerson_(Kolbas)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
 						</div>
 						<span id="upgCostKolbas"></span>
 						<br />	
@@ -202,10 +218,10 @@
 						
 						<div class="btn-group" style="margin-left: -1px">
 							<div class="btn-group" >
-								<button id="buyVasay" class="btn btn-default" onClick="buyPerson_(Vasay)" ><img id='imgPersonVasay' class="img-rounded img-responsive" src="img/Vasay1.png" title="Cost: 10 Memes"></img></button>
+								<button id="buyVasay" class="btn btn-default" onClick="buyPerson_(Vasay)" ><img id='imgPersonVasay' class="img-rounded img-responsive" src="img/Vasay1.png" title=""></img></button>
 							</div>
 							<div class="btn-group" style="margin-left: -1px">
-								<button id="upgB8" class="btn btn-default" onClick="upgPerson_(Vasay)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
+								<button id="upgB9" class="btn btn-default" onClick="upgPerson_(Vasay)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
 						</div>
 						<span id="upgCostVasay"></span>
 						<br />
@@ -213,10 +229,10 @@
 						
 						<div class="btn-group" style="margin-left: -1px">
 							<div class="btn-group" >
-								<button id="buyViet" class="btn btn-default" onClick="buyPerson_(Viet)" ><img id='imgPersonViet' class="img-rounded img-responsive" src="img/Viet1.png" title="Cost: 10 Memes"></img></button>
+								<button id="buyViet" class="btn btn-default" onClick="buyPerson_(Viet)" ><img id='imgPersonViet' class="img-rounded img-responsive" src="img/Viet1.png" title=""></img></button>
 							</div>
 							<div class="btn-group" style="margin-left: -1px">
-								<button id="upgB9" class="btn btn-default" onClick="upgPerson_(Viet)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
+								<button id="upgB10" class="btn btn-default" onClick="upgPerson_(Viet)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
 						</div>
 						<span id="upgCostViet"></span>
 						<br />
@@ -224,14 +240,42 @@
 						
 						<div class="btn-group" style="margin-left: -1px">
 							<div class="btn-group" >
-								<button id="buyErni" class="btn btn-default" onClick="buyPerson_(Erni)" ><img id='imgPersonErni' class="img-rounded img-responsive" src="img/Erni1.png" title="Cost: 10 Memes"></img></button>
+								<button id="buyErni" class="btn btn-default" onClick="buyPerson_(Erni)" ><img id='imgPersonErni' class="img-rounded img-responsive" src="img/Erni1.png" title=""></img></button>
 							</div>
 							<div class="btn-group" style="margin-left: -1px">
-								<button id="upgB10" class="btn btn-default" onClick="upgPerson_(Erni)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
+								<button id="upgB11" class="btn btn-default" onClick="upgPerson_(Erni)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button></div>
 						</div>
 						<span id="upgCostErni"></span>
 					</div>
-					<div id="level3" class="tab-pane fade"><h2>Avalible in next updates</h2></div>
+					<div id="level3" class="tab-pane fade">
+
+					<!-- Level 3 -->
+					
+					<!-- Bipa -->
+						<div class="btn-group" style="margin-left: -1px">
+							<div class="btn-group" >
+								<button id="buyBipa" class="btn btn-default" onClick="buyPerson_(Bipa)" ><img id='imgPersonBipa' class="img-rounded img-responsive" src="img/Bipa1.png" title=""></img></button>
+							</div>
+							<div class="btn-group" style="margin-left: -1px">
+								<button id="upgB12" class="btn btn-default" onClick="upgPerson_(Bipa)"><img id="upgB1" src="img/upg_340_a.png" class="img-rounded img-responsive"></img></button>
+							</div>
+						</div>
+						<span id="upgCostBipa"></span>
+						<br />
+						<h2>========================</h2>
+						<h2>Avalible in next updates</h2>
+						<div class="btn-group" style="margin-left: -1px">
+							<button id="nxtPers" class="btn btn-default" ><img id='imgPersonBipa' class="img-rounded img-responsive" src="img/nxtPers.png" title=""></img></button>
+						</div>
+						<br />
+						<div class="btn-group" style="margin-left: -1px">
+							<button id="nxtPers" class="btn btn-default" ><img id='imgPersonBipa' class="img-rounded img-responsive" src="img/nxtPers.png" title=""></img></button>
+						</div>
+						<br />
+						<div class="btn-group" style="margin-left: -1px">
+							<button id="nxtPers" class="btn btn-default" ><img id='imgPersonBipa' class="img-rounded img-responsive" src="img/nxtPers.png" title=""></img></button>
+						</div>
+					</div>
 				</div>	
 			</div>
 			<div class="col-md-2">
@@ -258,6 +302,7 @@
 					<button class="btn btn-sm" id="buyBonus10" onClick='buyBonus_(battle)'>Устроить баттл на сходке<span id="eF10"></span></button><span class="costEf" id="costEf10"></span>
 				</div>
 			</div>
+		</div>
 		</div>	
 	<div class="row">
 		<div class="container-fluid">
