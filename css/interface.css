@@ -144,6 +144,30 @@ body {
 	float: left;
 }
 
+#buyTasha {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+
+}
+
+#buyKita {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+
+}
+
+#buyErilon {
+	background: none;
+	border: none;
+	display: inline-block;
+	float: left;
+
+}
+
 #nxtPers {
 	background: none;
 	border: none;
@@ -239,6 +263,24 @@ body {
 }
 
 #upgB12 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB13 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB14 {
+	background: none;
+	border: none;
+	float:right;
+}
+
+#upgB15 {
 	background: none;
 	border: none;
 	float:right;

@@ -1,12 +1,14 @@
 /* Блок переменных и инициализации персонажей */
 
+var v = "v.0.3b:3005"; // версия игры
+
 //"флаг" начатой игры
 
 var gameInProgress = false; //если равен true, то игра загружает сохранение. 
 
 // Коэффициенты
 
-var cP = 1.1	; // Коэффициент производства
+var cP = 1.2; // Коэффициент производства
 var cUpg = 3; // Коэффициент стоимости улучшения
 var cSP = 2.5; // Коэффициент возрастания производства
 var cUpgFirstCost = 1.3; // Коэффициент стоимости первичного улучшения
@@ -17,25 +19,29 @@ var meme = 0; //Мемы
 var upgds = 0; //Прирост мем/cек
 var pValue = 0; //Текущий прогресс
 var n = 0; // Переменная для рассчёта "клика"
-var winValue = 1000000; //Итоговая сумма
+var winValue = 1000000; // Начальная итоговая сумма
 var b = 0; //Текущий бонус
 var lvl = 1; //Текущий уровень (по умолчанию 1)
 
 //инициализация персонажей (глобальные объекты)
 
+var Tasha = new memePerson("Tasha", 10, 2, 0, 1);
+var Artem = new memePerson("Artem", 10, 1, 0, 2);
+var Jane = new memePerson("Jane", 500, 25, 0, 3);
+var Kolbas = new memePerson("Kolbas", 5000, 50, 0, 4);
+var Basta = new memePerson("Basta", 30000, 100, 0, 5);
 
-var Keke = new memePerson("Keke", 50, 5, 0, 2);
-var Jane = new memePerson("Jane", 500, 15, 0, 3);
-var Basta = new memePerson("Basta", 1000, 25, 0, 4);
-var Cali = new memePerson("Cali", 5000, 50, 0, 5);
-var Oleg = new memePerson("Oleg", 30000, 100, 0, 6);
-var Kan = new memePerson("Kan", 80000, 200, 0, 7);
-var Kolbas = new memePerson("Kolbas", 150000, 500, 0, 8);
-var Vasay = new memePerson("Vasay", 300000, 700, 0, 9);
-var Viet = new memePerson("Viet", 800000, 900, 0, 10);
-var Erni = new memePerson("Erni", 1000000, 1000, 0, 11);
-var Artem = new memePerson("Artem", 10, 1, 0, 1);
-var Bipa = new memePerson("Bipa", 3000000, 2500, 0, 12)
+var Cali = new memePerson("Cali", 80000, 200, 0, 6);
+var Viet = new memePerson("Viet", 150000, 500, 0, 7);
+var Erni = new memePerson("Erni", 300000, 700, 0, 8);
+var Vasay = new memePerson("Vasay", 500000, 900, 0, 9);
+var Kita = new memePerson("Kita", 500001, 1000, 0, 10);
+
+var Bipa = new memePerson("Bipa", 1000000, 2500, 0, 11);
+var Kan = new memePerson("Kan", 5000000, 2800, 0, 12);
+var Oleg = new memePerson("Oleg",15000000, 3000, 0, 13);
+var Erilon = new memePerson("Erilon", 17000000, 3300, 0, 14);
+var Keke = new memePerson("Keke", 50000000, 3800, 0, 15);
 
 /* Блок конструктора объектов персонажей */
 
@@ -48,11 +54,11 @@ function memePerson(name, pC, mFP, upgCount, pN) {
 	this.namePerson = name;
 	this.personNum = pN;
 	this.personIsBuy = false;
-	//perCost.call(this);
 }
 
-pList = { Artem, Keke, Jane, Basta, Cali, Oleg, 
-Kan, Kolbas, Vasay, Viet, Erni, Bipa }; // Список персонажей
+pList = { Tasha, Artem, Jane, Kolbas, Basta, 
+Cali, Viet, Erni, Vasay, Kita, 
+Bipa, Kan, Oleg, Erilon, Keke }; // Список персонажей
 
 var personList = ""; //строка приобретённных  персонажей
 
@@ -83,11 +89,10 @@ function bonus(name){
 	this.bonusIsBuy = false;
 }
 
-
 /* Блок игровых функций */
 
 function memeClick(num) { // Обычное нажатие
-	n = ((num * lvl) * (Math.floor(upgds * b) + (upgds/2)));
+	n = ((num * lvl) * ((Math.floor(upgds * b)/3) + (upgds/(2+lvl))));
 	if (n <= 0) {n = 1};
 	meme = meme + num * n;
 	document.getElementById('memes').innerHTML = Math.floor(meme);
@@ -111,7 +116,7 @@ function nextLevel() { // Функция перехода на следующи�
 		n = 0;
 		personList='';
 		lvl++;
-		document.getElementById('lvl'+ lvl).disabled = '';
+		if (lvl <= 3) { document.getElementById('lvl'+ lvl).disabled = ''; }
 		save();
 		initLevel(lvl);
 		initGame();
@@ -141,12 +146,17 @@ function initLevel (lvl) {
 		case 3: {
 			$('.progress').css('background-color', "#0E5195");
 			$('.progress-bar').css('background-color', "#0E62B8");
-			winValue = 100000000;
+			winValue = 500000000;
 			break;
 		}	
 	}
+	if (lv >= 4)
+	{
+		$('.progress').css('background-color', "#0E5195");
+		$('.progress-bar').css('background-color', "#0E62B8");
+		winValue = winValue * 1.3;
+	}
 }
-
 
 //Функции покупки персонажей
 
@@ -159,7 +169,6 @@ function buyPerson() {
 			upgds = upgds + this.memesFirstProd;
 			meme = meme - this.personCost;
 			personList = personList + " " + this.namePerson;
-		//this.upgCost = Math.floor(10 * Math.pow(1.1, this.upgCount));
 		document.getElementById('upg').innerHTML = this.memesFirstProd;
 		document.getElementById('upgCost' + this.namePerson).innerHTML = "Update cost: " + this.upgCost;
 		document.getElementById('upgB' + this.personNum).style.display = '';
@@ -221,7 +230,6 @@ function buyBonus(){
 		this.bonusIsBuy = true;
 	}
 }
-
 
 /* Блок асинхронных событий */
 
@@ -300,23 +308,38 @@ function chkPers(m) {
 		{ document.getElementById('imgPersonBipa').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
 	if (m < Bipa.personCost && !Bipa.personIsBuy) 
 		{ document.getElementById('imgPersonBipa').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+
+	if (m >= Tasha.personCost && !Tasha.personIsBuy) 
+		{ document.getElementById('imgPersonTasha').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < Tasha.personCost && !Tasha.personIsBuy) 
+		{ document.getElementById('imgPersonTasha').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+
+	if (m >= Kita.personCost && !Kita.personIsBuy) 
+		{ document.getElementById('imgPersonKita').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < Kita.personCost && !Kita.personIsBuy) 
+		{ document.getElementById('imgPersonKita').style.WebkitFilter="grayscale(100%) blur(10px)"; }
+
+	if (m >= Erilon.personCost && !Erilon.personIsBuy) 
+		{ document.getElementById('imgPersonErilon').style.WebkitFilter="grayscale(100%) blur(0px)"; } 
+	if (m < Erilon.personCost && !Erilon.personIsBuy) 
+		{ document.getElementById('imgPersonErilon').style.WebkitFilter="grayscale(100%) blur(10px)"; }
 } 
 
 function chkPersAvalible(m) {
 
 	/* Level 1 */
 
-	if (!Artem.personIsBuy) {
-	document.getElementById('upgCost' + Keke.namePerson).style.display='none';
-	document.getElementById('imgPersonKeke').style.display="none";
+	if (!Tasha.personIsBuy) {
+	document.getElementById('upgCost' + Artem.namePerson).style.display='none';
+	document.getElementById('imgPersonArtem').style.display="none";
 	}
 	else
 	{
-	document.getElementById('upgCost' + Keke.namePerson).style.display='';
-	document.getElementById('imgPersonKeke').style.display="";	
+	document.getElementById('upgCost' + Artem.namePerson).style.display='';
+	document.getElementById('imgPersonArtem').style.display="";	
 	}
 
-	if (!Keke.personIsBuy) {
+	if (!Artem.personIsBuy) {
 	document.getElementById('upgCost' + Jane.namePerson).style.display='none';
 	document.getElementById('imgPersonJane').style.display="none";
 	}
@@ -327,38 +350,6 @@ function chkPersAvalible(m) {
 	}
 
 	if (!Jane.personIsBuy) {
-	document.getElementById('upgCost' + Basta.namePerson).style.display='none';
-	document.getElementById('imgPersonBasta').style.display="none";
-	}
-	else
-	{
-	document.getElementById('upgCost' + Basta.namePerson).style.display='';
-	document.getElementById('imgPersonBasta').style.display="";
-	}
-
-	if (!Basta.personIsBuy) {
-	document.getElementById('upgCost' + Cali.namePerson).style.display='none';
-	document.getElementById('imgPersonCali').style.display="none";
-	}
-	else
-	{
-	document.getElementById('upgCost' + Cali.namePerson).style.display='';
-	document.getElementById('imgPersonCali').style.display="";	
-	} 
-
-	if (!Cali.personIsBuy) {
-	document.getElementById('upgCost' + Oleg.namePerson).style.display='none';
-	document.getElementById('imgPersonOleg').style.display="none";
-	}
-	else
-	{
-	document.getElementById('upgCost' + Oleg.namePerson).style.display='';
-	document.getElementById('imgPersonOleg').style.display="";	
-	} 
-
-	/* Level 2 */
-
-	if (!Kan.personIsBuy) {
 	document.getElementById('upgCost' + Kolbas.namePerson).style.display='none';
 	document.getElementById('imgPersonKolbas').style.display="none";
 	}
@@ -369,16 +360,18 @@ function chkPersAvalible(m) {
 	}
 
 	if (!Kolbas.personIsBuy) {
-	document.getElementById('upgCost' + Vasay.namePerson).style.display='none';
-	document.getElementById('imgPersonVasay').style.display="none";
+	document.getElementById('upgCost' + Basta.namePerson).style.display='none';
+	document.getElementById('imgPersonBasta').style.display="none";
 	}
 	else
 	{
-	document.getElementById('upgCost' + Vasay.namePerson).style.display='';
-	document.getElementById('imgPersonVasay').style.display="";	
+	document.getElementById('upgCost' + Basta.namePerson).style.display='';
+	document.getElementById('imgPersonBasta').style.display="";	
 	}
 
-	if (!Vasay.personIsBuy) {
+	/* Level 2 */
+
+	if (!Cali.personIsBuy) {
 	document.getElementById('upgCost' + Viet.namePerson).style.display='none';
 	document.getElementById('imgPersonViet').style.display="none";
 	}
@@ -398,7 +391,66 @@ function chkPersAvalible(m) {
 	document.getElementById('imgPersonErni').style.display="";	
 	}
 
+	if (!Erni.personIsBuy) {
+	document.getElementById('upgCost' + Vasay.namePerson).style.display='none';
+	document.getElementById('imgPersonVasay').style.display="none";
+	}
+	else
+	{
+	document.getElementById('upgCost' + Vasay.namePerson).style.display='';
+	document.getElementById('imgPersonVasay').style.display="";	
+	}
+
+	if (!Vasay.personIsBuy) {
+	document.getElementById('upgCost' + Kita.namePerson).style.display='none';
+	document.getElementById('imgPersonKita').style.display="none";
+	}
+	else
+	{
+	document.getElementById('upgCost' + Kita.namePerson).style.display='';
+	document.getElementById('imgPersonKita').style.display="";	
+	}
+
 	/* Level 3 */
+
+	if (!Bipa.personIsBuy) {
+	document.getElementById('upgCost' + Kan.namePerson).style.display='none';
+	document.getElementById('imgPersonKan').style.display="none";
+	}
+	else
+	{
+	document.getElementById('upgCost' + Kan.namePerson).style.display='';
+	document.getElementById('imgPersonKan').style.display="";	
+	}
+
+	if (!Kan.personIsBuy) {
+	document.getElementById('upgCost' + Oleg.namePerson).style.display='none';
+	document.getElementById('imgPersonOleg').style.display="none";
+	}
+	else
+	{
+	document.getElementById('upgCost' + Oleg.namePerson).style.display='';
+	document.getElementById('imgPersonOleg').style.display="";	
+	}
+	if (!Oleg.personIsBuy) {
+	document.getElementById('upgCost' + Erilon.namePerson).style.display='none';
+	document.getElementById('imgPersonErilon').style.display="none";
+	}
+	else
+	{
+	document.getElementById('upgCost' + Erilon.namePerson).style.display='';
+	document.getElementById('imgPersonErilon').style.display="";	
+	}
+
+	if (!Erilon.personIsBuy) {
+	document.getElementById('upgCost' + Keke.namePerson).style.display='none';
+	document.getElementById('imgPersonKeke').style.display="none";
+	}
+	else
+	{
+	document.getElementById('upgCost' + Keke.namePerson).style.display='';
+	document.getElementById('imgPersonKeke').style.display="";	
+	}
 
 }
 
@@ -420,7 +472,6 @@ function chkPrgrs(m) {
 		}	
 	}
 }
-
 
 //Функция проверки Пепе
 
@@ -457,12 +508,11 @@ function chkMeme(m) {
 }
 
 function chkLvl(m) {
-	if (m >= winValue && lvl != 3) { document.getElementById('nxtLvl').disabled = '';
+	if (m >= winValue) { document.getElementById('nxtLvl').disabled = '';
 	document.getElementById('nxtLvl').style.display = ''; 
 	}
-	if (lvl == 3) { document.getElementById('nxtLvl').innerHTML = "Avalible in next updates"; }
+	if (lvl >= 3) { document.getElementById('nxtLvl').innerHTML = "Next level"; }
 }
-
 
 //Функция действий раз в секунду.
 
@@ -520,7 +570,16 @@ window.setInterval(function(){
 
 /* Блок системных функций */
 
-function initGame() {				// Функция инициализации игры
+// Функция инициализации игры
+
+function initGame() {				
+	if (localStorage['check.gameVersion'] != v && localStorage['check.gameVersion'] != undefined) {
+		if(confirm('Your savegame version is outdated. Please reset game state for avoid issues') == true){
+			removeSave();
+			location.reload();
+		}
+	}
+	document.getElementById('ver').innerHTML = v;
 	gameInProgress = (localStorage['check.gameInProgress'] == "true");
 	if (!gameInProgress) {			// Если флаг уже начатой игры равен false, то загрузить начальные значения счетчиков.
 		document.getElementById('upg').innerHTML = upgds,
@@ -531,75 +590,94 @@ function initGame() {				// Функция инициализации игры
 		$(document).ready(function(){
 			$('.progress-bar').attr('aria-valuemax', winValue);
 		});
-		//initPersons(); // Инициализация характеристик персонажей
 		updateCall();	
 		initStyles();  // Инициализация стилей у картинок.	
 		initBonus(); // Инициализация бонусов
 		gameInProgress = true; 
 	}
-	if(!resumeGame()) { /*save();*/ }
+	if(!resumeGame()) {}
 };
 
 	function initPersons(){ //Инициализация характеристик персонажей
-		Keke.personNum = 2;
-		Keke.memesFirstProd = 5;
-		Keke.personCost = 50;
-		perCost.call(Keke);
+		/* Level 1 */
+		Tasha.personNum = 1;
+		Tasha.memesFirstProd = 2;
+		Tasha.personCost = 10;
+		perCost.call(Tasha);
 
-		Jane.personNum = 3;
-		Jane.memesFirstProd = 15;
-		Jane.personCost = 500;
-		perCost.call(Jane);
-		
-		Basta.personNum = 4;
-		Basta.memesFirstProd = 25;
-		Basta.personCost = 1000;
-		perCost.call(Basta);
-		
-		Cali.personNum = 5;
-		Cali.memesFirstProd = 50;
-		Cali.personCost = 5000;
-		perCost.call(Cali);
-
-		Oleg.personNum = 6;
-		Oleg.memesFirstProd = 100;
-		Oleg.personCost = 30000;
-		perCost.call(Oleg);
-
-		Kan.personNum = 7;
-		Kan.memesFirstProd = 200;
-		Kan.personCost = 80000;
-		perCost.call(Kan);
-
-		Kolbas.personNum = 8;
-		Kolbas.memesFirstProd = 500;
-		Kolbas.personCost = 150000;
-		perCost.call(Kolbas);
-
-		Vasay.personNum = 9;
-		Vasay.memesFirstProd = 700;
-		Vasay.personCost = 300000;
-		perCost.call(Vasay);
-
-		Viet.personNum = 10;
-		Viet.memesFirstProd = 900;
-		Viet.personCost = 800000;
-		perCost.call(Viet);
-
-		Erni.personNum = 11;
-		Erni.memesFirstProd = 1000;
-		Erni.personCost = 1000000;
-		perCost.call(Erni);
-
-		Artem.personNum = 1;
+		Artem.personNum = 2;
 		Artem.memesFirstProd = 1;
 		Artem.personCost = 10;
 		perCost.call(Artem);
 
-		Bipa.personNum = 12;
+		Jane.personNum = 3;
+		Jane.memesFirstProd = 25;
+		Jane.personCost = 500;
+		perCost.call(Jane);
+
+		Kolbas.personNum = 4;
+		Kolbas.memesFirstProd = 50;
+		Kolbas.personCost = 5000;
+		perCost.call(Kolbas);
+
+		Basta.personNum = 5;
+		Basta.memesFirstProd = 100;
+		Basta.personCost = 30000;
+		perCost.call(Basta);
+
+		/* Level 2 */
+		Cali.personNum = 6;
+		Cali.memesFirstProd = 200;
+		Cali.personCost = 80000;
+		perCost.call(Cali);
+
+		Viet.personNum = 7;
+		Viet.memesFirstProd = 500;
+		Viet.personCost = 150000;
+		perCost.call(Viet);
+
+		Erni.personNum = 8;
+		Erni.memesFirstProd = 700;
+		Erni.personCost = 300000;
+		perCost.call(Erni);	
+
+		Vasay.personNum = 9;
+		Vasay.memesFirstProd = 900;
+		Vasay.personCost = 500000;
+		perCost.call(Vasay);
+
+		Kita.personNum = 10;
+		Kita.memesFirstProd = 1000;
+		Kita.personCost = 500001;
+		perCost.call(Kita);
+
+		/* Level 3 */
+		Bipa.personNum = 11;
 		Bipa.memesFirstProd = 2500;
-		Bipa.personCost = 3000000;
+		Bipa.personCost = 1000000;
 		perCost.call(Bipa);
+
+		Kan.personNum = 12;
+		Kan.memesFirstProd = 2800;
+		Kan.personCost = 5000000;
+		perCost.call(Kan);
+
+		Oleg.personNum = 13;
+		Oleg.memesFirstProd = 3000;
+		Oleg.personCost = 15000000;
+		perCost.call(Oleg);
+
+		Erilon.personNum = 14;
+		Erilon.memesFirstProd = 3300;
+		Erilon.personCost = 17000000;
+		perCost.call(Erilon);
+
+		Keke.personNum = 15;
+		Keke.memesFirstProd = 3800;
+		Keke.personCost = 50000000;
+		perCost.call(Keke);
+
+		
 }
 
 function perCost() {
@@ -614,7 +692,7 @@ function perCost() {
 		}
 
 function initStyles() { //Инициализация стилей у картинок
-	for (var i = 1; i < 13; i++) {
+	for (var i = 1; i <= 15; i++) {
 		document.getElementById('upgB' + i).style.display = 'none';	
 	}
 	for (var i in pList) {
@@ -638,42 +716,42 @@ function initBonus(){
 	bStyles.call(mtng);
 	
 	jkCock.bonusNum = 2;
-	jkCock.bonusEffencive = 0.05;
+	jkCock.bonusEffencive = 0.03;
 	jkCock.bonusCost = 700;
 	bStyles.call(jkCock);
 	
 	jkAss.bonusNum = 3;
-	jkAss.bonusEffencive = 0.055;
+	jkAss.bonusEffencive = 0.05;
 	jkAss.bonusCost = 1500;
 	bStyles.call(jkAss);
 	
 	plBotle.bonusNum = 4;
-	plBotle.bonusEffencive = 0.07;
+	plBotle.bonusEffencive = 0.055;
 	plBotle.bonusCost = 3000;
 	bStyles.call(plBotle);
 
 	drink.bonusNum = 5;
-	drink.bonusEffencive = 0.09;
+	drink.bonusEffencive = 0.07;
 	drink.bonusCost = 7000;
 	bStyles.call(drink);
 
 	lostFili.bonusNum = 6;
-	lostFili.bonusEffencive = 0.1;
+	lostFili.bonusEffencive = 0.9;
 	lostFili.bonusCost = 10000;
 	bStyles.call(lostFili);
 
 	prazka.bonusNum = 7;
-	prazka.bonusEffencive = 0.12;
+	prazka.bonusEffencive = 0.105;
 	prazka.bonusCost = 15000;
 	bStyles.call(prazka);
 
 	talkHS.bonusNum = 8;
-	talkHS.bonusEffencive = 0.2;
+	talkHS.bonusEffencive = 0.15;
 	talkHS.bonusCost = 30000;
 	bStyles.call(talkHS);
 
 	GrebChannel.bonusNum = 9;
-	GrebChannel.bonusEffencive = 0.25;
+	GrebChannel.bonusEffencive = 0.2;
 	GrebChannel.bonusCost = 50000;
 	bStyles.call(GrebChannel);
 
@@ -695,10 +773,11 @@ function resumeGame() {
 	if (!gameInProgress) { return false };
 	load();
 }
-	
 
 function save() { 
 	var save = {
+		// Версия игры
+		v: v,
 		// Счётчики
 		meme: meme,
 		upgds: upgds,
@@ -718,6 +797,9 @@ function save() {
 		Erni: Erni,
 		Artem: Artem,
 		Bipa: Bipa,
+		Tasha: Tasha,
+		Kita: Kita,
+		Erilon: Erilon,
 		// Бонусы
 		mtng: mtng,
 		jkCock: jkCock,
@@ -740,6 +822,7 @@ function save() {
 
 	localStorage.setItem('save', JSON.stringify(save));
 	localStorage['check.gameInProgress'] = gameInProgress;
+	localStorage['check.gameVersion'] = v;
 };
 
 function load() {
@@ -841,6 +924,20 @@ function load() {
 		Bipa = savegame.Bipa;
 		loadPerson.call(Bipa);
 		}
+	if (savegame.Tasha.personIsBuy != false) {
+		Tasha = savegame.Tasha;
+		loadPerson.call(Tasha);
+		}
+	if (savegame.Kita.personIsBuy != false) {
+		Kita = savegame.Kita;
+		loadPerson.call(Kita);
+		}
+	if (savegame.Erilon.personIsBuy != false) {
+		Erilon = savegame.Erilon;
+		loadPerson.call(Erilon);
+		}
+
+
 
 	/* Загружаем бонусы */
 	
@@ -888,7 +985,7 @@ function load() {
 
 function loadLvls (lvl) {
 	for (var i = 1; i <= lvl; i++) {
-		document.getElementById('lvl'+ i).disabled = '';
+		if (lvl <= 3) {	document.getElementById('lvl'+ i).disabled = ''; }
 		initLevel(i);
 		}
 	}
@@ -914,10 +1011,10 @@ function loadPerson(){
 			}
 }	
 
-
 function removeSave() {
 	localStorage.removeItem("save");
 	localStorage.removeItem('check.gameInProgress');
+	localStorage['check.gameVersion'] = v;
 	location.reload();
 }
 
